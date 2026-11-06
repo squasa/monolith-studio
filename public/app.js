@@ -4,7 +4,7 @@ let CART = [];
 
 async function initStore() {
   try {
-    const res = await fetch('/config/store-config.json');
+    const res = await fetch('config/store-config.json');
     STORE_CONFIG = await res.json();
   } catch (e) {
     console.error('Failed to load store-config.json:', e);
@@ -66,7 +66,7 @@ function renderProducts() {
         <p class="product-summary">${p.summary}</p>
         <div class="product-meta-row">
           <span class="product-price">$${p.price.toFixed(2)}</span>
-          <span class="product-stock">● In Stock (${p.leadTime})</span>
+          <span class="product-stock">● In Stock • 24–48h Dispatch</span>
         </div>
         <div class="product-actions">
           <button class="btn-outline" onclick="openProductModal(${p.id})">Specs & Details</button>

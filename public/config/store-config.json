@@ -13,8 +13,8 @@
     "hours": "Monday – Friday, 9:00 AM – 5:00 PM PT",
     "shippingPromise": "Free Tracked USPS / UPS / FedEx Ground Shipping (2–4 Business Days) — Dispatches within 24–48 Hours from Los Angeles, CA",
     "warrantyPromise": "30-Day Studio Trial Guarantee & 1-Year Structural CNC Hardware Warranty",
-    "logoImage": "/images/products/rewind_hardware_logo.jpg",
-    "iconImage": "/images/products/rewind_avatar_icon.jpg"
+    "logoImage": "images/products/rewind_hardware_logo.jpg",
+    "iconImage": "images/products/rewind_avatar_icon.jpg"
   },
   "waveCheckoutLinks": {
     "_comment": "Paste your Wave Checkout URLs (e.g. https://link.waveapps.com/xxxxxx) for each price tier or SKU below. When populated, customer checkout automatically redirects to Wave with their shipping address and contact details pre-filled.",
@@ -63,8 +63,8 @@
       "weightLbs": 0.40,
       "inStock": true,
       "leadTime": "Ships in 24–48 hours",
-      "image": "/images/products/item1_pen_dock.jpg",
-      "gallery": ["/images/products/item1_pen_dock.jpg"],
+      "image": "images/products/item1_pen_dock.jpg",
+      "gallery": ["images/products/item1_pen_dock.jpg"],
       "summary": "Solid 6061-T6 aircraft-grade brushed aluminum pen block with a precision-milled horizontal cradle, vertical quick-dock well, and micro-suction silicone base.",
       "highlights": [
         "Dual-Orientation Resting Design: Display your drafting pen, fountain pen, or stylus horizontally along the milled top flute or upright in the 14.5mm vertical bore.",
@@ -95,8 +95,8 @@
       "weightLbs": 0.84,
       "inStock": true,
       "leadTime": "Ships in 24–48 hours",
-      "image": "/images/products/item2_glidemat.jpg",
-      "gallery": ["/images/products/item2_glidemat.jpg"],
+      "image": "images/products/item2_glidemat.jpg",
+      "gallery": ["images/products/item2_glidemat.jpg"],
       "summary": "Large-format 900×400×4mm studio and gaming desk mat engineered with high-density micro-textured jacquard cloth, sub-surface flat-lock stitching, and a 4mm natural rubber base.",
       "highlights": [
         "Calibrated X/Y Optical Tracking: High-density micro-weave surface delivers effortless glide for PTFE and glass mouse skates with pinpoint stopping power.",
@@ -126,8 +126,8 @@
       "weightLbs": 0.33,
       "inStock": true,
       "leadTime": "Ships in 24–48 hours",
-      "image": "/images/products/item3_watch_aluminum.jpg",
-      "gallery": ["/images/products/item3_watch_aluminum.jpg"],
+      "image": "images/products/item3_watch_aluminum.jpg",
+      "gallery": ["images/products/item3_watch_aluminum.jpg"],
       "summary": "5-axis CNC-machined 6061 aerospace aluminum protective exoskeleton and vulcanized FKM fluoroelastomer strap system for Apple Watch 45mm.",
       "highlights": [
         "5-Axis CNC Aerospace Aluminum Bezel: Hand-brushed silver alloy frame wraps your Apple Watch in an industrial, architectural chassis.",
@@ -158,10 +158,10 @@
       "weightLbs": 0.51,
       "inStock": true,
       "leadTime": "Ships in 24–48 hours",
-      "image": "/images/products/rewind_mouse_silver_cover.jpg",
+      "image": "images/products/rewind_mouse_silver_cover.jpg",
       "gallery": [
-        "/images/products/rewind_mouse_silver_cover.jpg",
-        "/images/products/rewind_mouse_silver_lineup.jpg"
+        "images/products/rewind_mouse_silver_cover.jpg",
+        "images/products/rewind_mouse_silver_lineup.jpg"
       ],
       "summary": "Featherweight 50-gram symmetrical wireless mouse featuring a brushed metallic silver shell, knurled aluminum scroll wheel, 26,000 DPI optical sensor, and tri-mode connectivity.",
       "highlights": [
@@ -195,8 +195,8 @@
       "weightLbs": 0.53,
       "inStock": true,
       "leadTime": "Ships in 24–48 hours",
-      "image": "/images/products/item5_watch_brass.jpg",
-      "gallery": ["/images/products/item5_watch_brass.jpg"],
+      "image": "images/products/item5_watch_brass.jpg",
+      "gallery": ["images/products/item5_watch_brass.jpg"],
       "summary": "Heavy-duty CNC-milled C36000 solid architectural brass protective armor case and FKM rubber strap built specifically for the 49mm Apple Watch Ultra & Ultra 2.",
       "highlights": [
         "Solid C36000 Architectural Brass Chassis: Milled from solid billet brass with a satin brushed finish that develops a unique bespoke patina over time.",
@@ -228,8 +228,8 @@
       "weightLbs": 0.93,
       "inStock": true,
       "leadTime": "Ships in 24–48 hours",
-      "image": "/images/products/rewind_luminabar_cover.png",
-      "gallery": ["/images/products/rewind_luminabar_cover.png"],
+      "image": "images/products/rewind_luminabar_cover.png",
+      "gallery": ["images/products/rewind_luminabar_cover.png"],
       "summary": "Anodized aluminum over-monitor task lamp with zero-glare asymmetric optical projection, Ra97+ color accuracy, stepless 2700K–6500K color temperature, and a rotary wireless desk puck.",
       "highlights": [
         "Zero-Glare Asymmetric Optical Lens: Precision 45-degree directional light beam illuminates your desk and keyboard with zero reflection on flat or curved monitors.",
@@ -262,8 +262,8 @@
       "weightLbs": 0.77,
       "inStock": true,
       "leadTime": "Ships in 24–48 hours",
-      "image": "/images/products/item7_macropad.jpg",
-      "gallery": ["/images/products/item7_macropad.jpg"],
+      "image": "images/products/item7_macropad.jpg",
+      "gallery": ["images/products/item7_macropad.jpg"],
       "summary": "Heavy CNC-milled 6061 aluminum 8-key mechanical macro pad with a solid knurled metal rotary encoder knob, hot-swappable linear switches, and QMK/VIA custom layer support.",
       "highlights": [
         "Solid CNC-Milled Aluminum Chassis: Weighs 310g unboxed so it sits planted like an anvil beside your keyboard or drawing tablet.",
@@ -296,8 +296,8 @@
       "weightLbs": 1.06,
       "inStock": true,
       "leadTime": "Ships in 24–48 hours",
-      "image": "/images/products/item8_laptop_stand.jpg",
-      "gallery": ["/images/products/item8_laptop_stand.jpg"],
+      "image": "images/products/item8_laptop_stand.jpg",
+      "gallery": ["images/products/item8_laptop_stand.jpg"],
       "summary": "Heavyweight bead-blasted anodized aluminum dual-bay vertical laptop dock with tool-free knurled thumbscrew width adjustment and scratch-free silicone channel liners.",
       "highlights": [
         "Reclaim Your Primary Desk Footprint: Dock up to two laptops, tablets, or sketchbooks vertically in Clamshell workstation mode.",
@@ -327,8 +327,8 @@
       "weightLbs": 1.37,
       "inStock": true,
       "leadTime": "Ships in 24–48 hours",
-      "image": "/images/products/rewind_keyboard_cover.jpg",
-      "gallery": ["/images/products/rewind_keyboard_cover.jpg"],
+      "image": "images/products/rewind_keyboard_cover.jpg",
+      "gallery": ["images/products/rewind_keyboard_cover.jpg"],
       "summary": "Compact unibody split-angle ergonomic mechanical keyboard housed in a matte obsidian CNC aluminum frame with gasket-mounted acoustics, hot-swappable switches, and PBT keycaps.",
       "highlights": [
         "Natural 12° Angled Columnar Split: Aligns wrists and forearms at a relaxed anatomical typing angle to eliminate ulnar deviation during all-day sessions.",
@@ -361,10 +361,10 @@
       "weightLbs": 0.99,
       "inStock": true,
       "leadTime": "Ships in 24–48 hours",
-      "image": "/images/products/rewind_pocket_silver_cover.jpg",
+      "image": "images/products/rewind_pocket_silver_cover.jpg",
       "gallery": [
-        "/images/products/rewind_pocket_silver_cover.jpg",
-        "/images/products/rewind_pocket_silver_lineup.jpg"
+        "images/products/rewind_pocket_silver_cover.jpg",
+        "images/products/rewind_pocket_silver_lineup.jpg"
       ],
       "summary": "Precision 5-axis CNC-machined 6061-T6 monolithic silver aluminum vertical handheld console featuring a laminated 3.5-inch IPS glass display, machined metal D-pad, and dual USB-C ports.",
       "highlights": [
