@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ReWind Hardware Co. — Precision CNC Machined Desktop Peripherals &amp; Cases</title>
+  <meta name="description" content="Small-batch 6061-T6 aerospace aluminum and solid C36000 brass desktop peripherals, ultralight gaming mice, mechanical keyboards, CNC watch armor, and studio hardware. Free tracked US shipping." />
+  <link rel="icon" type="image/jpeg" href="images/products/rewind_avatar_icon.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="announcement-bar">
+    <span class="dot"></span>
+    <strong>IN STOCK &amp; READY TO SHIP:</strong> Free Tracked USPS / UPS / FedEx Shipping on All US Orders (Dispatches in 24–48h from Los Angeles, CA)
+  </div>
+
+  <!-- Sticky Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="" class="brand-link">
+        <img src="images/products/rewind_avatar_icon.jpg" alt="ReWind Logo" class="brand-icon" />
+        <div class="brand-text">
+          <span class="brand-name">ReWind Hardware Co.</span>
+          <span class="brand-sub">5-Axis CNC • Los Angeles</span>
+        </div>
+      </a>
+
+      <nav class="main-nav">
+        <a href="#catalog">Hardware Catalog</a>
+        <a href="#engineering">CNC Engineering</a>
+        <a onclick="openPolicyModal('shipping')">Shipping &amp; Delivery</a>
+        <a onclick="openPolicyModal('returns')">30-Day Returns</a>
+        <a onclick="openPolicyModal('contact')">Contact Studio</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="btn-track" onclick="openTrackModal()">Track Order</button>
+        <button class="btn-cart" onclick="openCheckoutModal()">
+          <span>Cart / Checkout</span>
+          <span id="cart-count" class="cart-count">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Banner -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-eyebrow">
+          <span>BATCH 04 // 6061-T6 ALUMINUM &amp; C36000 SOLID BRASS</span>
+        </div>
+        <h1>Monolithic CNC Hardware. Engineered to Endure.</h1>
+        <p>
+          We machine desktop peripherals, ultralight wireless mice, split-angle mechanical keyboards, and protective watch exoskeletons from solid blocks of aerospace-grade metal. Every piece ships direct from our Los Angeles facility with complimentary tracked delivery.
+        </p>
+        <div class="hero-cta-row">
+          <a href="#catalog" class="btn-primary-light">Explore All 10 Hardware Releases ↓</a>
+          <button class="btn-secondary-dark" onclick="openPolicyModal('shipping')">2–4 Day Tracked US Shipping</button>
+        </div>
+      </div>
+
+      <div class="hero-showcase-card">
+        <div class="hero-mini-card" onclick="openProductModal(4)">
+          <img src="images/products/rewind_mouse_silver_cover.jpg" alt="ReWind Aerograde 50g Mouse" />
+          <div class="hero-mini-meta">
+            <span>Aerograde 50g Mouse</span>
+            <span class="hero-mini-price">$50</span>
+          </div>
+        </div>
+        <div class="hero-mini-card" onclick="openProductModal(9)">
+          <img src="images/products/rewind_keyboard_cover.jpg" alt="ReWind Aero Ergonomic Keyboard" />
+          <div class="hero-mini-meta">
+            <span>Aero CNC Keyboard</span>
+            <span class="hero-mini-price">$120</span>
+          </div>
+        </div>
+        <div class="hero-mini-card" onclick="openProductModal(6)">
+          <img src="images/products/rewind_luminabar_cover.png" alt="ReWind Luminabar Pro" />
+          <div class="hero-mini-meta">
+            <span>Luminabar Light Bar</span>
+            <span class="hero-mini-price">$70</span>
+          </div>
+        </div>
+        <div class="hero-mini-card" onclick="openProductModal(10)">
+          <img src="images/products/rewind_pocket_silver_cover.jpg" alt="ReWind CNC Pocket" />
+          <div class="hero-mini-meta">
+            <span>CNC Pocket Handheld</span>
+            <span class="hero-mini-price">$150</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust & Fulfillment Guarantee Strip -->
+  <section class="trust-bar">
+    <div class="trust-grid">
+      <div class="trust-item">
+        <div class="trust-icon">⚙️</div>
+        <div>
+          <strong>5-Axis CNC Billet Milled</strong>
+          <span>6061-T6 Aluminum &amp; C36000 Brass</span>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">📦</div>
+        <div>
+          <strong>24–48h Los Angeles Dispatch</strong>
+          <span>Free USPS / UPS / FedEx Tracking</span>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">🛡️</div>
+        <div>
+          <strong>30-Day Studio Trial</strong>
+          <span>Prepaid hassle-free US returns</span>
+        </div>
+      </div>
+      <div class="trust-item">
+        <div class="trust-icon">🔒</div>
+        <div>
+          <strong>1-Year Structural Warranty</strong>
+          <span>Full replacement hardware guarantee</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Catalog -->
+  <main id="catalog" class="catalog-section">
+    <div class="section-header">
+      <div>
+        <h2>Current Production Catalog</h2>
+        <p>All 10 hardware items are in stock in our Los Angeles warehouse and ship with live carrier tracking within 1–2 business days.</p>
+      </div>
+    </div>
+
+    <div id="filter-bar" class="filter-bar"></div>
+    <div id="product-grid" class="product-grid"></div>
+  </main>
+
+  <!-- CNC Engineering Story -->
+  <section id="engineering" class="engineering-section">
+    <div class="engineering-inner">
+      <div class="eng-card">
+        <div class="eng-num">01 // MONOBLOCK METALLURGY</div>
+        <h3>Milled from Solid Billet, Never Cast</h3>
+        <p>
+          Every ReWind enclosure starts as a solid extruded bar of 6061-T6 aircraft aluminum or C36000 architectural brass. Multi-axis CNC milling achieves sub-0.05mm tolerances, sharp diamond-chamfered edges, and structural rigidity that injection-molded plastic cannot replicate.
+        </p>
+      </div>
+      <div class="eng-card">
+        <div class="eng-num">02 // OPEN FIRMWARE &amp; REPAIRABILITY</div>
+        <h3>Built to Be Owned, Not Replaced</h3>
+        <p>
+          Our input devices feature 5-pin hot-swappable mechanical switch sockets, QMK/VIA browser keymapping, standard stainless Torx fasteners, and replaceable PTFE skates—allowing effortless maintenance and customization for decades of daily studio use.
+        </p>
+      </div>
+      <div class="eng-card">
+        <div class="eng-num">03 // DIRECT LOS ANGELES FULFILLMENT</div>
+        <h3>Tracked Domestic Parcel Delivery</h3>
+        <p>
+          We stock every SKU in-house at our Los Angeles studio warehouse. Orders are hand-inspected, packed in custom high-density foam mailers, and dispatched via USPS Ground Advantage, UPS Ground, or FedEx Home Delivery within 24–48 hours.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Universal Product / Checkout / Policy Modal -->
+  <div id="universal-modal" class="modal-backdrop" onclick="if(event.target === this) closeModal()">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeModal()" aria-label="Close">✕</button>
+      <div id="universal-modal-content"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <img src="images/products/rewind_avatar_icon.jpg" alt="ReWind" style="width:32px; height:32px; border-radius:6px;" />
+          <strong style="color:#ffffff; font-size:16px; letter-spacing:0.05em;">REWIND HARDWARE CO.</strong>
+        </div>
+        <p style="font-size:13px; color:#94a3b8; line-height:1.6; margin-bottom:14px;">
+          Precision 5-axis CNC machined desktop peripherals, ultralight mice, split-angle mechanical keyboards, and protective watch armor designed and fulfilled from Los Angeles, California.
+        </p>
+        <div style="font-size:12.5px; color:#cbd5e1; font-family:var(--font-mono);">
+          420 Studio Arts Way, Suite 210<br>
+          Los Angeles, CA 90013, USA<br>
+          Tel: +1 (213) 555-0194
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Hardware Categories</h4>
+        <ul>
+          <li><a href="#catalog" onclick="setCategory('Precision Mice')">Aerograde 50g Wireless Mouse</a></li>
+          <li><a href="#catalog" onclick="setCategory('Mechanical Input')">CNC Mechanical Keyboards &amp; Pads</a></li>
+          <li><a href="#catalog" onclick="setCategory('CNC Watch Armor')">CNC Aluminum &amp; Brass Watch Cases</a></li>
+          <li><a href="#catalog" onclick="setCategory('Studio Lighting')">Luminabar Pro Monitor Light</a></li>
+          <li><a href="#catalog" onclick="setCategory('Desk Architecture')">Monolith Stands &amp; Desk Docks</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Policies &amp; Legal</h4>
+        <ul>
+          <li><a onclick="openPolicyModal('terms')">Terms of Service</a></li>
+          <li><a onclick="openPolicyModal('returns')">30-Day Return &amp; Refund Policy</a></li>
+          <li><a onclick="openPolicyModal('shipping')">Shipping &amp; Delivery Policy</a></li>
+          <li><a onclick="openPolicyModal('privacy')">Privacy Policy</a></li>
+          <li><a onclick="openPolicyModal('contact')">Contact &amp; Legal Imprint</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Customer Support &amp; Orders</h4>
+        <ul>
+          <li><a onclick="openTrackModal()">Track Your Order Status</a></li>
+          <li><a href="mailto:support@rewindhardware.co">support@rewindhardware.co</a></li>
+          <li><a href="mailto:cjha882026@outlook.com">cjha882026@outlook.com</a></li>
+          <li style="color:#64748b; font-size:12.5px; margin-top:6px;">
+            Support Hours: Mon–Fri, 9:00 AM – 5:00 PM PT<br>
+            All US orders include Free Tracked Shipping &amp; 1-Year Hardware Warranty.
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2026 ReWind Hardware Co. All rights reserved. Precision CNC Hardware • Los Angeles, CA.</div>
+      <div>PCI-DSS Level 1 Encrypted Checkout • Visa • Mastercard • Amex • Discover • Apple Pay</div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "build": "echo 'Static assets ready in public/'"
+    "build": "rm -rf build && cp -r public build && echo 'Copied public/ to build/'"
   },
   "engines": {
     "node": ">=18.0.0"
