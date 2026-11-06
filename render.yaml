@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: rewind-hardware
+    runtime: static
+    buildCommand: npm run build
+    staticPublishPath: ./public
+    routes:
+      - type: rewrite
+        source: /terms
+        destination: /index.html
+      - type: rewrite
+        source: /returns
+        destination: /index.html
+      - type: rewrite
+        source: /privacy
+        destination: /index.html
+      - type: rewrite
+        source: /shipping
+        destination: /index.html
+      - type: rewrite
+        source: /contact
+        destination: /index.html
+      - type: rewrite
+        source: /track
+        destination: /index.html

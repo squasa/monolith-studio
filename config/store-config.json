@@ -1,0 +1,391 @@
+{
+  "brand": {
+    "name": "ReWind Hardware Co.",
+    "shortName": "ReWind",
+    "legalEntity": "ReWind Hardware Co.",
+    "tagline": "Precision CNC-Machined Desktop Peripherals, Cases & Studio Hardware",
+    "heroTitle": "Monolithic CNC Hardware. Engineered to Endure.",
+    "heroSubtitle": "Small-batch 6061-T6 aerospace aluminum, solid C36000 architectural brass, and ultralight desktop peripherals milled in Los Angeles. Free tracked US shipping on every order.",
+    "supportEmail": "support@rewindhardware.co",
+    "secondaryEmail": "cjha882026@outlook.com",
+    "phone": "+1 (213) 555-0194",
+    "address": "420 Studio Arts Way, Suite 210, Los Angeles, CA 90013, United States",
+    "hours": "Monday – Friday, 9:00 AM – 5:00 PM PT",
+    "shippingPromise": "Free Tracked USPS / UPS / FedEx Ground Shipping (2–4 Business Days) — Dispatches within 24–48 Hours from Los Angeles, CA",
+    "warrantyPromise": "30-Day Studio Trial Guarantee & 1-Year Structural CNC Hardware Warranty",
+    "logoImage": "/images/products/rewind_hardware_logo.jpg",
+    "iconImage": "/images/products/rewind_avatar_icon.jpg"
+  },
+  "waveCheckoutLinks": {
+    "_comment": "Paste your Wave Checkout URLs (e.g. https://link.waveapps.com/xxxxxx) for each price tier or SKU below. When populated, customer checkout automatically redirects to Wave with their shipping address and contact details pre-filled.",
+    "byPriceTier": {
+      "20": "",
+      "30": "",
+      "40": "",
+      "50": "",
+      "60": "",
+      "70": "",
+      "80": "",
+      "90": "",
+      "120": "",
+      "150": ""
+    },
+    "bySku": {
+      "RW-PND-020": "",
+      "RW-GMP-030": "",
+      "RW-AWC-040": "",
+      "RW-AGM-050": "",
+      "RW-BRC-060": "",
+      "RW-LMB-070": "",
+      "RW-MCP-080": "",
+      "RW-MLS-090": "",
+      "RW-AKB-120": "",
+      "RW-PKT-150": ""
+    }
+  },
+  "checkoutFields": [
+    { "name": "Address Line 1 (Street Address)", "key": "address", "type": "text", "required": true, "placeholder": "e.g. 2716 Hilltop Haven Dr" },
+    { "name": "Address Line 2 (Apt, Suite, Unit - Optional)", "key": "address2", "type": "text", "required": false, "placeholder": "Apt 4B, Suite 200 (Optional)" },
+    { "name": "City", "key": "city", "type": "text", "required": true, "placeholder": "Los Angeles" },
+    { "name": "State / Province", "key": "region", "type": "text", "required": true, "placeholder": "CA" },
+    { "name": "ZIP / Postal Code", "key": "postal", "type": "text", "required": true, "placeholder": "90001" },
+    { "name": "Phone Number (For delivery tracking updates)", "key": "phone", "type": "tel", "required": true, "placeholder": "(213) 555-0199" }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "sku": "RW-PND-020",
+      "title": "ReWind™ CNC Aluminum Weighted Pen & Stylus Desk Dock",
+      "category": "Desk Architecture",
+      "badge": "CNC 6061-T6",
+      "price": 20.00,
+      "weightGrams": 180,
+      "weightLbs": 0.40,
+      "inStock": true,
+      "leadTime": "Ships in 24–48 hours",
+      "image": "/images/products/item1_pen_dock.jpg",
+      "gallery": ["/images/products/item1_pen_dock.jpg"],
+      "summary": "Solid 6061-T6 aircraft-grade brushed aluminum pen block with a precision-milled horizontal cradle, vertical quick-dock well, and micro-suction silicone base.",
+      "highlights": [
+        "Dual-Orientation Resting Design: Display your drafting pen, fountain pen, or stylus horizontally along the milled top flute or upright in the 14.5mm vertical bore.",
+        "Monoblock 6061-T6 Billet Construction: CNC-turned and hand-brushed to a raw satin metallic sheen that resists fingerprints.",
+        "Diamond-Chamfered Rim: Smooth 45-degree entry bevel protects delicate metal, resin, and anodized pen barrels from scratching.",
+        "High-Grip Silicone Base: Full-coverage bottom elastomer pad anchors firmly to wood, glass, leather, or stone desk surfaces."
+      ],
+      "specs": {
+        "Material": "CNC-Machined 6061-T6 Aerospace Aluminum (Brushed Silver)",
+        "Vertical Bore Diameter": "14.5mm with 45° diamond-turned entry chamfer",
+        "Dimensions": "75mm × 42mm × 32mm",
+        "Weight": "180g (0.40 lbs)"
+      },
+      "boxContents": [
+        "1× ReWind™ CNC Aluminum Weighted Pen & Stylus Desk Dock",
+        "1× Spare Micro-Suction Silicone Foot Pad",
+        "1× ReWind Hardware Co. Specification Card"
+      ]
+    },
+    {
+      "id": 2,
+      "sku": "RW-GMP-030",
+      "title": "ReWind™ GlideMat Pro — Micro-Weave Precision Desk Pad (900×400mm)",
+      "category": "Desk Surfaces",
+      "badge": "Zero-Friction Weave",
+      "price": 30.00,
+      "weightGrams": 380,
+      "weightLbs": 0.84,
+      "inStock": true,
+      "leadTime": "Ships in 24–48 hours",
+      "image": "/images/products/item2_glidemat.jpg",
+      "gallery": ["/images/products/item2_glidemat.jpg"],
+      "summary": "Large-format 900×400×4mm studio and gaming desk mat engineered with high-density micro-textured jacquard cloth, sub-surface flat-lock stitching, and a 4mm natural rubber base.",
+      "highlights": [
+        "Calibrated X/Y Optical Tracking: High-density micro-weave surface delivers effortless glide for PTFE and glass mouse skates with pinpoint stopping power.",
+        "Recessed Sub-Surface Edge Stitching: Ultra-narrow flat-lock perimeter stitch sits below the pad surface to eliminate wrist irritation.",
+        "Spill-Repellent Nano Coating: Liquids bead up on contact and wipe clean without staining or altering surface glide.",
+        "4mm Dense Natural Rubber Core: Eliminates desk surface imperfections and dampens mechanical keyboard acoustics."
+      ],
+      "specs": {
+        "Dimensions": "900mm × 400mm × 4.0mm (35.4\" × 15.7\")",
+        "Surface Material": "High-Density Micro-Weave Jacquard Fabric (Obsidian Slate)",
+        "Base Material": "4mm Non-Slip Natural Textured Rubber",
+        "Weight": "380g (0.84 lbs)"
+      },
+      "boxContents": [
+        "1× ReWind™ GlideMat Pro 900×400mm Precision Desk Pad",
+        "1× Rigid Cylinder Presentation & Storage Tube"
+      ]
+    },
+    {
+      "id": 3,
+      "sku": "RW-AWC-040",
+      "title": "ReWind™ CNC Metal Case for Apple Watch Series 10 & 12 (45mm)",
+      "category": "CNC Watch Armor",
+      "badge": "5-Axis Milled",
+      "price": 40.00,
+      "weightGrams": 150,
+      "weightLbs": 0.33,
+      "inStock": true,
+      "leadTime": "Ships in 24–48 hours",
+      "image": "/images/products/item3_watch_aluminum.jpg",
+      "gallery": ["/images/products/item3_watch_aluminum.jpg"],
+      "summary": "5-axis CNC-machined 6061 aerospace aluminum protective exoskeleton and vulcanized FKM fluoroelastomer strap system for Apple Watch 45mm.",
+      "highlights": [
+        "5-Axis CNC Aerospace Aluminum Bezel: Hand-brushed silver alloy frame wraps your Apple Watch in an industrial, architectural chassis.",
+        "316L Stainless Hex Hardware: Secured via 4 precision flush-mounted Torx/hex bezel bolts with an internal shock-absorbing silicone gasket.",
+        "Tactile Crown & Side-Button Pass-Through: Machined metal button actuator and open crown guard preserve smooth rotational feedback.",
+        "Vulcanized FKM Fluoroelastomer Strap: Dust-resistant, sweat-proof high-density FKM rubber strap with a brushed metal tang buckle."
+      ],
+      "specs": {
+        "Compatibility": "Apple Watch 45mm / 46mm (Series 10, 11, 12 & 9/8/7)",
+        "Case Material": "5-Axis CNC-Milled 6061-T6 Brushed Aluminum + 316L Stainless Bolts",
+        "Strap Material": "Vulcanized FKM Fluoroelastomer Rubber (Matte Obsidian)",
+        "Package Weight": "150g (0.33 lbs)"
+      },
+      "boxContents": [
+        "1× ReWind™ CNC Brushed Aluminum Watch Case & Integrated FKM Strap",
+        "1× Internal Shock-Dampening Silicone Liner",
+        "1× Precision Assembly Driver + 4× Spare Stainless Bezel Screws"
+      ]
+    },
+    {
+      "id": 4,
+      "sku": "RW-AGM-050",
+      "title": "ReWind™ Aerograde 50g — Ultralight Brushed Silver Wireless Gaming Mouse",
+      "category": "Precision Mice",
+      "badge": "Best Seller • 50g",
+      "price": 50.00,
+      "weightGrams": 230,
+      "weightLbs": 0.51,
+      "inStock": true,
+      "leadTime": "Ships in 24–48 hours",
+      "image": "/images/products/rewind_mouse_silver_cover.jpg",
+      "gallery": [
+        "/images/products/rewind_mouse_silver_cover.jpg",
+        "/images/products/rewind_mouse_silver_lineup.jpg"
+      ],
+      "summary": "Featherweight 50-gram symmetrical wireless mouse featuring a brushed metallic silver shell, knurled aluminum scroll wheel, 26,000 DPI optical sensor, and tri-mode connectivity.",
+      "highlights": [
+        "Featherweight 50g Structural Balance: Zero-perforation solid shell engineered with thin-wall internal ribbing for effortless flick control and zero creak.",
+        "CNC Knurled Aluminum Scroll Wheel: Precision diamond-knurled metal scroll wheel with defined tactile detents.",
+        "Flagship 26,000 DPI Optical Sensor: 650 IPS tracking speed and 50G acceleration with 1ms lag-free 2.4GHz wireless, Bluetooth 5.3, and paracord USB-C wired modes.",
+        "Crisp Optical Microswitches: Rated for 80 million actuations with zero double-click degradation and virgin-grade 100% PTFE rounded skates."
+      ],
+      "specs": {
+        "Net Mouse Weight": "50g ± 2g (230g boxed parcel weight)",
+        "Sensor": "PAW3395 Flagship Optical (Up to 26,000 DPI, 650 IPS)",
+        "Connectivity": "2.4GHz Low-Latency Wireless / Bluetooth 5.3 / Paracord USB-C",
+        "Battery Life": "Up to 75 Hours Continuous @ 1000Hz Polling",
+        "Dimensions": "121mm × 62mm × 38mm (Symmetrical Medium)"
+      },
+      "boxContents": [
+        "1× ReWind™ Aerograde 50g Brushed Silver Wireless Mouse",
+        "1× 2.4GHz Low-Latency USB-C Receiver & Desk Extender Adapter",
+        "1× 1.8m Ultra-Flexible Braided Paracord Charging/Data Cable",
+        "1× Spare Set of 100% Virgin PTFE Glide Skates"
+      ]
+    },
+    {
+      "id": 5,
+      "sku": "RW-BRC-060",
+      "title": "ReWind™ Solid Brass CNC Case for Apple Watch Ultra (49mm)",
+      "category": "CNC Watch Armor",
+      "badge": "Solid C36000 Brass",
+      "price": 60.00,
+      "weightGrams": 240,
+      "weightLbs": 0.53,
+      "inStock": true,
+      "leadTime": "Ships in 24–48 hours",
+      "image": "/images/products/item5_watch_brass.jpg",
+      "gallery": ["/images/products/item5_watch_brass.jpg"],
+      "summary": "Heavy-duty CNC-milled C36000 solid architectural brass protective armor case and FKM rubber strap built specifically for the 49mm Apple Watch Ultra & Ultra 2.",
+      "highlights": [
+        "Solid C36000 Architectural Brass Chassis: Milled from solid billet brass with a satin brushed finish that develops a unique bespoke patina over time.",
+        "Reinforced Crown & Action-Button Guard: Precision-shrouded side geometry protects the 49mm titanium housing against high-impact knocks.",
+        "Drop-In Snap & Bolt Locking Backplate: Secure 4-screw rear compression lock allows full heart-rate sensor contact and magnetic wireless charging.",
+        "Heavy-Duty FKM Tactical Strap: Paired with a 24mm vented fluoroelastomer strap and matching brushed brass pin buckle."
+      ],
+      "specs": {
+        "Compatibility": "Apple Watch Ultra & Ultra 2 (49mm)",
+        "Case Material": "CNC-Machined Solid C36000 Brushed Brass",
+        "Strap": "Vented FKM Fluoroelastomer with Brass Buckle (Fits 150–215mm wrists)",
+        "Package Weight": "240g (0.53 lbs)"
+      },
+      "boxContents": [
+        "1× ReWind™ Solid Brass CNC Case for Apple Watch Ultra (49mm)",
+        "1× Integrated Vented FKM Rubber Strap with Brass Hardware",
+        "2× Internal Silicone Shock Buffers",
+        "1× Precision Hex Screwdriver & Spare Fastener Kit"
+      ]
+    },
+    {
+      "id": 6,
+      "sku": "RW-LMB-070",
+      "title": "ReWind™ Luminabar Pro — Asymmetric CNC Aluminum Monitor Light Bar",
+      "category": "Studio Lighting",
+      "badge": "CRI 97+ + Wireless Puck",
+      "price": 70.00,
+      "weightGrams": 420,
+      "weightLbs": 0.93,
+      "inStock": true,
+      "leadTime": "Ships in 24–48 hours",
+      "image": "/images/products/rewind_luminabar_cover.png",
+      "gallery": ["/images/products/rewind_luminabar_cover.png"],
+      "summary": "Anodized aluminum over-monitor task lamp with zero-glare asymmetric optical projection, Ra97+ color accuracy, stepless 2700K–6500K color temperature, and a rotary wireless desk puck.",
+      "highlights": [
+        "Zero-Glare Asymmetric Optical Lens: Precision 45-degree directional light beam illuminates your desk and keyboard with zero reflection on flat or curved monitors.",
+        "Wireless Rotary Desktop Control Puck: Adjust brightness and warm-to-cool color temperature (2700K–6500K) effortlessly with a heavy anodized aluminum desktop dial.",
+        "Studio-Grade Ra97+ Full-Spectrum LEDs: True-to-life color rendering reduces eye fatigue during late-night CAD, coding, and editing sessions.",
+        "Weighted Gravity Counterbalance Clamp: Fits flat and curved displays from 5mm to 45mm thick in one second without springs or clamping pressure."
+      ],
+      "specs": {
+        "Light Bar Body": "Anodized Matte Obsidian Extruded 6063 Aluminum (450mm length)",
+        "Color Rendering Index": "CRI Ra97+ (80 Full-Spectrum Dual-Tone LEDs)",
+        "Color Temperature": "2700K Warm Studio to 6500K Daylight (Stepless)",
+        "Power Input": "USB-C 5V/1A (2.4GHz Wireless Rotary Puck Included)",
+        "Package Weight": "420g (0.93 lbs)"
+      },
+      "boxContents": [
+        "1× ReWind™ Luminabar Pro 450mm CNC Aluminum Monitor Light Bar",
+        "1× Wireless Rotary Desktop Control Puck (Batteries Pre-Installed)",
+        "1× Counterweighted Gravity Monitor Mount",
+        "1× 1.8m Braided USB-C Power Cable"
+      ]
+    },
+    {
+      "id": 7,
+      "sku": "RW-MCP-080",
+      "title": "ReWind™ MacroPad 8 — CNC Aluminum Hot-Swappable Rotary Encoder Pad",
+      "category": "Mechanical Input",
+      "badge": "QMK / VIA Programmable",
+      "price": 80.00,
+      "weightGrams": 350,
+      "weightLbs": 0.77,
+      "inStock": true,
+      "leadTime": "Ships in 24–48 hours",
+      "image": "/images/products/item7_macropad.jpg",
+      "gallery": ["/images/products/item7_macropad.jpg"],
+      "summary": "Heavy CNC-milled 6061 aluminum 8-key mechanical macro pad with a solid knurled metal rotary encoder knob, hot-swappable linear switches, and QMK/VIA custom layer support.",
+      "highlights": [
+        "Solid CNC-Milled Aluminum Chassis: Weighs 310g unboxed so it sits planted like an anvil beside your keyboard or drawing tablet.",
+        "Knurled Aluminum Rotary Encoder: Program the clickable rotary dial for timeline scrubbing, brush sizing, zoom control, or master volume.",
+        "5-Pin Hot-Swappable PCB: Pre-installed with factory-lubed linear mechanical switches and double-shot matte black PBT keycaps.",
+        "Instant VIA Browser Remapping: Customize macros, shortcuts, and 4 switchable layers directly in your browser with zero background bloatware."
+      ],
+      "specs": {
+        "Case Material": "CNC-Machined 6061-T6 Brushed Silver Anodized Aluminum",
+        "Layout": "8 Mechanical Keys + 1 Clickable Knurled Aluminum Rotary Encoder",
+        "Switches": "Pre-lubed Linear 45g Switches (5-Pin Hot-Swappable Sockets)",
+        "Firmware": "Open-Source QMK / VIA Compatible (Detachable USB-C)",
+        "Package Weight": "350g (0.77 lbs)"
+      },
+      "boxContents": [
+        "1× ReWind™ MacroPad 8 CNC Aluminum Mechanical Pad",
+        "1× Knurled Brushed Aluminum Rotary Knob (Installed)",
+        "1× Braided USB-C to USB-A/C Data Cable",
+        "1× Combination Keycap & Switch Puller Tool"
+      ]
+    },
+    {
+      "id": 8,
+      "sku": "RW-MLS-090",
+      "title": "ReWind™ Monolith Vertical Laptop & Tablet CNC Aluminum Studio Stand",
+      "category": "Desk Architecture",
+      "badge": "Dual-Slot Billet",
+      "price": 90.00,
+      "weightGrams": 480,
+      "weightLbs": 1.06,
+      "inStock": true,
+      "leadTime": "Ships in 24–48 hours",
+      "image": "/images/products/item8_laptop_stand.jpg",
+      "gallery": ["/images/products/item8_laptop_stand.jpg"],
+      "summary": "Heavyweight bead-blasted anodized aluminum dual-bay vertical laptop dock with tool-free knurled thumbscrew width adjustment and scratch-free silicone channel liners.",
+      "highlights": [
+        "Reclaim Your Primary Desk Footprint: Dock up to two laptops, tablets, or sketchbooks vertically in Clamshell workstation mode.",
+        "Tool-Free Knurled Brass/Steel Thumbscrews: Easily adjust slot widths from 12mm to 32mm to fit MacBook Air/Pro, workstation laptops, and iPads.",
+        "Full-Channel Soft Silicone Cradle: Interior contact walls are lined with 2.5mm vulcanized silicone to prevent metal-on-metal contact.",
+        "Passive Thermal Convection Base: Elevated bottom airflow channel keeps docked laptops cool under heavy external monitor workloads."
+      ],
+      "specs": {
+        "Material": "Solid CNC-Machined Anodized Aluminum + Silicone Channel Liners",
+        "Adjustable Slot Width": "Dual Bays — Adjustable from 12mm to 32mm each",
+        "Dimensions": "180mm × 115mm × 58mm",
+        "Package Weight": "480g (1.06 lbs)"
+      },
+      "boxContents": [
+        "1× ReWind™ Monolith Dual-Slot Vertical CNC Aluminum Laptop Stand",
+        "1× Quick-Adjust Calibration Card"
+      ]
+    },
+    {
+      "id": 9,
+      "sku": "RW-AKB-120",
+      "title": "ReWind™ Aero Ergonomic — Split-Angle CNC Aluminum Mechanical Keyboard",
+      "category": "Mechanical Input",
+      "badge": "Gasket-Mount CNC",
+      "price": 120.00,
+      "weightGrams": 620,
+      "weightLbs": 1.37,
+      "inStock": true,
+      "leadTime": "Ships in 24–48 hours",
+      "image": "/images/products/rewind_keyboard_cover.jpg",
+      "gallery": ["/images/products/rewind_keyboard_cover.jpg"],
+      "summary": "Compact unibody split-angle ergonomic mechanical keyboard housed in a matte obsidian CNC aluminum frame with gasket-mounted acoustics, hot-swappable switches, and PBT keycaps.",
+      "highlights": [
+        "Natural 12° Angled Columnar Split: Aligns wrists and forearms at a relaxed anatomical typing angle to eliminate ulnar deviation during all-day sessions.",
+        "CNC-Machined Matte Obsidian Aluminum Case: Low-front-height 18mm chassis milled with a clean unibody silhouette and detachable braided USB-C cable.",
+        "Poron Gasket Mount & Acoustic Foam Suite: Three layers of internal sound-dampening foam deliver a deep, muted 'thock' acoustic profile.",
+        "Full Hot-Swap & VIA Programmability: Swap any 3-pin or 5-pin mechanical switch in seconds and customize thumb-cluster layers via VIA."
+      ],
+      "specs": {
+        "Chassis": "CNC-Machined 6063 Anodized Aluminum (Matte Obsidian)",
+        "Mounting Style": "Poron Gasket Mount with Polycarbonate Flex Plate",
+        "Keycaps": "Double-Shot Matte Black PBT with High-Contrast White Legends",
+        "Connectivity": "Detachable Braided USB-C (1000Hz Polling, NKRO)",
+        "Package Weight": "620g (1.37 lbs)"
+      },
+      "boxContents": [
+        "1× ReWind™ Aero Ergonomic CNC Aluminum Mechanical Keyboard",
+        "1× 1.8m Braided USB-C Coiled/Straight Studio Cable",
+        "4× Extra Tactile & Linear Test Switches + Keycap/Switch Puller",
+        "1× Custom Molded Dust Cover & Keymap Reference Guide"
+      ]
+    },
+    {
+      "id": 10,
+      "sku": "RW-PKT-150",
+      "title": "ReWind™ CNC Pocket — Solid Aluminum Retro Gaming Handheld (Monolithic Silver)",
+      "category": "Flagship Hardware",
+      "badge": "Flagship • Monoblock CNC",
+      "price": 150.00,
+      "weightGrams": 450,
+      "weightLbs": 0.99,
+      "inStock": true,
+      "leadTime": "Ships in 24–48 hours",
+      "image": "/images/products/rewind_pocket_silver_cover.jpg",
+      "gallery": [
+        "/images/products/rewind_pocket_silver_cover.jpg",
+        "/images/products/rewind_pocket_silver_lineup.jpg"
+      ],
+      "summary": "Precision 5-axis CNC-machined 6061-T6 monolithic silver aluminum vertical handheld console featuring a laminated 3.5-inch IPS glass display, machined metal D-pad, and dual USB-C ports.",
+      "highlights": [
+        "Monoblock 6061-T6 Aluminum Shell: Every enclosure is 5-axis CNC-milled, bead-blasted, and clear-anodized for a cold-to-the-touch industrial feel.",
+        "Edge-to-Edge Laminated 3.5\" IPS Display: Crisp 640×480 4:3 pixel-integer scaling bonded under Gorilla Glass with zero air gap.",
+        "Machined Metal D-Pad & Rear Shoulder Triggers: Custom flared L1/L2 and R1/R2 rear trigger ledge designed for comfortable two-handed grip.",
+        "All-Day 3500mAh Li-Po Battery & Open Linux OS: Supports open-source retro homebrew, microSD expansion up to 512GB, and 3.5mm lossless audio out."
+      ],
+      "specs": {
+        "Enclosure": "5-Axis CNC-Milled 6061-T6 Bead-Blasted Silver Aluminum",
+        "Display": "3.5-Inch OCA Laminated IPS (640×480, 4:3 Aspect Ratio, 400 Nits)",
+        "Controls": "CNC Aluminum D-Pad, ABXY Buttons + Flared Rear L1/L2/R1/R2 Triggers",
+        "I/O Ports": "USB-C Fast Charge, USB-C OTG, MicroSD Slot (64GB Card Included), 3.5mm Jack",
+        "Package Weight": "450g (0.99 lbs)"
+      },
+      "boxContents": [
+        "1× ReWind™ CNC Pocket Solid Aluminum Handheld (Monolithic Silver)",
+        "1× 64GB High-Speed MicroSD Card (Open-Source OS Pre-Installed)",
+        "1× Tempered 9H Glass Screen Protector",
+        "1× Braided USB-C Charging Cable & Hard EVA Travel Case"
+      ]
+    }
+  ]
+}
