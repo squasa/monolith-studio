@@ -46,7 +46,7 @@ app.post('/api/orders', (req, res) => {
 });
 
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', store: 'ReWind Hardware Co.' });
+  res.json({ status: 'ok', store: 'Monolith Studio Co.' });
 });
 
 // Clean SPA policy & tracking routes
@@ -58,5 +58,5 @@ for (const route of spaRoutes) {
 }
 
 app.listen(PORT, () => {
-  console.log(`[ReWind Hardware Co.] Storefront live at http://localhost:${PORT}`);
+  console.log(`[Monolith Studio Co.] Storefront live at http://localhost:${PORT}`);
 });

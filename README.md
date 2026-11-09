@@ -1,21 +1,21 @@
-# ReWind Hardware Co. (`rewind-hardware`)
+# Monolith Studio Co. (`monolith-studio`)
 
-Official storefront for **ReWind Hardware Co.** — Precision 5-Axis CNC-Machined Desktop Peripherals, Ultralight Wireless Mice, Split-Angle Mechanical Keyboards, and CNC Watch Armor.
+Official storefront for **Monolith Studio Co.** — Precision 5-Axis CNC-Machined Desktop Peripherals, Ultralight Wireless Mice, Split-Angle Mechanical Keyboards, and CNC Watch Armor.
 
 ## Product Lineup ($20 – $150 Tiers)
 
 | Tier | SKU | Product | Parcel Weight |
 | :--- | :--- | :--- | :--- |
-| **$20.00** | `RW-PND-020` | ReWind™ CNC Aluminum Weighted Pen & Stylus Desk Dock | `180g (0.40 lbs)` |
-| **$30.00** | `RW-GMP-030` | ReWind™ GlideMat Pro — Micro-Weave Precision Desk Pad (900×400mm) | `380g (0.84 lbs)` |
-| **$40.00** | `RW-AWC-040` | ReWind™ CNC Metal Case for Apple Watch Series 10 & 12 (45mm) | `150g (0.33 lbs)` |
-| **$50.00** | `RW-AGM-050` | ReWind™ Aerograde 50g — Ultralight Brushed Silver Wireless Gaming Mouse | `230g (0.51 lbs)` |
-| **$60.00** | `RW-BRC-060` | ReWind™ Solid Brass CNC Case for Apple Watch Ultra (49mm) | `240g (0.53 lbs)` |
-| **$70.00** | `RW-LMB-070` | ReWind™ Luminabar Pro — Asymmetric CNC Aluminum Monitor Light Bar | `420g (0.93 lbs)` |
-| **$80.00** | `RW-MCP-080` | ReWind™ MacroPad 8 — CNC Aluminum Hot-Swappable Rotary Encoder Pad | `350g (0.77 lbs)` |
-| **$90.00** | `RW-MLS-090` | ReWind™ Monolith Vertical Laptop & Tablet CNC Aluminum Studio Stand | `480g (1.06 lbs)` |
-| **$120.00** | `RW-AKB-120` | ReWind™ Aero Ergonomic — Split-Angle CNC Aluminum Mechanical Keyboard | `620g (1.37 lbs)` |
-| **$150.00** | `RW-PKT-150` | ReWind™ CNC Pocket — Solid Aluminum Retro Gaming Handheld | `450g (0.99 lbs)` |
+| **$20.00** | `ML-PND-020` | Monolith™ CNC Aluminum Weighted Pen & Stylus Desk Dock | `180g (0.40 lbs)` |
+| **$30.00** | `ML-GMP-030` | Monolith™ GlideMat Pro — Micro-Weave Precision Desk Pad (900×400mm) | `380g (0.84 lbs)` |
+| **$40.00** | `ML-AWC-040` | Monolith™ CNC Metal Case for Apple Watch Series 10 & 12 (45mm) | `150g (0.33 lbs)` |
+| **$50.00** | `ML-AGM-050` | Monolith™ Aerograde 50g — Ultralight Brushed Silver Wireless Gaming Mouse | `230g (0.51 lbs)` |
+| **$60.00** | `ML-BRC-060` | Monolith™ Solid Brass CNC Case for Apple Watch Ultra (49mm) | `240g (0.53 lbs)` |
+| **$70.00** | `ML-LMB-070` | Monolith™ Luminabar Pro — Asymmetric CNC Aluminum Monitor Light Bar | `420g (0.93 lbs)` |
+| **$80.00** | `ML-MCP-080` | Monolith™ MacroPad 8 — CNC Aluminum Hot-Swappable Rotary Encoder Pad | `350g (0.77 lbs)` |
+| **$90.00** | `ML-MLS-090` | Monolith™ Monolith Vertical Laptop & Tablet CNC Aluminum Studio Stand | `480g (1.06 lbs)` |
+| **$120.00** | `ML-AKB-120` | Monolith™ Aero Ergonomic — Split-Angle CNC Aluminum Mechanical Keyboard | `620g (1.37 lbs)` |
+| **$150.00** | `ML-PKT-150` | Monolith™ CNC Pocket — Solid Aluminum Retro Gaming Handheld | `450g (0.99 lbs)` |
 
 ---
 

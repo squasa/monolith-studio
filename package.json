@@ -1,7 +1,7 @@
 {
-  "name": "rewind-hardware",
+  "name": "monolith-studio",
   "version": "1.0.0",
-  "description": "ReWind Hardware Co. — Precision CNC Machined Desktop Peripherals, Cases & Studio Hardware",
+  "description": "Monolith Studio Co. — Precision CNC Machined Desktop Peripherals, Cases & Studio Hardware",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

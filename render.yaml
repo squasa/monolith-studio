@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: rewind-hardware
+    name: monolith-studio
     runtime: static
     buildCommand: npm run build
     staticPublishPath: ./public
