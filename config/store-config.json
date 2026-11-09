@@ -1,20 +1,20 @@
 {
   "brand": {
-    "name": "ReWind Hardware Co.",
-    "shortName": "ReWind",
-    "legalEntity": "ReWind Hardware Co.",
+    "name": "Monolith Studio Co.",
+    "shortName": "Monolith",
+    "legalEntity": "Monolith Studio Co.",
     "tagline": "Precision CNC-Machined Desktop Peripherals, Cases & Studio Hardware",
     "heroTitle": "Monolithic CNC Hardware. Engineered to Endure.",
     "heroSubtitle": "Small-batch Grade 5 titanium, 6061-T6 aerospace aluminum, magnesium alloy, and custom mechanical peripherals. Free tracked US shipping on every order.",
-    "supportEmail": "support@rewindhardware.co",
+    "supportEmail": "support@monolithstudio.co",
     "secondaryEmail": "cjha882026@outlook.com",
     "phone": "+1 (213) 555-0194",
     "address": "225 N Ave 25, Los Angeles, CA 90031, United States",
     "hours": "Monday – Friday, 9:00 AM – 5:00 PM PT",
     "shippingPromise": "Free Tracked USPS / UPS / FedEx Ground Shipping (2–4 Business Days) — Dispatches within 24–48 Hours from Los Angeles, CA",
     "warrantyPromise": "30-Day Studio Trial Guarantee & 1-Year Structural CNC Hardware Warranty",
-    "logoImage": "images/products/rewind_hardware_logo.jpg",
-    "iconImage": "images/products/rewind_avatar_icon.jpg"
+    "logoImage": "images/products/monolith_studio_logo.jpg",
+    "iconImage": "images/products/monolith_avatar_icon.jpg"
   },
   "waveCheckoutLinks": {
     "_comment": "Paste your Wave Checkout URLs (e.g. https://link.waveapps.com/xxxxxx) for each price tier or SKU below. When populated, customer checkout automatically redirects to Wave with their shipping address and contact details pre-filled.",
@@ -31,16 +31,16 @@
       "150": ""
     },
     "bySku": {
-      "RW-PND-020": "",
-      "RW-GMP-030": "",
-      "RW-AWC-040": "",
-      "RW-AGM-050": "",
-      "RW-BRC-060": "",
-      "RW-LMB-070": "",
-      "RW-MCP-080": "",
-      "RW-MLS-090": "",
-      "RW-AKB-120": "",
-      "RW-PKT-150": ""
+      "ML-PND-020": "",
+      "ML-GMP-030": "",
+      "ML-AWC-040": "",
+      "ML-AGM-050": "",
+      "ML-BRC-060": "",
+      "ML-LMB-070": "",
+      "ML-MCP-080": "",
+      "ML-MLS-090": "",
+      "ML-AKB-120": "",
+      "ML-PKT-150": ""
     }
   },
   "checkoutFields": [
@@ -54,8 +54,8 @@
   "products": [
     {
       "id": 1,
-      "sku": "RW-PND-020",
-      "title": "ReWind™ CNC Machined Titanium Bolt-Action Studio Pen",
+      "sku": "ML-PND-020",
+      "title": "Monolith™ CNC Machined Titanium Bolt-Action Studio Pen",
       "category": "Desk Architecture",
       "badge": "Grade 5 Titanium",
       "price": 20.00,
@@ -79,15 +79,15 @@
         "Package Weight": "180g (0.40 lbs)"
       },
       "boxContents": [
-        "1× ReWind™ CNC Machined Titanium Bolt-Action Studio Pen",
+        "1× Monolith™ CNC Machined Titanium Bolt-Action Studio Pen",
         "2× 0.5mm Black Archival Gel Ink Refills (1 Pre-Installed)",
-        "1× ReWind Hardware Co. Specification Box"
+        "1× Monolith Studio Co. Specification Box"
       ]
     },
     {
       "id": 2,
-      "sku": "RW-GMP-030",
-      "title": "ReWind™ GlideMat Pro — Micro-Weave Precision Desk Pad (900×400mm)",
+      "sku": "ML-GMP-030",
+      "title": "Monolith™ GlideMat Pro — Micro-Weave Precision Desk Pad (900×400mm)",
       "category": "Desk Surfaces",
       "badge": "Zero-Friction Weave",
       "price": 30.00,
@@ -111,14 +111,14 @@
         "Weight": "380g (0.84 lbs)"
       },
       "boxContents": [
-        "1× ReWind™ GlideMat Pro 900×400mm Precision Desk Pad",
+        "1× Monolith™ GlideMat Pro 900×400mm Precision Desk Pad",
         "1× Rigid Cylinder Presentation & Storage Tube"
       ]
     },
     {
       "id": 3,
-      "sku": "RW-AWC-040",
-      "title": "ReWind™ 316L Stainless CNC Case for Apple Watch 45mm / 46mm",
+      "sku": "ML-AWC-040",
+      "title": "Monolith™ 316L Stainless CNC Case for Apple Watch 45mm / 46mm",
       "category": "CNC Watch Armor",
       "badge": "5-Axis Milled",
       "price": 40.00,
@@ -142,15 +142,15 @@
         "Package Weight": "150g (0.33 lbs)"
       },
       "boxContents": [
-        "1× ReWind™ CNC Brushed Stainless Watch Case & Integrated FKM Strap",
+        "1× Monolith™ CNC Brushed Stainless Watch Case & Integrated FKM Strap",
         "1× Internal Shock-Dampening Silicone Liner",
         "1× Precision Assembly Driver + Spare Bezel Screws"
       ]
     },
     {
       "id": 4,
-      "sku": "RW-AGM-050",
-      "title": "ReWind™ Magnesium X — 42g Ultralight Wireless Magnesium Alloy Mouse",
+      "sku": "ML-AGM-050",
+      "title": "Monolith™ Magnesium X — 42g Ultralight Wireless Magnesium Alloy Mouse",
       "category": "Precision Mice",
       "badge": "Best Seller • Magnesium",
       "price": 50.00,
@@ -158,10 +158,10 @@
       "weightLbs": 0.51,
       "inStock": true,
       "leadTime": "Ships in 24–48 hours",
-      "image": "images/products/rewind_mouse_silver_cover.jpg",
+      "image": "images/products/monolith_mouse_silver_cover.jpg",
       "gallery": [
-        "images/products/rewind_mouse_silver_cover.jpg",
-        "images/products/rewind_mouse_silver_hover.jpg"
+        "images/products/monolith_mouse_silver_cover.jpg",
+        "images/products/monolith_mouse_silver_hover.jpg"
       ],
       "summary": "Featherweight 42-gram CNC-machined magnesium alloy exoskeleton wireless mouse featuring a PAW3395 26,000 DPI optical sensor, optical microswitches, and tri-mode connectivity.",
       "highlights": [
@@ -178,7 +178,7 @@
         "Dimensions": "122mm × 62mm × 37mm (Symmetrical Medium)"
       },
       "boxContents": [
-        "1× ReWind™ Magnesium X Ultralight Silver Wireless Mouse",
+        "1× Monolith™ Magnesium X Ultralight Silver Wireless Mouse",
         "1× 2.4GHz Low-Latency USB-C Receiver & Desk Extender Adapter",
         "1× 1.8m Ultra-Flexible Braided Paracord Charging/Data Cable",
         "1× Spare Set of 100% Virgin PTFE Glide Skates"
@@ -186,8 +186,8 @@
     },
     {
       "id": 5,
-      "sku": "RW-BRC-060",
-      "title": "ReWind™ PVD Gold & Brass CNC Case for Apple Watch (45mm / 49mm)",
+      "sku": "ML-BRC-060",
+      "title": "Monolith™ PVD Gold & Brass CNC Case for Apple Watch (45mm / 49mm)",
       "category": "CNC Watch Armor",
       "badge": "18K Gold PVD CNC",
       "price": 60.00,
@@ -211,7 +211,7 @@
         "Package Weight": "240g (0.53 lbs)"
       },
       "boxContents": [
-        "1× ReWind™ Gold PVD CNC Case for Apple Watch",
+        "1× Monolith™ Gold PVD CNC Case for Apple Watch",
         "1× Integrated FKM Rubber Strap with Gold-Tone Hardware",
         "2× Internal Silicone Shock Buffers",
         "1× Precision Screwdriver & Spare Fastener Kit"
@@ -219,8 +219,8 @@
     },
     {
       "id": 6,
-      "sku": "RW-LMB-070",
-      "title": "ReWind™ Luminabar Pro — Asymmetric CNC Aluminum Monitor Light Bar",
+      "sku": "ML-LMB-070",
+      "title": "Monolith™ Luminabar Pro — Asymmetric CNC Aluminum Monitor Light Bar",
       "category": "Studio Lighting",
       "badge": "CRI 97+ + Wireless Puck",
       "price": 70.00,
@@ -228,10 +228,10 @@
       "weightLbs": 0.93,
       "inStock": true,
       "leadTime": "Ships in 24–48 hours",
-      "image": "images/products/rewind_luminabar_cover.png",
+      "image": "images/products/monolith_luminabar_cover.png",
       "gallery": [
-        "images/products/rewind_luminabar_cover.png",
-        "images/products/rewind_luminabar_hover.png"
+        "images/products/monolith_luminabar_cover.png",
+        "images/products/monolith_luminabar_hover.png"
       ],
       "summary": "Anodized aluminum over-monitor task lamp with zero-glare asymmetric optical projection, Ra97+ color accuracy, stepless 2700K–6500K color temperature, and a 2.4GHz rotary wireless desk puck.",
       "highlights": [
@@ -248,7 +248,7 @@
         "Package Weight": "420g (0.93 lbs)"
       },
       "boxContents": [
-        "1× ReWind™ Luminabar Pro CNC Aluminum Monitor Light Bar",
+        "1× Monolith™ Luminabar Pro CNC Aluminum Monitor Light Bar",
         "1× Wireless Rotary Desktop Control Puck (Batteries Pre-Installed)",
         "1× Counterweighted Gravity Monitor Mount",
         "1× 1.8m Braided USB-C Power Cable"
@@ -256,8 +256,8 @@
     },
     {
       "id": 7,
-      "sku": "RW-MCP-080",
-      "title": "ReWind™ Q0 Pro — CNC Aluminum QMK/VIA Wireless Custom Macro & Number Pad",
+      "sku": "ML-MCP-080",
+      "title": "Monolith™ Q0 Pro — CNC Aluminum QMK/VIA Wireless Custom Macro & Number Pad",
       "category": "Mechanical Input",
       "badge": "QMK / VIA • Magnetic / Mechanical",
       "price": 80.00,
@@ -282,7 +282,7 @@
         "Package Weight": "350g (0.77 lbs)"
       },
       "boxContents": [
-        "1× ReWind™ Q0 Pro Fully Assembled CNC Aluminum Macro & Number Pad",
+        "1× Monolith™ Q0 Pro Fully Assembled CNC Aluminum Macro & Number Pad",
         "1× 2.4GHz Type-A/C Wireless Receiver",
         "1× Braided Type-C to Type-C Cable + Type-A Adapter",
         "1× Combination Keycap & Switch Puller + Hex Screwdriver"
@@ -290,8 +290,8 @@
     },
     {
       "id": 8,
-      "sku": "RW-MLS-090",
-      "title": "ReWind™ Dual Dock Pro — CNC Aluminum Under-Laptop Workstation Stand & USB-C Hub",
+      "sku": "ML-MLS-090",
+      "title": "Monolith™ Dual Dock Pro — CNC Aluminum Under-Laptop Workstation Stand & USB-C Hub",
       "category": "Desk Architecture",
       "badge": "9-Port CNC Dock + Stand",
       "price": 90.00,
@@ -316,15 +316,15 @@
         "Package Weight": "480g (1.06 lbs)"
       },
       "boxContents": [
-        "1× ReWind™ Dual Dock Pro CNC Aluminum Workstation Stand",
+        "1× Monolith™ Dual Dock Pro CNC Aluminum Workstation Stand",
         "1× Integrated Dual USB-C Host Connector Cable",
         "1× Thermal Silicone Pad & Screw for M.2 SSD Installation"
       ]
     },
     {
       "id": 9,
-      "sku": "RW-AKB-120",
-      "title": "ReWind™ Q14 Pro — 96% Alice Split-Layout CNC Aluminum Wireless Mechanical Keyboard",
+      "sku": "ML-AKB-120",
+      "title": "Monolith™ Q14 Pro — 96% Alice Split-Layout CNC Aluminum Wireless Mechanical Keyboard",
       "category": "Mechanical Input",
       "badge": "Alice CNC + Left Numpad",
       "price": 120.00,
@@ -332,10 +332,10 @@
       "weightLbs": 1.37,
       "inStock": true,
       "leadTime": "Ships in 24–48 hours",
-      "image": "images/products/rewind_keyboard_cover.jpg",
+      "image": "images/products/monolith_keyboard_cover.jpg",
       "gallery": [
-        "images/products/rewind_keyboard_cover.jpg",
-        "images/products/rewind_keyboard_hover.jpg"
+        "images/products/monolith_keyboard_cover.jpg",
+        "images/products/monolith_keyboard_hover.jpg"
       ],
       "summary": "Full-metal 6063 CNC-machined aluminum 96% ergonomic Alice-layout wireless mechanical keyboard featuring a southpaw left-hand number pad, double-gasket mount, rotary encoder knob, and QMK/VIA support.",
       "highlights": [
@@ -352,7 +352,7 @@
         "Package Weight": "620g (1.37 lbs)"
       },
       "boxContents": [
-        "1× ReWind™ Q14 Pro Fully Assembled CNC Aluminum Alice Keyboard",
+        "1× Monolith™ Q14 Pro Fully Assembled CNC Aluminum Alice Keyboard",
         "1× 2.4GHz Type-A Receiver + Extension Adapter",
         "1× Braided Type-C Cable + Mac/Windows Extra PBT Keycaps",
         "1× Switch Puller, Keycap Puller & Hex Allen Key"
@@ -360,8 +360,8 @@
     },
     {
       "id": 10,
-      "sku": "RW-PKT-150",
-      "title": "ReWind™ Pocket 35 — Dual-Analog Vertical Retro Gaming Handheld Console",
+      "sku": "ML-PKT-150",
+      "title": "Monolith™ Pocket 35 — Dual-Analog Vertical Retro Gaming Handheld Console",
       "category": "Flagship Hardware",
       "badge": "Flagship • 3.5\" IPS + Dual Sticks",
       "price": 150.00,
@@ -369,10 +369,10 @@
       "weightLbs": 0.99,
       "inStock": true,
       "leadTime": "Ships in 24–48 hours",
-      "image": "images/products/rewind_pocket_silver_cover.jpg",
+      "image": "images/products/monolith_pocket_silver_cover.jpg",
       "gallery": [
-        "images/products/rewind_pocket_silver_cover.jpg",
-        "images/products/rewind_pocket_silver_hover.jpg"
+        "images/products/monolith_pocket_silver_cover.jpg",
+        "images/products/monolith_pocket_silver_hover.jpg"
       ],
       "summary": "Precision-molded retro gray vertical handheld console featuring a full-laminated 3.5-inch IPS 640×480 display, dual Hall-effect 3D analog sticks, flared rear L1/L2/R1/R2 shoulder triggers, and open-source Linux OS.",
       "highlights": [
@@ -389,7 +389,7 @@
         "Package Weight": "450g (0.99 lbs)"
       },
       "boxContents": [
-        "1× ReWind™ Pocket 35 Retro Gray Vertical Handheld Console",
+        "1× Monolith™ Pocket 35 Retro Gray Vertical Handheld Console",
         "1× 64GB High-Speed MicroSD Card (Linux OS Pre-Installed)",
         "1× Tempered 9H Glass Screen Protector",
         "1× USB-C Charging Cable & User Manual"
