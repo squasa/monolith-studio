@@ -9,7 +9,7 @@
     "supportEmail": "support@monolithstudio.co",
     "secondaryEmail": "cjha882026@outlook.com",
     "phone": "+1 (213) 555-0194",
-    "address": "225 N Ave 25, Los Angeles, CA 90031, United States",
+    "address": "6515 S Crenshaw Blvd, Los Angeles, CA 90043, United States",
     "hours": "Monday – Friday, 9:00 AM – 5:00 PM PT",
     "shippingPromise": "Free Tracked USPS / UPS / FedEx Ground Shipping (2–4 Business Days) — Dispatches within 24–48 Hours from Los Angeles, CA",
     "warrantyPromise": "30-Day Studio Trial Guarantee & 1-Year Structural CNC Hardware Warranty",
@@ -17,39 +17,75 @@
     "iconImage": "images/products/monolith_avatar_icon.jpg"
   },
   "waveCheckoutLinks": {
-    "_comment": "Paste your Wave Checkout URLs (e.g. https://link.waveapps.com/xxxxxx) for each price tier or SKU below. When populated, customer checkout automatically redirects to Wave with their shipping address and contact details pre-filled.",
+    "_comment": "Active checkout links (connected to live Stripe Payment Links)",
     "byPriceTier": {
-      "20": "",
-      "30": "",
-      "40": "",
-      "50": "",
-      "60": "",
-      "70": "",
-      "80": "",
-      "90": "",
-      "120": "",
-      "150": ""
+      "20": "https://buy.stripe.com/eVq7sLaI35WFdDBbpN1sQ00",
+      "30": "https://buy.stripe.com/eVqaEX2bx98RgPN1Pd1sQ01",
+      "40": "https://buy.stripe.com/fZu00j6rN70JdDBctR1sQ02",
+      "50": "https://buy.stripe.com/dRmdR95nJbgZgPNfG31sQ03",
+      "60": "https://buy.stripe.com/fZu14n4jF84NeHF3Xl1sQ04",
+      "70": "https://buy.stripe.com/4gM4gz9DZacV6b91Pd1sQ05",
+      "80": "https://buy.stripe.com/7sY3cv7vRfxf8jh3Xl1sQ06",
+      "90": "https://buy.stripe.com/aFa7sLdUf5WF431ctR1sQ07",
+      "120": "https://buy.stripe.com/00w6oH2bx70JdDB3Xl1sQ08",
+      "150": "https://buy.stripe.com/cNi28r7vR84N2YX2Th1sQ09"
     },
     "bySku": {
-      "ML-PND-020": "",
-      "ML-GMP-030": "",
-      "ML-AWC-040": "",
-      "ML-AGM-050": "",
-      "ML-BRC-060": "",
-      "ML-LMB-070": "",
-      "ML-MCP-080": "",
-      "ML-MLS-090": "",
-      "ML-AKB-120": "",
-      "ML-PKT-150": ""
+      "ML-PND-020": "https://buy.stripe.com/eVq7sLaI35WFdDBbpN1sQ00",
+      "ML-GMP-030": "https://buy.stripe.com/eVqaEX2bx98RgPN1Pd1sQ01",
+      "ML-AWC-040": "https://buy.stripe.com/fZu00j6rN70JdDBctR1sQ02",
+      "ML-AGM-050": "https://buy.stripe.com/dRmdR95nJbgZgPNfG31sQ03",
+      "ML-BRC-060": "https://buy.stripe.com/fZu14n4jF84NeHF3Xl1sQ04",
+      "ML-LMB-070": "https://buy.stripe.com/4gM4gz9DZacV6b91Pd1sQ05",
+      "ML-MCP-080": "https://buy.stripe.com/7sY3cv7vRfxf8jh3Xl1sQ06",
+      "ML-MLS-090": "https://buy.stripe.com/aFa7sLdUf5WF431ctR1sQ07",
+      "ML-AKB-120": "https://buy.stripe.com/00w6oH2bx70JdDB3Xl1sQ08",
+      "ML-PKT-150": "https://buy.stripe.com/cNi28r7vR84N2YX2Th1sQ09"
     }
   },
   "checkoutFields": [
-    { "name": "Address Line 1 (Street Address)", "key": "address", "type": "text", "required": true, "placeholder": "e.g. 2716 Hilltop Haven Dr" },
-    { "name": "Address Line 2 (Apt, Suite, Unit - Optional)", "key": "address2", "type": "text", "required": false, "placeholder": "Apt 4B, Suite 200 (Optional)" },
-    { "name": "City", "key": "city", "type": "text", "required": true, "placeholder": "Los Angeles" },
-    { "name": "State / Province", "key": "region", "type": "text", "required": true, "placeholder": "CA" },
-    { "name": "ZIP / Postal Code", "key": "postal", "type": "text", "required": true, "placeholder": "90001" },
-    { "name": "Phone Number (For delivery tracking updates)", "key": "phone", "type": "tel", "required": true, "placeholder": "(213) 555-0199" }
+    {
+      "name": "Address Line 1 (Street Address)",
+      "key": "address",
+      "type": "text",
+      "required": true,
+      "placeholder": "e.g. 2716 Hilltop Haven Dr"
+    },
+    {
+      "name": "Address Line 2 (Apt, Suite, Unit - Optional)",
+      "key": "address2",
+      "type": "text",
+      "required": false,
+      "placeholder": "Apt 4B, Suite 200 (Optional)"
+    },
+    {
+      "name": "City",
+      "key": "city",
+      "type": "text",
+      "required": true,
+      "placeholder": "Los Angeles"
+    },
+    {
+      "name": "State / Province",
+      "key": "region",
+      "type": "text",
+      "required": true,
+      "placeholder": "CA"
+    },
+    {
+      "name": "ZIP / Postal Code",
+      "key": "postal",
+      "type": "text",
+      "required": true,
+      "placeholder": "90001"
+    },
+    {
+      "name": "Phone Number (For delivery tracking updates)",
+      "key": "phone",
+      "type": "tel",
+      "required": true,
+      "placeholder": "(213) 555-0199"
+    }
   ],
   "products": [
     {
@@ -58,13 +94,15 @@
       "title": "Monolith™ CNC Machined Titanium Bolt-Action Studio Pen",
       "category": "Desk Architecture",
       "badge": "Grade 5 Titanium",
-      "price": 20.00,
+      "price": 20,
       "weightGrams": 180,
-      "weightLbs": 0.40,
+      "weightLbs": 0.4,
       "inStock": true,
       "leadTime": "Ships in 24–48 hours",
       "image": "images/products/item1_pen_dock.jpg",
-      "gallery": ["images/products/item1_pen_dock.jpg"],
+      "gallery": [
+        "images/products/item1_pen_dock.jpg"
+      ],
       "summary": "Precision-turned Grade 5 titanium bolt-action drafting pen featuring micro-grooved tactile grip rings, a smooth C-shaped bolt channel, and a milled stainless pocket clip.",
       "highlights": [
         "Fluid C-Channel Bolt Action: One-piece machined internal carrier glides along a curved J/C-slot with a crisp mechanical lock and zero spring rattle.",
@@ -82,7 +120,10 @@
         "1× Monolith™ CNC Machined Titanium Bolt-Action Studio Pen",
         "2× 0.5mm Black Archival Gel Ink Refills (1 Pre-Installed)",
         "1× Monolith Studio Co. Specification Box"
-      ]
+      ],
+      "stripePaymentLink": "https://buy.stripe.com/eVq7sLaI35WFdDBbpN1sQ00",
+      "stripeProductId": "prod_VbZTRsSu7Yhvkv",
+      "stripePriceId": "price_1UaML1DpvRsFSG1g5oqbqjVz"
     },
     {
       "id": 2,
@@ -90,13 +131,15 @@
       "title": "Monolith™ GlideMat Pro — Micro-Weave Precision Desk Pad (900×400mm)",
       "category": "Desk Surfaces",
       "badge": "Zero-Friction Weave",
-      "price": 30.00,
+      "price": 30,
       "weightGrams": 380,
       "weightLbs": 0.84,
       "inStock": true,
       "leadTime": "Ships in 24–48 hours",
       "image": "images/products/item2_glidemat.jpg",
-      "gallery": ["images/products/item2_glidemat.jpg"],
+      "gallery": [
+        "images/products/item2_glidemat.jpg"
+      ],
       "summary": "Large-format 900×400×4mm studio and gaming desk mat engineered with high-density micro-textured jacquard cloth, sub-surface flat-lock stitching, and a 4mm natural rubber base.",
       "highlights": [
         "Calibrated X/Y Optical Tracking: High-density micro-weave surface delivers effortless glide for PTFE and magnesium mouse skates with pinpoint stopping power.",
@@ -113,7 +156,10 @@
       "boxContents": [
         "1× Monolith™ GlideMat Pro 900×400mm Precision Desk Pad",
         "1× Rigid Cylinder Presentation & Storage Tube"
-      ]
+      ],
+      "stripePaymentLink": "https://buy.stripe.com/eVqaEX2bx98RgPN1Pd1sQ01",
+      "stripeProductId": "prod_VbZTF5psnj7qnG",
+      "stripePriceId": "price_1UaML1DpvRsFSG1gvhWeJAIF"
     },
     {
       "id": 3,
@@ -121,13 +167,15 @@
       "title": "Monolith™ 316L Stainless CNC Case for Apple Watch 45mm / 46mm",
       "category": "CNC Watch Armor",
       "badge": "5-Axis Milled",
-      "price": 40.00,
+      "price": 40,
       "weightGrams": 150,
       "weightLbs": 0.33,
       "inStock": true,
       "leadTime": "Ships in 24–48 hours",
       "image": "images/products/item3_watch_aluminum.jpg",
-      "gallery": ["images/products/item3_watch_aluminum.jpg"],
+      "gallery": [
+        "images/products/item3_watch_aluminum.jpg"
+      ],
       "summary": "5-axis CNC-machined 316L brushed stainless steel protective exoskeleton and vulcanized FKM fluoroelastomer strap system for Apple Watch 45mm & 46mm.",
       "highlights": [
         "5-Axis CNC 316L Stainless Bezel: Hand-brushed silver stainless frame wraps your Apple Watch in a multi-piece architectural chassis.",
@@ -145,7 +193,10 @@
         "1× Monolith™ CNC Brushed Stainless Watch Case & Integrated FKM Strap",
         "1× Internal Shock-Dampening Silicone Liner",
         "1× Precision Assembly Driver + Spare Bezel Screws"
-      ]
+      ],
+      "stripePaymentLink": "https://buy.stripe.com/fZu00j6rN70JdDBctR1sQ02",
+      "stripeProductId": "prod_VbZUKT7PI7AiYx",
+      "stripePriceId": "price_1UaML2DpvRsFSG1gVK3j71Mo"
     },
     {
       "id": 4,
@@ -153,7 +204,7 @@
       "title": "Monolith™ Magnesium X — 42g Ultralight Wireless Magnesium Alloy Mouse",
       "category": "Precision Mice",
       "badge": "Best Seller • Magnesium",
-      "price": 50.00,
+      "price": 50,
       "weightGrams": 230,
       "weightLbs": 0.51,
       "inStock": true,
@@ -182,7 +233,10 @@
         "1× 2.4GHz Low-Latency USB-C Receiver & Desk Extender Adapter",
         "1× 1.8m Ultra-Flexible Braided Paracord Charging/Data Cable",
         "1× Spare Set of 100% Virgin PTFE Glide Skates"
-      ]
+      ],
+      "stripePaymentLink": "https://buy.stripe.com/dRmdR95nJbgZgPNfG31sQ03",
+      "stripeProductId": "prod_VbZULcbYDDnfrg",
+      "stripePriceId": "price_1UaML3DpvRsFSG1g9JOGeb62"
     },
     {
       "id": 5,
@@ -190,13 +244,15 @@
       "title": "Monolith™ PVD Gold & Brass CNC Case for Apple Watch (45mm / 49mm)",
       "category": "CNC Watch Armor",
       "badge": "18K Gold PVD CNC",
-      "price": 60.00,
+      "price": 60,
       "weightGrams": 240,
       "weightLbs": 0.53,
       "inStock": true,
       "leadTime": "Ships in 24–48 hours",
       "image": "images/products/item5_watch_brass.jpg",
-      "gallery": ["images/products/item5_watch_brass.jpg"],
+      "gallery": [
+        "images/products/item5_watch_brass.jpg"
+      ],
       "summary": "Heavy-duty 5-axis CNC-milled gold PVD stainless & brass protective armor case and vulcanized FKM rubber strap built for Apple Watch 45mm & 49mm.",
       "highlights": [
         "Hand-Brushed Gold PVD CNC Chassis: Milled from solid billet metal with a satin-brushed gold bezel and polished chamfered edges.",
@@ -215,7 +271,10 @@
         "1× Integrated FKM Rubber Strap with Gold-Tone Hardware",
         "2× Internal Silicone Shock Buffers",
         "1× Precision Screwdriver & Spare Fastener Kit"
-      ]
+      ],
+      "stripePaymentLink": "https://buy.stripe.com/fZu14n4jF84NeHF3Xl1sQ04",
+      "stripeProductId": "prod_VbZUTGfQw1ZNTY",
+      "stripePriceId": "price_1UaML3DpvRsFSG1gcViCuilS"
     },
     {
       "id": 6,
@@ -223,7 +282,7 @@
       "title": "Monolith™ Luminabar Pro — Asymmetric CNC Aluminum Monitor Light Bar",
       "category": "Studio Lighting",
       "badge": "CRI 97+ + Wireless Puck",
-      "price": 70.00,
+      "price": 70,
       "weightGrams": 420,
       "weightLbs": 0.93,
       "inStock": true,
@@ -252,7 +311,10 @@
         "1× Wireless Rotary Desktop Control Puck (Batteries Pre-Installed)",
         "1× Counterweighted Gravity Monitor Mount",
         "1× 1.8m Braided USB-C Power Cable"
-      ]
+      ],
+      "stripePaymentLink": "https://buy.stripe.com/4gM4gz9DZacV6b91Pd1sQ05",
+      "stripeProductId": "prod_VbZUz4uI4KpF5Q",
+      "stripePriceId": "price_1UaML4DpvRsFSG1g5Loq9uqQ"
     },
     {
       "id": 7,
@@ -260,13 +322,15 @@
       "title": "Monolith™ Q0 Pro — CNC Aluminum QMK/VIA Wireless Custom Macro & Number Pad",
       "category": "Mechanical Input",
       "badge": "QMK / VIA • Magnetic / Mechanical",
-      "price": 80.00,
+      "price": 80,
       "weightGrams": 350,
       "weightLbs": 0.77,
       "inStock": true,
       "leadTime": "Ships in 24–48 hours",
       "image": "images/products/item7_macropad.jpg",
-      "gallery": ["images/products/item7_macropad.jpg"],
+      "gallery": [
+        "images/products/item7_macropad.jpg"
+      ],
       "summary": "Heavy 6063 CNC-machined aluminum 26-key wireless mechanical number & macro pad featuring a dedicated M1–M5 macro column, clickable aluminum rotary encoder knob, and QMK/VIA support.",
       "highlights": [
         "Solid 6063 CNC Aluminum Body: Milled from solid aluminum billet, polished, anodized, and sandblasted through 24 manufacturing stages.",
@@ -286,7 +350,10 @@
         "1× 2.4GHz Type-A/C Wireless Receiver",
         "1× Braided Type-C to Type-C Cable + Type-A Adapter",
         "1× Combination Keycap & Switch Puller + Hex Screwdriver"
-      ]
+      ],
+      "stripePaymentLink": "https://buy.stripe.com/7sY3cv7vRfxf8jh3Xl1sQ06",
+      "stripeProductId": "prod_VbZUGSMoSY0THe",
+      "stripePriceId": "price_1UaML4DpvRsFSG1gDhS5RkbQ"
     },
     {
       "id": 8,
@@ -294,13 +361,15 @@
       "title": "Monolith™ Dual Dock Pro — CNC Aluminum Under-Laptop Workstation Stand & USB-C Hub",
       "category": "Desk Architecture",
       "badge": "9-Port CNC Dock + Stand",
-      "price": 90.00,
+      "price": 90,
       "weightGrams": 480,
       "weightLbs": 1.06,
       "inStock": true,
       "leadTime": "Ships in 24–48 hours",
       "image": "images/products/item8_laptop_stand.jpg",
-      "gallery": ["images/products/item8_laptop_stand.jpg"],
+      "gallery": [
+        "images/products/item8_laptop_stand.jpg"
+      ],
       "summary": "Space-gray CNC aluminum ergonomic under-laptop workstation stand with integrated dual USB-C host connector, 2× HDMI 2.0, DisplayPort 1.4, Gigabit Ethernet, 10Gbps USB-A/C data, and NVMe SSD enclosure.",
       "highlights": [
         "Ergonomic Elevation + Full Workstation I/O: Cradles your MacBook or USB-C laptop at an elevated viewing angle while routing all cables cleanly out the rear.",
@@ -319,7 +388,10 @@
         "1× Monolith™ Dual Dock Pro CNC Aluminum Workstation Stand",
         "1× Integrated Dual USB-C Host Connector Cable",
         "1× Thermal Silicone Pad & Screw for M.2 SSD Installation"
-      ]
+      ],
+      "stripePaymentLink": "https://buy.stripe.com/aFa7sLdUf5WF431ctR1sQ07",
+      "stripeProductId": "prod_VbZUpcBzxQF77r",
+      "stripePriceId": "price_1UaML5DpvRsFSG1gMtucymhP"
     },
     {
       "id": 9,
@@ -327,7 +399,7 @@
       "title": "Monolith™ Q14 Pro — 96% Alice Split-Layout CNC Aluminum Wireless Mechanical Keyboard",
       "category": "Mechanical Input",
       "badge": "Alice CNC + Left Numpad",
-      "price": 120.00,
+      "price": 120,
       "weightGrams": 620,
       "weightLbs": 1.37,
       "inStock": true,
@@ -356,7 +428,10 @@
         "1× 2.4GHz Type-A Receiver + Extension Adapter",
         "1× Braided Type-C Cable + Mac/Windows Extra PBT Keycaps",
         "1× Switch Puller, Keycap Puller & Hex Allen Key"
-      ]
+      ],
+      "stripePaymentLink": "https://buy.stripe.com/00w6oH2bx70JdDB3Xl1sQ08",
+      "stripeProductId": "prod_VbZUfOzg0BKN1t",
+      "stripePriceId": "price_1UaML5DpvRsFSG1gGDnmWCpV"
     },
     {
       "id": 10,
@@ -364,7 +439,7 @@
       "title": "Monolith™ Pocket 35 — Dual-Analog Vertical Retro Gaming Handheld Console",
       "category": "Flagship Hardware",
       "badge": "Flagship • 3.5\" IPS + Dual Sticks",
-      "price": 150.00,
+      "price": 150,
       "weightGrams": 450,
       "weightLbs": 0.99,
       "inStock": true,
@@ -393,7 +468,38 @@
         "1× 64GB High-Speed MicroSD Card (Linux OS Pre-Installed)",
         "1× Tempered 9H Glass Screen Protector",
         "1× USB-C Charging Cable & User Manual"
-      ]
+      ],
+      "stripePaymentLink": "https://buy.stripe.com/cNi28r7vR84N2YX2Th1sQ09",
+      "stripeProductId": "prod_VbZUoT2GPMtOHM",
+      "stripePriceId": "price_1UaML6DpvRsFSG1g2NQSOXFg"
     }
-  ]
+  ],
+  "stripeCheckoutLinks": {
+    "_comment": "Live Stripe Payment Links for Monolith Studio Co. (acct_1UZqdVDpvRsFSG1g)",
+    "publishableKey": "pk_live_51UZqdVDpvRsFSG1g8ZadMOFdDEgs8utDlhmNN6E6ZpCjIbOxIrZ8DQOkK7aROLCPKpbVcvmxaT1uGLRyQPxq9Pu1008lMVgH8a",
+    "byPriceTier": {
+      "20": "https://buy.stripe.com/eVq7sLaI35WFdDBbpN1sQ00",
+      "30": "https://buy.stripe.com/eVqaEX2bx98RgPN1Pd1sQ01",
+      "40": "https://buy.stripe.com/fZu00j6rN70JdDBctR1sQ02",
+      "50": "https://buy.stripe.com/dRmdR95nJbgZgPNfG31sQ03",
+      "60": "https://buy.stripe.com/fZu14n4jF84NeHF3Xl1sQ04",
+      "70": "https://buy.stripe.com/4gM4gz9DZacV6b91Pd1sQ05",
+      "80": "https://buy.stripe.com/7sY3cv7vRfxf8jh3Xl1sQ06",
+      "90": "https://buy.stripe.com/aFa7sLdUf5WF431ctR1sQ07",
+      "120": "https://buy.stripe.com/00w6oH2bx70JdDB3Xl1sQ08",
+      "150": "https://buy.stripe.com/cNi28r7vR84N2YX2Th1sQ09"
+    },
+    "bySku": {
+      "ML-PND-020": "https://buy.stripe.com/eVq7sLaI35WFdDBbpN1sQ00",
+      "ML-GMP-030": "https://buy.stripe.com/eVqaEX2bx98RgPN1Pd1sQ01",
+      "ML-AWC-040": "https://buy.stripe.com/fZu00j6rN70JdDBctR1sQ02",
+      "ML-AGM-050": "https://buy.stripe.com/dRmdR95nJbgZgPNfG31sQ03",
+      "ML-BRC-060": "https://buy.stripe.com/fZu14n4jF84NeHF3Xl1sQ04",
+      "ML-LMB-070": "https://buy.stripe.com/4gM4gz9DZacV6b91Pd1sQ05",
+      "ML-MCP-080": "https://buy.stripe.com/7sY3cv7vRfxf8jh3Xl1sQ06",
+      "ML-MLS-090": "https://buy.stripe.com/aFa7sLdUf5WF431ctR1sQ07",
+      "ML-AKB-120": "https://buy.stripe.com/00w6oH2bx70JdDB3Xl1sQ08",
+      "ML-PKT-150": "https://buy.stripe.com/cNi28r7vR84N2YX2Th1sQ09"
+    }
+  }
 }
