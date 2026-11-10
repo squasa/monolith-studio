@@ -30,7 +30,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // In-memory + file order log
 const ORDERS_FILE = path.join(__dirname, 'orders.json');
-app.post('/api/orders', (req, res) => {
+const SHIPMENT_STUDIO_URL = process.env.SHIPMENT_STUDIO_URL || 'http://localhost:8425';
+
+app.post('/api/orders', async (req, res) => {
   try {
     const order = req.body;
     let existing = [];
@@ -39,10 +41,35 @@ app.post('/api/orders', (req, res) => {
     }
     existing.unshift(order);
     fs.writeFileSync(ORDERS_FILE, JSON.stringify(existing.slice(0, 200), null, 2));
+
+    // Forward order to Local Shipment Studio (http://localhost:8425/api/orders) if running
+    try {
+      await fetch(`${SHIPMENT_STUDIO_URL}/api/orders`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(order)
+      });
+    } catch (_) {}
+
     res.json({ ok: true, orderId: order.orderId });
   } catch (e) {
     res.json({ ok: true });
   }
+});
+
+app.get('/api/shipments/track', async (req, res) => {
+  const q = String(req.query.q || '').trim();
+  if (!q) return res.status(400).json({ found: false });
+
+  try {
+    const studioRes = await fetch(`${SHIPMENT_STUDIO_URL}/api/shipments/track?q=${encodeURIComponent(q)}`);
+    if (studioRes.ok) {
+      const data = await studioRes.json();
+      return res.json(data);
+    }
+  } catch (_) {}
+
+  return res.status(404).json({ found: false });
 });
 
 app.get('/api/health', (req, res) => {

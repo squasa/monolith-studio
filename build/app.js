@@ -410,13 +410,25 @@ async function submitCheckout(e) {
     localStorage.setItem('monolith_orders', JSON.stringify(saved.slice(0, 30)));
   } catch (_) {}
 
-  // Also notify backend /api/orders if running in Node server mode
+  // Also notify backend /api/orders and Local Shipment Studio (http://localhost:8425/api/orders)
   try {
     await fetch('/api/orders', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(orderPayload)
     });
+  } catch (_) {}
+
+  try {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 1200);
+    await fetch('http://localhost:8425/api/orders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(orderPayload),
+      signal: ctrl.signal
+    });
+    clearTimeout(timer);
   } catch (_) {}
 
   // Check if Stripe Payment Link or Wave Checkout link is configured for this SKU or price tier
@@ -522,10 +534,59 @@ function openTrackModal(prefillOrderId = '') {
   if (prefillOrderId) lookupOrder();
 }
 
-function lookupOrder() {
+async function lookupOrder() {
   const q = (document.getElementById('track-input')?.value || '').trim().replace(/^#/, '').toUpperCase();
   const resultEl = document.getElementById('track-result');
   if (!q) return;
+
+  // 1. Query Local Shipment Studio (http://localhost:8425) or storefront /api/shipments/track for live carrier tracking
+  let liveOrder = null;
+  const endpoints = [
+    `http://localhost:8425/api/shipments/track?q=${encodeURIComponent(q)}`,
+    `/api/shipments/track?q=${encodeURIComponent(q)}`
+  ];
+  for (const ep of endpoints) {
+    try {
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), 1500);
+      const res = await fetch(ep, { signal: ctrl.signal });
+      clearTimeout(t);
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.found && data.order) {
+          liveOrder = data.order;
+          break;
+        }
+      }
+    } catch (_) {}
+  }
+
+  if (liveOrder) {
+    const statusMap = {
+      delivered: { label: 'Delivered', bg: '#dcfce7', color: '#166534' },
+      in_transit: { label: `In Transit via ${liveOrder.carrier || 'Carrier'}`, bg: '#dbeafe', color: '#1e40af' },
+      pending_fulfillment: { label: 'Preparing for Dispatch (Los Angeles Studio)', bg: '#eff6ff', color: '#1d4ed8' }
+    };
+    const badge = statusMap[liveOrder.status] || statusMap.pending_fulfillment;
+    const trackingHtml = liveOrder.trackingNumber
+      ? `<a href="${liveOrder.trackingUrl || '#'}" target="_blank" rel="noopener" style="color:#2563eb; font-family:var(--font-mono); font-weight:700; text-decoration:underline;">${liveOrder.carrier || 'FEDEX'} — ${liveOrder.trackingNumber}</a>`
+      : 'Scheduled for carrier scan within 24–48 hours (USPS / UPS / FedEx)';
+
+    resultEl.innerHTML = `
+      <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; padding:18px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+          <strong style="font-family:var(--font-mono); font-size:15px;">Order ${liveOrder.orderId}</strong>
+          <span style="background:${badge.bg}; color:${badge.color}; font-size:12px; font-weight:700; padding:4px 10px; border-radius:99px;">${badge.label}</span>
+        </div>
+        <div style="font-size:13.5px; color:#334155; line-height:1.65;">
+          <strong>Hardware Item:</strong> ${liveOrder.productName || 'Monolith CNC Hardware'}${liveOrder.sku ? ` (<code>${liveOrder.sku}</code>)` : ''}<br>
+          <strong>Destination:</strong> ${[liveOrder.city, liveOrder.state, liveOrder.postalCode].filter(Boolean).join(', ')}<br>
+          <strong>Live Carrier Tracking:</strong> ${trackingHtml}
+        </div>
+      </div>
+    `;
+    return;
+  }
 
   let saved = [];
   try {
