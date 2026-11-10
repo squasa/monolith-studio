@@ -18,6 +18,33 @@ async function initStore() {
 }
 
 function handleInitialRoute() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('order_success') === '1') {
+    const sku = params.get('sku') || '';
+    const matched = STORE_CONFIG.products.find(p => p.sku === sku);
+    const orderId = 'ML-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+    const modal = document.getElementById('universal-modal');
+    const content = document.getElementById('universal-modal-content');
+    if (modal && content) {
+      content.innerHTML = `
+        <div class="checkout-container">
+          <div style="background:#ecfdf5; border:1px solid #a7f3d0; color:#065f46; padding:16px 20px; border-radius:10px; margin-bottom:22px;">
+            <div style="font-family:var(--font-mono); font-size:12px; font-weight:700; text-transform:uppercase;">Stripe Payment Verified • #${orderId}</div>
+            <h2 style="font-size:22px; font-weight:800; margin-top:4px;">Thank You! Your Hardware Order is Confirmed.</h2>
+            <p style="font-size:13.5px; margin-top:6px;">
+              Your payment for <strong>${matched ? matched.title : 'Monolith Studio Hardware'}</strong> has been processed via Stripe. Your parcel is queued for packing at our Los Angeles studio warehouse (6515 S Crenshaw Blvd) and will ship within 24–48 hours with live USPS/UPS/FedEx tracking.
+            </p>
+          </div>
+          <div style="display:flex; justify-content:flex-end; gap:12px;">
+            <button class="btn-buy" onclick="closeModal(); window.history.replaceState({}, '', window.location.pathname);">Return to Storefront</button>
+          </div>
+        </div>
+      `;
+      modal.classList.add('open');
+    }
+    return;
+  }
+
   const path = window.location.pathname.replace(/\/+$/, '');
   const hash = window.location.hash.replace('#', '');
   const target = path.slice(1) || hash;
@@ -246,6 +273,15 @@ function openCheckoutModal() {
         </div>
       </div>
 
+      <div style="margin-bottom:18px;">
+        <button type="button" onclick="goDirectStripeCheckout()" class="btn-buy" style="padding:14px; font-size:15px; width:100%; background:#635bff; display:flex; align-items:center; justify-content:center; gap:8px;">
+          <span>⚡ Express Checkout with Stripe / Apple Pay / Cash App — $${subtotal.toFixed(2)} USD →</span>
+        </button>
+        <div style="text-align:center; font-size:11.5px; color:#64748b; margin-top:6px;">
+          Or pre-register your delivery manifest below before redirecting to Stripe Checkout:
+        </div>
+      </div>
+
       <form id="monolith-checkout-form" onsubmit="submitCheckout(event)">
         <h3 style="font-size:15px; font-weight:700; margin-bottom:4px;">Customer &amp; Delivery Address</h3>
         <p style="font-size:12.5px; color:#525866; margin-bottom:12px;">Enter your physical delivery details below. Live carrier tracking updates will be sent to your email and phone.</p>
@@ -304,10 +340,14 @@ function openCheckoutModal() {
   modal.classList.add('open');
 }
 
-function resolveWaveCheckoutUrl(primaryItem, totalAmount) {
-  if (!STORE_CONFIG || !STORE_CONFIG.waveCheckoutLinks) return '';
-  const bySku = STORE_CONFIG.waveCheckoutLinks.bySku || {};
-  const byTier = STORE_CONFIG.waveCheckoutLinks.byPriceTier || {};
+function resolveCheckoutUrl(primaryItem, totalAmount) {
+  if (primaryItem && primaryItem.stripePaymentLink) {
+    return primaryItem.stripePaymentLink;
+  }
+  const stripeLinks = STORE_CONFIG?.stripeCheckoutLinks || STORE_CONFIG?.waveCheckoutLinks;
+  if (!stripeLinks) return '';
+  const bySku = stripeLinks.bySku || {};
+  const byTier = stripeLinks.byPriceTier || {};
 
   if (primaryItem && bySku[primaryItem.sku] && bySku[primaryItem.sku].trim()) {
     return bySku[primaryItem.sku].trim();
@@ -317,6 +357,15 @@ function resolveWaveCheckoutUrl(primaryItem, totalAmount) {
     return byTier[tierKey].trim();
   }
   return '';
+}
+
+function goDirectStripeCheckout() {
+  const totalAmount = CART.reduce((sum, i) => sum + i.product.price * i.qty, 0);
+  const primaryProduct = CART[0]?.product;
+  const checkoutUrl = resolveCheckoutUrl(primaryProduct, totalAmount);
+  if (checkoutUrl) {
+    window.location.href = checkoutUrl;
+  }
 }
 
 async function submitCheckout(e) {
@@ -370,9 +419,18 @@ async function submitCheckout(e) {
     });
   } catch (_) {}
 
-  // Check if Wave Checkout link is configured for this SKU or price tier
-  const waveUrl = resolveWaveCheckoutUrl(primaryProduct, totalAmount);
-  if (waveUrl) {
+  // Check if Stripe Payment Link or Wave Checkout link is configured for this SKU or price tier
+  const checkoutUrl = resolveCheckoutUrl(primaryProduct, totalAmount);
+  if (checkoutUrl) {
+    if (checkoutUrl.includes('buy.stripe.com')) {
+      const stripeParams = new URLSearchParams({
+        prefilled_email: customer.email,
+        client_reference_id: orderId
+      });
+      const separator = checkoutUrl.includes('?') ? '&' : '?';
+      window.location.href = `${checkoutUrl}${separator}${stripeParams.toString()}`;
+      return;
+    }
     const params = new URLSearchParams({
       first_name: customer.first_name,
       last_name: customer.last_name,
@@ -385,8 +443,8 @@ async function submitCheckout(e) {
       postal: customer.postal,
       country: 'US'
     });
-    const separator = waveUrl.includes('?') ? '&' : '?';
-    window.location.href = `${waveUrl}${separator}${params.toString()}`;
+    const separator = checkoutUrl.includes('?') ? '&' : '?';
+    window.location.href = `${checkoutUrl}${separator}${params.toString()}`;
     return;
   }
 
