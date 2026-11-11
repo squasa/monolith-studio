@@ -1,18 +1,18 @@
 {
   "brand": {
     "name": "Monolith Studio Co.",
-    "shortName": "Monolith",
+    "shortName": "Monolith Studio",
     "legalEntity": "Monolith Studio Co.",
-    "tagline": "Precision CNC-Machined Desktop Peripherals, Cases & Studio Hardware",
-    "heroTitle": "Monolithic CNC Hardware. Engineered to Endure.",
-    "heroSubtitle": "Small-batch Grade 5 titanium, 6061-T6 aerospace aluminum, magnesium alloy, and custom mechanical peripherals. Free tracked US shipping on every order.",
+    "tagline": "Metal Desk Gear, Keyboards & Everyday Hardware",
+    "heroTitle": "Solid metal desk gear, keyboards, and everyday hardware.",
+    "heroSubtitle": "Mechanical keyboards, ultralight mice, watch cases, and desk accessories made from aluminum, titanium, and steel. Shipped from our Los Angeles shop in 1–2 business days.",
     "supportEmail": "support@monolithstudio.co",
     "secondaryEmail": "cjha882026@outlook.com",
     "phone": "+1 (213) 555-0194",
     "address": "6515 S Crenshaw Blvd, Los Angeles, CA 90043, United States",
     "hours": "Monday – Friday, 9:00 AM – 5:00 PM PT",
-    "shippingPromise": "Free Tracked USPS / UPS / FedEx Ground Shipping (2–4 Business Days) — Dispatches within 24–48 Hours from Los Angeles, CA",
-    "warrantyPromise": "30-Day Studio Trial Guarantee & 1-Year Structural CNC Hardware Warranty",
+    "shippingPromise": "Free Tracked USPS / UPS / FedEx Shipping (2–4 Business Days) — Ships in 1–2 Days from Los Angeles, CA",
+    "warrantyPromise": "30-Day Returns & 1-Year Hardware Warranty",
     "logoImage": "images/products/monolith_studio_logo.jpg",
     "iconImage": "images/products/monolith_avatar_icon.jpg"
   },
@@ -45,18 +45,18 @@
   },
   "checkoutFields": [
     {
-      "name": "Address Line 1 (Street Address)",
+      "name": "Street Address",
       "key": "address",
       "type": "text",
       "required": true,
-      "placeholder": "e.g. 2716 Hilltop Haven Dr"
+      "placeholder": "6515 S Crenshaw Blvd"
     },
     {
-      "name": "Address Line 2 (Apt, Suite, Unit - Optional)",
+      "name": "Apt, Suite, Unit (Optional)",
       "key": "address2",
       "type": "text",
       "required": false,
-      "placeholder": "Apt 4B, Suite 200 (Optional)"
+      "placeholder": "Apt 308 (Optional)"
     },
     {
       "name": "City",
@@ -66,60 +66,61 @@
       "placeholder": "Los Angeles"
     },
     {
-      "name": "State / Province",
+      "name": "State",
       "key": "region",
       "type": "text",
       "required": true,
       "placeholder": "CA"
     },
     {
-      "name": "ZIP / Postal Code",
+      "name": "ZIP Code",
       "key": "postal",
       "type": "text",
       "required": true,
-      "placeholder": "90001"
+      "placeholder": "90043"
     },
     {
-      "name": "Phone Number (For delivery tracking updates)",
+      "name": "Phone Number",
       "key": "phone",
       "type": "tel",
       "required": true,
-      "placeholder": "(213) 555-0199"
+      "placeholder": "(213) 555-0194"
     }
   ],
   "products": [
     {
       "id": 1,
       "sku": "ML-PND-020",
-      "title": "Monolith™ CNC Machined Titanium Bolt-Action Studio Pen",
-      "category": "Desk Architecture",
-      "badge": "Grade 5 Titanium",
+      "title": "Titanium Bolt-Action Pen",
+      "category": "Desk Accessories",
+      "badge": "Titanium",
       "price": 20,
       "weightGrams": 180,
       "weightLbs": 0.4,
       "inStock": true,
-      "leadTime": "Ships in 24–48 hours",
+      "leadTime": "Ships in 1–2 days",
       "image": "images/products/item1_pen_dock.jpg",
       "gallery": [
         "images/products/item1_pen_dock.jpg"
       ],
-      "summary": "Precision-turned Grade 5 titanium bolt-action drafting pen featuring micro-grooved tactile grip rings, a smooth C-shaped bolt channel, and a milled stainless pocket clip.",
+      "summary": "Solid machined titanium pen with a smooth bolt-action mechanism and ribbed grip. Fits standard Pilot G2 and Parker-style refills.",
       "highlights": [
-        "Fluid C-Channel Bolt Action: One-piece machined internal carrier glides along a curved J/C-slot with a crisp mechanical lock and zero spring rattle.",
-        "Micro-Grooved Non-Slip Barrel: Concentric lathe-turned micro-ridges along the entire barrel provide effortless grip during long sketching and note-taking sessions.",
-        "Deep-Carry Milled Stainless Clip: Secured with dual flush-mounted Torx screws for reliable pocket and notebook carry.",
-        "Universal Rollerball & Gel Refill Fit: Ships pre-loaded with a smooth 0.5mm black archival gel ink cartridge (compatible with Pilot G2 & Parker-style refills)."
+        "Machined from solid Grade 5 titanium with a clean matte finish",
+        "Smooth bolt-action slider that locks firmly into place without rattling",
+        "Fine ribbed grip section so it feels balanced and won't slip in your hand",
+        "Ships with two 0.5mm black gel ink refills (one pre-installed)"
       ],
       "specs": {
-        "Material": "CNC-Turned Grade 5 Titanium (Raw Machined Finish)",
-        "Mechanism": "Curved Bolt-Action with Solid Titanium Thumb Stud",
-        "Dimensions": "134mm Length × 10.8mm Diameter",
-        "Package Weight": "180g (0.40 lbs)"
+        "Material": "Grade 5 Titanium (Matte Finish)",
+        "Mechanism": "Bolt-Action with Stainless Pocket Clip",
+        "Size": "134mm long × 10.8mm wide",
+        "Refill Type": "0.5mm Black Gel (Pilot G2 / Parker compatible)",
+        "Shipping Weight": "180g (0.40 lbs)"
       },
       "boxContents": [
-        "1× Monolith™ CNC Machined Titanium Bolt-Action Studio Pen",
-        "2× 0.5mm Black Archival Gel Ink Refills (1 Pre-Installed)",
-        "1× Monolith Studio Co. Specification Box"
+        "Titanium Bolt-Action Pen",
+        "2× 0.5mm Black Gel Ink Refills (1 installed)",
+        "Storage Box"
       ],
       "stripePaymentLink": "https://buy.stripe.com/eVq7sLaI35WFdDBbpN1sQ00",
       "stripeProductId": "prod_VbZTRsSu7Yhvkv",
@@ -128,34 +129,34 @@
     {
       "id": 2,
       "sku": "ML-GMP-030",
-      "title": "Monolith™ GlideMat Pro — Micro-Weave Precision Desk Pad (900×400mm)",
-      "category": "Desk Surfaces",
-      "badge": "Zero-Friction Weave",
+      "title": "GlideMat Large Desk Pad (900 × 400mm)",
+      "category": "Mice & Pads",
+      "badge": "900 × 400mm",
       "price": 30,
       "weightGrams": 380,
       "weightLbs": 0.84,
       "inStock": true,
-      "leadTime": "Ships in 24–48 hours",
+      "leadTime": "Ships in 1–2 days",
       "image": "images/products/item2_glidemat.jpg",
       "gallery": [
         "images/products/item2_glidemat.jpg"
       ],
-      "summary": "Large-format 900×400×4mm studio and gaming desk mat engineered with high-density micro-textured jacquard cloth, sub-surface flat-lock stitching, and a 4mm natural rubber base.",
+      "summary": "Full-desk black cloth mat with low-profile stitched edges and a thick 4mm rubber base that stays flat on your desk.",
       "highlights": [
-        "Calibrated X/Y Optical Tracking: High-density micro-weave surface delivers effortless glide for PTFE and magnesium mouse skates with pinpoint stopping power.",
-        "Recessed Sub-Surface Edge Stitching: Ultra-narrow flat-lock perimeter stitch sits flush with the pad surface to eliminate wrist irritation.",
-        "Spill-Repellent Nano Coating: Liquids bead up on contact and wipe clean without staining or altering surface glide.",
-        "4mm Dense Natural Rubber Core: Eliminates desk surface imperfections and dampens mechanical keyboard acoustics."
+        "Large 35.4\" × 15.7\" size fits both your keyboard and mouse with room to spare",
+        "Smooth, tight-weave cloth surface for consistent mouse movement",
+        "Low-profile stitched edges that won't fray or rub against your wrist",
+        "Water-resistant surface wipes clean easily if you spill a drink"
       ],
       "specs": {
-        "Dimensions": "900mm × 400mm × 4.0mm (35.4\" × 15.7\")",
-        "Surface Material": "High-Density Micro-Weave Jacquard Fabric (Obsidian Black)",
-        "Base Material": "4mm Non-Slip Natural Textured Rubber",
-        "Weight": "380g (0.84 lbs)"
+        "Size": "900 × 400 × 4mm (35.4\" × 15.7\")",
+        "Top Surface": "Smooth Woven Cloth (Black)",
+        "Base": "4mm Non-Slip Natural Rubber",
+        "Shipping Weight": "380g (0.84 lbs)"
       },
       "boxContents": [
-        "1× Monolith™ GlideMat Pro 900×400mm Precision Desk Pad",
-        "1× Rigid Cylinder Presentation & Storage Tube"
+        "GlideMat 900 × 400mm Desk Pad",
+        "Protective Storage Tube"
       ],
       "stripePaymentLink": "https://buy.stripe.com/eVqaEX2bx98RgPN1Pd1sQ01",
       "stripeProductId": "prod_VbZTF5psnj7qnG",
@@ -164,35 +165,35 @@
     {
       "id": 3,
       "sku": "ML-AWC-040",
-      "title": "Monolith™ 316L Stainless CNC Case for Apple Watch 45mm / 46mm",
-      "category": "CNC Watch Armor",
-      "badge": "5-Axis Milled",
+      "title": "Stainless Steel Case & Band for Apple Watch (45mm / 46mm)",
+      "category": "Apple Watch Cases",
+      "badge": "316L Stainless",
       "price": 40,
       "weightGrams": 150,
       "weightLbs": 0.33,
       "inStock": true,
-      "leadTime": "Ships in 24–48 hours",
+      "leadTime": "Ships in 1–2 days",
       "image": "images/products/item3_watch_aluminum.jpg",
       "gallery": [
         "images/products/item3_watch_aluminum.jpg"
       ],
-      "summary": "5-axis CNC-machined 316L brushed stainless steel protective exoskeleton and vulcanized FKM fluoroelastomer strap system for Apple Watch 45mm & 46mm.",
+      "summary": "Brushed stainless steel protective case with a soft black fluoroelastomer rubber band and folding clasp for Apple Watch 45mm and 46mm.",
       "highlights": [
-        "5-Axis CNC 316L Stainless Bezel: Hand-brushed silver stainless frame wraps your Apple Watch in a multi-piece architectural chassis.",
-        "8-Screw Exposed Bezel Architecture: Secured via precision flush-mounted bezel bolts with an internal shock-absorbing silicone gasket.",
-        "Tactile Crown & Side-Button Pass-Through: Machined metal crown guard and side actuator preserve smooth rotational feedback.",
-        "Vulcanized FKM Fluoroelastomer Strap: Dust-resistant, sweat-proof high-density black FKM rubber strap with a deployment clasp."
+        "Brushed 316L stainless steel frame protects the watch body and screen edges",
+        "Inner silicone liner cushions your watch against everyday bumps and scratches",
+        "Soft, sweat-resistant black rubber strap with a stainless folding clasp",
+        "Includes screwdriver and spare screws for quick 2-minute installation"
       ],
       "specs": {
-        "Compatibility": "Apple Watch 45mm / 46mm (Series 10, 11 & 9/8/7)",
-        "Case Material": "5-Axis CNC-Milled 316L Brushed Stainless Steel",
-        "Strap Material": "Vulcanized FKM Fluoroelastomer Rubber (Obsidian Black)",
-        "Package Weight": "150g (0.33 lbs)"
+        "Fits": "Apple Watch 45mm & 46mm (Series 7, 8, 9, 10, 11)",
+        "Case Material": "Brushed 316L Stainless Steel",
+        "Band Material": "Black Fluoroelastomer Rubber with Folding Clasp",
+        "Shipping Weight": "150g (0.33 lbs)"
       },
       "boxContents": [
-        "1× Monolith™ CNC Brushed Stainless Watch Case & Integrated FKM Strap",
-        "1× Internal Shock-Dampening Silicone Liner",
-        "1× Precision Assembly Driver + Spare Bezel Screws"
+        "Stainless Steel Watch Case & Attached Black Rubber Band",
+        "Silicone Inner Cushion Liner",
+        "Mini Screwdriver & Spare Screws"
       ],
       "stripePaymentLink": "https://buy.stripe.com/fZu00j6rN70JdDBctR1sQ02",
       "stripeProductId": "prod_VbZUKT7PI7AiYx",
@@ -201,38 +202,38 @@
     {
       "id": 4,
       "sku": "ML-AGM-050",
-      "title": "Monolith™ Magnesium X — 42g Ultralight Wireless Magnesium Alloy Mouse",
-      "category": "Precision Mice",
-      "badge": "Best Seller • Magnesium",
+      "title": "Magnesium X 42g Wireless Mouse",
+      "category": "Mice & Pads",
+      "badge": "42g Magnesium",
       "price": 50,
       "weightGrams": 230,
       "weightLbs": 0.51,
       "inStock": true,
-      "leadTime": "Ships in 24–48 hours",
+      "leadTime": "Ships in 1–2 days",
       "image": "images/products/monolith_mouse_silver_cover.jpg",
       "gallery": [
         "images/products/monolith_mouse_silver_cover.jpg",
         "images/products/monolith_mouse_silver_hover.jpg"
       ],
-      "summary": "Featherweight 42-gram CNC-machined magnesium alloy exoskeleton wireless mouse featuring a PAW3395 26,000 DPI optical sensor, optical microswitches, and tri-mode connectivity.",
+      "summary": "Ultralight 42-gram wireless mouse with a silver magnesium alloy shell, PAW3395 optical sensor, and 2.4GHz, Bluetooth, and USB-C wired modes.",
       "highlights": [
-        "Low-Density Magnesium Alloy Exoskeleton: Precision-milled metallic silver magnesium shell delivers cold-to-the-touch rigidity at just 42 grams.",
-        "Tactile Grooved Scroll Wheel: Lightweight rubberized metal-core scroll wheel with defined mechanical detents.",
-        "Flagship PAW3395 26,000 DPI Sensor: 650 IPS tracking speed and 50G acceleration with 2.4GHz low-latency wireless, Bluetooth 5.3, and paracord USB-C wired modes.",
-        "Crisp Optical Microswitches: Rated for 80 million actuations with zero double-click degradation and virgin-grade 100% PTFE rounded skates."
+        "Weighs only 42 grams with a sturdy, cool-to-the-touch magnesium alloy shell",
+        "PAW3395 optical sensor (up to 26,000 DPI) for fast, accurate cursor tracking",
+        "Use it wirelessly with the 2.4GHz USB receiver, via Bluetooth, or plugged in via USB-C",
+        "Crisp optical switches and smooth PTFE glide feet (extra set of feet included)"
       ],
       "specs": {
-        "Net Mouse Weight": "42g ± 2g (230g boxed parcel weight)",
-        "Shell Material": "CNC-Machined Magnesium Alloy (Anodized Metallic Silver)",
-        "Sensor": "PAW3395 Flagship Optical (Up to 26,000 DPI, 650 IPS)",
-        "Connectivity": "2.4GHz Low-Latency Wireless / Bluetooth 5.3 / Paracord USB-C",
-        "Dimensions": "122mm × 62mm × 37mm (Symmetrical Medium)"
+        "Mouse Weight": "42g (230g boxed shipping weight)",
+        "Shell Material": "Machined Magnesium Alloy (Silver)",
+        "Sensor": "PixArt PAW3395 Optical (up to 26,000 DPI)",
+        "Connection": "2.4GHz USB Wireless / Bluetooth 5.3 / USB-C Wired",
+        "Size": "122 × 62 × 37mm"
       },
       "boxContents": [
-        "1× Monolith™ Magnesium X Ultralight Silver Wireless Mouse",
-        "1× 2.4GHz Low-Latency USB-C Receiver & Desk Extender Adapter",
-        "1× 1.8m Ultra-Flexible Braided Paracord Charging/Data Cable",
-        "1× Spare Set of 100% Virgin PTFE Glide Skates"
+        "Magnesium X 42g Silver Wireless Mouse",
+        "2.4GHz USB Wireless Receiver & Desk Adapter",
+        "Braided USB-C Charging Cable",
+        "Extra Set of PTFE Mouse Feet"
       ],
       "stripePaymentLink": "https://buy.stripe.com/dRmdR95nJbgZgPNfG31sQ03",
       "stripeProductId": "prod_VbZULcbYDDnfrg",
@@ -241,36 +242,35 @@
     {
       "id": 5,
       "sku": "ML-BRC-060",
-      "title": "Monolith™ PVD Gold & Brass CNC Case for Apple Watch (45mm / 49mm)",
-      "category": "CNC Watch Armor",
-      "badge": "18K Gold PVD CNC",
+      "title": "Gold & Brass Case for Apple Watch (45mm / 49mm)",
+      "category": "Apple Watch Cases",
+      "badge": "Gold PVD Finish",
       "price": 60,
       "weightGrams": 240,
       "weightLbs": 0.53,
       "inStock": true,
-      "leadTime": "Ships in 24–48 hours",
+      "leadTime": "Ships in 1–2 days",
       "image": "images/products/item5_watch_brass.jpg",
       "gallery": [
         "images/products/item5_watch_brass.jpg"
       ],
-      "summary": "Heavy-duty 5-axis CNC-milled gold PVD stainless & brass protective armor case and vulcanized FKM rubber strap built for Apple Watch 45mm & 49mm.",
+      "summary": "Brushed gold-finish stainless and brass case with a black rubber strap for Apple Watch 45mm, 46mm, and 49mm Ultra.",
       "highlights": [
-        "Hand-Brushed Gold PVD CNC Chassis: Milled from solid billet metal with a satin-brushed gold bezel and polished chamfered edges.",
-        "Reinforced Crown & Side-Button Guard: Precision-shrouded side geometry protects your Apple Watch housing against daily impacts.",
-        "Secure 4-Screw Compression Backplate: Allows full heart-rate sensor contact and unrestricted magnetic wireless charging.",
-        "High-Density FKM Tactical Strap: Paired with a custom ridged black fluoroelastomer strap and matching gold-tone buckle hardware."
+        "Brushed gold PVD metal case with raised edges to guard the screen and crown",
+        "Open backplate keeps heart-rate sensors and magnetic charging working normally",
+        "Ridged black rubber strap with a matching gold-tone buckle",
+        "Comes with silicone liners, screwdriver, and spare screws"
       ],
       "specs": {
-        "Compatibility": "Apple Watch 45mm / 46mm & Ultra 49mm",
-        "Case Material": "5-Axis CNC-Machined Stainless & Brass with Gold PVD Finish",
-        "Strap": "Ridged FKM Fluoroelastomer with Matching Buckle (Fits 150–215mm wrists)",
-        "Package Weight": "240g (0.53 lbs)"
+        "Fits": "Apple Watch 45mm / 46mm & Ultra 49mm",
+        "Case Material": "Stainless Steel & Brass with Gold PVD Finish",
+        "Band": "Black Fluoroelastomer Rubber (fits 150–215mm wrists)",
+        "Shipping Weight": "240g (0.53 lbs)"
       },
       "boxContents": [
-        "1× Monolith™ Gold PVD CNC Case for Apple Watch",
-        "1× Integrated FKM Rubber Strap with Gold-Tone Hardware",
-        "2× Internal Silicone Shock Buffers",
-        "1× Precision Screwdriver & Spare Fastener Kit"
+        "Gold PVD Watch Case with Black Rubber Strap",
+        "2× Silicone Inner Liners",
+        "Mini Screwdriver & Extra Screws"
       ],
       "stripePaymentLink": "https://buy.stripe.com/fZu14n4jF84NeHF3Xl1sQ04",
       "stripeProductId": "prod_VbZUTGfQw1ZNTY",
@@ -279,38 +279,38 @@
     {
       "id": 6,
       "sku": "ML-LMB-070",
-      "title": "Monolith™ Luminabar Pro — Asymmetric CNC Aluminum Monitor Light Bar",
-      "category": "Studio Lighting",
-      "badge": "CRI 97+ + Wireless Puck",
+      "title": "Luminabar Aluminum Monitor Light Bar",
+      "category": "Lighting & Docks",
+      "badge": "Includes Wireless Dial",
       "price": 70,
       "weightGrams": 420,
       "weightLbs": 0.93,
       "inStock": true,
-      "leadTime": "Ships in 24–48 hours",
+      "leadTime": "Ships in 1–2 days",
       "image": "images/products/monolith_luminabar_cover.png",
       "gallery": [
         "images/products/monolith_luminabar_cover.png",
         "images/products/monolith_luminabar_hover.png"
       ],
-      "summary": "Anodized aluminum over-monitor task lamp with zero-glare asymmetric optical projection, Ra97+ color accuracy, stepless 2700K–6500K color temperature, and a 2.4GHz rotary wireless desk puck.",
+      "summary": "Black aluminum monitor light bar that lights up your desk without reflecting on your screen. Controlled with a wireless desktop dial.",
       "highlights": [
-        "Zero-Glare Asymmetric Optical Lens: Precision 45-degree directional light beam illuminates your desk and keyboard with zero reflection on flat or curved monitors.",
-        "Wireless Rotary Desktop Control Puck: Adjust brightness and warm-to-cool color temperature (2700K–6500K) effortlessly with a heavy anodized aluminum desktop dial.",
-        "Studio-Grade Ra97+ Full-Spectrum LEDs: True-to-life color rendering reduces eye fatigue during late-night CAD, coding, and editing sessions.",
-        "Weighted Gravity Counterbalance Clamp: Fits flat and curved displays from 5mm to 45mm thick in one second without springs or clamping pressure."
+        "Angled beam lights your keyboard and desk while keeping zero glare off your monitor",
+        "Wireless aluminum desk knob lets you tap to toggle power and twist to change brightness or warmth",
+        "Adjustable color temperature from warm indoor light (2700K) to crisp daylight (6500K)",
+        "Weighted mount rests on top of flat or curved monitors (5–45mm thick) in seconds"
       ],
       "specs": {
-        "Light Bar Body": "Anodized Matte Obsidian Extruded 6063 Aluminum (448mm length)",
-        "Color Rendering Index": "CRI Ra97+ (80 Full-Spectrum Dual-Tone LEDs)",
-        "Color Temperature": "2700K Warm Studio to 6500K Daylight (Stepless)",
-        "Power Input": "USB-C 5V/1A (2.4GHz Wireless Rotary Puck Included)",
-        "Package Weight": "420g (0.93 lbs)"
+        "Body": "Anodized Black Aluminum (448mm wide)",
+        "Light Quality": "Ra97+ High Color Accuracy LEDs",
+        "Color Range": "2700K Warm to 6500K Cool White",
+        "Power": "USB-C Cable (Wireless Control Dial Included)",
+        "Shipping Weight": "420g (0.93 lbs)"
       },
       "boxContents": [
-        "1× Monolith™ Luminabar Pro CNC Aluminum Monitor Light Bar",
-        "1× Wireless Rotary Desktop Control Puck (Batteries Pre-Installed)",
-        "1× Counterweighted Gravity Monitor Mount",
-        "1× 1.8m Braided USB-C Power Cable"
+        "Luminabar Aluminum Monitor Light Bar",
+        "Wireless Desktop Control Dial (Batteries Included)",
+        "Weighted Monitor Rest",
+        "1.8m Braided USB-C Power Cable"
       ],
       "stripePaymentLink": "https://buy.stripe.com/4gM4gz9DZacV6b91Pd1sQ05",
       "stripeProductId": "prod_VbZUz4uI4KpF5Q",
@@ -319,37 +319,37 @@
     {
       "id": 7,
       "sku": "ML-MCP-080",
-      "title": "Monolith™ Q0 Pro — CNC Aluminum QMK/VIA Wireless Custom Macro & Number Pad",
-      "category": "Mechanical Input",
-      "badge": "QMK / VIA • Magnetic / Mechanical",
+      "title": "Q0 Pro Aluminum Wireless Number & Macro Pad",
+      "category": "Keyboards & Keypads",
+      "badge": "QMK / VIA Wireless",
       "price": 80,
       "weightGrams": 350,
       "weightLbs": 0.77,
       "inStock": true,
-      "leadTime": "Ships in 24–48 hours",
+      "leadTime": "Ships in 1–2 days",
       "image": "images/products/item7_macropad.jpg",
       "gallery": [
         "images/products/item7_macropad.jpg"
       ],
-      "summary": "Heavy 6063 CNC-machined aluminum 26-key wireless mechanical number & macro pad featuring a dedicated M1–M5 macro column, clickable aluminum rotary encoder knob, and QMK/VIA support.",
+      "summary": "Heavy CNC aluminum wireless number pad with 5 extra macro keys on the left, a metal rotary knob, and hot-swappable mechanical switches.",
       "highlights": [
-        "Solid 6063 CNC Aluminum Body: Milled from solid aluminum billet, polished, anodized, and sandblasted through 24 manufacturing stages.",
-        "Dedicated Macro Column + Rotary Knob: Features 5 left-side macro keys (M1–M5), top shortcut keys, and a programmable aluminum rotary dial for zoom, scrub, or volume.",
-        "Tri-Mode 2.4GHz / Bluetooth 5.3 / USB-C: Connect wirelessly across up to 3 workstation devices or run wired at 1000Hz polling.",
-        "Hot-Swappable & Instant VIA Remapping: Customize every key, macro string, and rotary action directly in your web browser via VIA/QMK."
+        "Solid anodized aluminum case that stays firmly planted on your desk",
+        "Full number pad plus 5 dedicated macro keys (M1–M5) and a clickable metal knob for volume or zoom",
+        "Connects via 2.4GHz wireless, Bluetooth (up to 3 devices), or USB-C cable",
+        "Remap any key or shortcut directly in your web browser using VIA"
       ],
       "specs": {
-        "Case Material": "CNC-Machined 6063 Anodized Aluminum (Obsidian Black)",
-        "Layout": "26-Key Numpad + 5 Dedicated Macro Keys (M1–M5) + 1 Aluminum Rotary Knob",
-        "Connectivity": "2.4GHz Wireless / Bluetooth 5.3 / Wired USB Type-C",
-        "Firmware": "Open-Source QMK / Web Launcher & VIA Programmable",
-        "Package Weight": "350g (0.77 lbs)"
+        "Case": "Machined 6063 Aluminum (Black)",
+        "Layout": "26 Keys + 5 Macro Keys + Metal Rotary Knob",
+        "Connection": "2.4GHz Wireless / Bluetooth 5.3 / USB-C",
+        "Key Customization": "Hot-Swappable Switches & VIA / QMK Browser Remapping",
+        "Shipping Weight": "350g (0.77 lbs)"
       },
       "boxContents": [
-        "1× Monolith™ Q0 Pro Fully Assembled CNC Aluminum Macro & Number Pad",
-        "1× 2.4GHz Type-A/C Wireless Receiver",
-        "1× Braided Type-C to Type-C Cable + Type-A Adapter",
-        "1× Combination Keycap & Switch Puller + Hex Screwdriver"
+        "Q0 Pro Aluminum Wireless Number & Macro Pad",
+        "2.4GHz Wireless Receiver",
+        "Braided USB-C Cable & Adapter",
+        "Keycap & Switch Puller"
       ],
       "stripePaymentLink": "https://buy.stripe.com/7sY3cv7vRfxf8jh3Xl1sQ06",
       "stripeProductId": "prod_VbZUGSMoSY0THe",
@@ -358,36 +358,36 @@
     {
       "id": 8,
       "sku": "ML-MLS-090",
-      "title": "Monolith™ Dual Dock Pro — CNC Aluminum Under-Laptop Workstation Stand & USB-C Hub",
-      "category": "Desk Architecture",
-      "badge": "9-Port CNC Dock + Stand",
+      "title": "Dual Dock Aluminum Laptop Stand & USB-C Hub",
+      "category": "Lighting & Docks",
+      "badge": "Stand + 9-Port Hub",
       "price": 90,
       "weightGrams": 480,
       "weightLbs": 1.06,
       "inStock": true,
-      "leadTime": "Ships in 24–48 hours",
+      "leadTime": "Ships in 1–2 days",
       "image": "images/products/item8_laptop_stand.jpg",
       "gallery": [
         "images/products/item8_laptop_stand.jpg"
       ],
-      "summary": "Space-gray CNC aluminum ergonomic under-laptop workstation stand with integrated dual USB-C host connector, 2× HDMI 2.0, DisplayPort 1.4, Gigabit Ethernet, 10Gbps USB-A/C data, and NVMe SSD enclosure.",
+      "summary": "Space-gray aluminum under-laptop stand with a built-in USB-C dock: dual HDMI, DisplayPort, Gigabit Ethernet, USB 3.2 ports, 100W charging, and an M.2 SSD bay.",
       "highlights": [
-        "Ergonomic Elevation + Full Workstation I/O: Cradles your MacBook or USB-C laptop at an elevated viewing angle while routing all cables cleanly out the rear.",
-        "Triple-Monitor Display Output: Equipped with 2× 4K/60Hz HDMI ports and 1× DisplayPort 1.4 port for multi-display studio setups.",
-        "Built-In M.2 NVMe / SATA SSD Bay: Bottom tool-free compartment accepts an M.2 SSD up to 4TB for instant Time Machine backups and project storage.",
-        "10Gbps USB-C/A + Gigabit Ethernet + 100W PD: Includes RJ45 Gigabit LAN, 10Gbps and 5Gbps USB data ports, and 100W USB-C Power Delivery pass-through."
+        "Props your laptop up at a comfortable typing angle and keeps all your cables plugged in along the back",
+        "2× HDMI 2.0 ports and 1× DisplayPort 1.4 for hooking up external 4K monitors",
+        "Built-in slot underneath lets you install an M.2 NVMe or SATA SSD (up to 4TB) for extra storage",
+        "Includes Gigabit Ethernet, fast USB-A/USB-C ports, and up to 100W USB-C pass-through charging"
       ],
       "specs": {
-        "Enclosure Material": "Anodized Space Gray CNC Aluminum with Non-Slip Silicone Pads",
-        "Video Outputs": "2× HDMI 2.0 (4K@60Hz) + 1× DisplayPort 1.4 (4K@60Hz)",
-        "Data & Network Ports": "1× RJ45 Gigabit Ethernet, 2× USB-C (10Gbps / 5Gbps), 2× USB-A, M.2 SSD Slot",
-        "Power Delivery": "Up to 100W USB-C PD Pass-Through + Dedicated On/Off Switch",
-        "Package Weight": "480g (1.06 lbs)"
+        "Material": "Anodized Space Gray Aluminum with Non-Slip Silicone Pads",
+        "Monitor Outputs": "2× HDMI 2.0 (4K 60Hz) + 1× DisplayPort 1.4",
+        "Ports & Storage": "Gigabit Ethernet, 2× USB-C, 2× USB-A, M.2 SSD Slot",
+        "Power Delivery": "Up to 100W USB-C Pass-Through Charging",
+        "Shipping Weight": "480g (1.06 lbs)"
       },
       "boxContents": [
-        "1× Monolith™ Dual Dock Pro CNC Aluminum Workstation Stand",
-        "1× Integrated Dual USB-C Host Connector Cable",
-        "1× Thermal Silicone Pad & Screw for M.2 SSD Installation"
+        "Dual Dock Aluminum Laptop Stand & Hub",
+        "Attached Dual USB-C Host Cable",
+        "Thermal Pad & Screw for M.2 SSD"
       ],
       "stripePaymentLink": "https://buy.stripe.com/aFa7sLdUf5WF431ctR1sQ07",
       "stripeProductId": "prod_VbZUpcBzxQF77r",
@@ -396,38 +396,38 @@
     {
       "id": 9,
       "sku": "ML-AKB-120",
-      "title": "Monolith™ Q14 Pro — 96% Alice Split-Layout CNC Aluminum Wireless Mechanical Keyboard",
-      "category": "Mechanical Input",
-      "badge": "Alice CNC + Left Numpad",
+      "title": "Q14 Pro Aluminum Alice Split Wireless Mechanical Keyboard",
+      "category": "Keyboards & Keypads",
+      "badge": "Alice Split + Left Numpad",
       "price": 120,
       "weightGrams": 620,
       "weightLbs": 1.37,
       "inStock": true,
-      "leadTime": "Ships in 24–48 hours",
+      "leadTime": "Ships in 1–2 days",
       "image": "images/products/monolith_keyboard_cover.jpg",
       "gallery": [
         "images/products/monolith_keyboard_cover.jpg",
         "images/products/monolith_keyboard_hover.jpg"
       ],
-      "summary": "Full-metal 6063 CNC-machined aluminum 96% ergonomic Alice-layout wireless mechanical keyboard featuring a southpaw left-hand number pad, double-gasket mount, rotary encoder knob, and QMK/VIA support.",
+      "summary": "Full-aluminum 96% Alice split mechanical keyboard with a left-side number pad, metal volume knob, gasket mount, and wireless/wired connectivity.",
       "highlights": [
-        "Ergonomic Alice Split + Left-Side Numpad: Angled split alphanumeric cluster aligns wrists naturally while placing the full number pad on the left to free up right-hand mouse space.",
-        "Solid 6063 CNC-Machined Aluminum Chassis: Heavyweight anodized aluminum body with double-gasket silicone mounting and internal IXPE/PET/Latex acoustic foam layers.",
-        "Tri-Mode 2.4GHz (1000Hz) / Bluetooth 5.1 / USB-C: Seamlessly switch between Mac, Windows, and Linux with included OS toggle switch and extra keycaps.",
-        "Full Hot-Swap PCB & Programmable Rotary Knob: Pre-lubed tactile/linear mechanical switches, screw-in PCB stabilizers, and double-shot PBT keycaps."
+        "Angled split key layout keeps your wrists straight, while the left-side number pad gives your right hand more room for the mouse",
+        "Heavy machined aluminum case with gasket mounting and internal foam for a deep, cushioned typing sound",
+        "Connects via 2.4GHz wireless, Bluetooth 5.1, or USB-C cable (includes Mac and Windows keycaps)",
+        "Hot-swappable switch sockets, PBT keycaps, and easy browser key remapping via VIA"
       ],
       "specs": {
-        "Chassis": "Full 6063 CNC-Machined Anodized Aluminum (Carbon Black)",
-        "Layout": "96% Ergonomic Alice Split with Southpaw Left-Hand Numpad & Rotary Knob",
-        "Mounting Style": "Double-Gasket Mount with Multi-Layer Acoustic Foam",
-        "Connectivity": "2.4GHz Wireless (1000Hz) / Bluetooth 5.1 / Wired USB-C (QMK/VIA)",
-        "Package Weight": "620g (1.37 lbs)"
+        "Case": "Machined 6063 Aluminum (Black)",
+        "Layout": "96% Alice Split with Left-Side Numpad & Rotary Knob",
+        "Mount": "Gasket Mount with Sound-Dampening Foam",
+        "Connection": "2.4GHz Wireless / Bluetooth 5.1 / USB-C Wired",
+        "Shipping Weight": "620g (1.37 lbs)"
       },
       "boxContents": [
-        "1× Monolith™ Q14 Pro Fully Assembled CNC Aluminum Alice Keyboard",
-        "1× 2.4GHz Type-A Receiver + Extension Adapter",
-        "1× Braided Type-C Cable + Mac/Windows Extra PBT Keycaps",
-        "1× Switch Puller, Keycap Puller & Hex Allen Key"
+        "Q14 Pro Aluminum Alice Mechanical Keyboard",
+        "2.4GHz Wireless USB Receiver",
+        "Braided USB-C Cable & Mac/Windows Extra Keycaps",
+        "Switch & Keycap Puller"
       ],
       "stripePaymentLink": "https://buy.stripe.com/00w6oH2bx70JdDB3Xl1sQ08",
       "stripeProductId": "prod_VbZUfOzg0BKN1t",
@@ -436,38 +436,38 @@
     {
       "id": 10,
       "sku": "ML-PKT-150",
-      "title": "Monolith™ Pocket 35 — Dual-Analog Vertical Retro Gaming Handheld Console",
-      "category": "Flagship Hardware",
-      "badge": "Flagship • 3.5\" IPS + Dual Sticks",
+      "title": "Pocket 35 Retro Handheld Game Console",
+      "category": "Handhelds",
+      "badge": "3.5\" IPS + 64GB Card",
       "price": 150,
       "weightGrams": 450,
       "weightLbs": 0.99,
       "inStock": true,
-      "leadTime": "Ships in 24–48 hours",
+      "leadTime": "Ships in 1–2 days",
       "image": "images/products/monolith_pocket_silver_cover.jpg",
       "gallery": [
         "images/products/monolith_pocket_silver_cover.jpg",
         "images/products/monolith_pocket_silver_hover.jpg"
       ],
-      "summary": "Precision-molded retro gray vertical handheld console featuring a full-laminated 3.5-inch IPS 640×480 display, dual Hall-effect 3D analog sticks, flared rear L1/L2/R1/R2 shoulder triggers, and open-source Linux OS.",
+      "summary": "Compact vertical retro handheld console with a sharp 3.5-inch IPS screen, dual analog sticks, rear shoulder buttons, and a 64GB microSD card.",
       "highlights": [
-        "3.5-Inch OCA Full-Laminated IPS Display: Razor-sharp 640×480 resolution with 4:3 integer scaling for authentic retro pixel geometry and wide viewing angles.",
-        "Dual Analog Joysticks + Flared Rear Triggers: Equipped with recessed dual 3D analog thumbsticks and ergonomic rear L1/L2/R1/R2 triggers for comfortable two-handed play.",
-        "Quad-Core 64-Bit Processor & Open Linux OS: Runs over 20 classic console and arcade formats smoothly with instant save-states, sleep/resume, and custom themes.",
-        "3500mAh Li-Po Battery & USB-C OTG: Delivers up to 7 hours of continuous gameplay per charge with dual microSD expansion slots (64GB card included) and 3.5mm audio jack."
+        "Bright 3.5-inch laminated IPS screen (640×480) with classic 4:3 aspect ratio",
+        "Dual analog thumbsticks, classic D-pad, and comfortable rear L1/L2/R1/R2 shoulder triggers",
+        "3500mAh rechargeable battery gives 6–7 hours of play time and charges via USB-C",
+        "Comes ready to play with a 64GB microSD card, glass screen protector, and charging cable"
       ],
       "specs": {
-        "Finish": "Retro DMG Gray Matte Shell with Burgundy/Black ABXY Controls",
-        "Display": "3.5-Inch OCA Full-Laminated IPS (640×480, 4:3 Aspect Ratio)",
-        "Controls": "Precision D-Pad, Dual 3D Analog Joysticks + Rear L1/L2/R1/R2 Triggers",
-        "I/O & Battery": "USB-C Fast Charge/OTG, MicroSD Slot (64GB Included), 3.5mm Jack, 3500mAh Battery",
-        "Package Weight": "450g (0.99 lbs)"
+        "Color": "Retro Gray with Burgundy & Black Buttons",
+        "Screen": "3.5-Inch IPS Display (640 × 480, 4:3)",
+        "Controls": "D-Pad, Dual Analog Sticks & Rear Shoulder Buttons",
+        "Battery & Storage": "3500mAh Battery (USB-C), 64GB MicroSD Included, 3.5mm Headphone Jack",
+        "Shipping Weight": "450g (0.99 lbs)"
       },
       "boxContents": [
-        "1× Monolith™ Pocket 35 Retro Gray Vertical Handheld Console",
-        "1× 64GB High-Speed MicroSD Card (Linux OS Pre-Installed)",
-        "1× Tempered 9H Glass Screen Protector",
-        "1× USB-C Charging Cable & User Manual"
+        "Pocket 35 Retro Handheld Console",
+        "64GB MicroSD Card (Pre-Installed)",
+        "Glass Screen Protector",
+        "USB-C Charging Cable"
       ],
       "stripePaymentLink": "https://buy.stripe.com/cNi28r7vR84N2YX2Th1sQ09",
       "stripeProductId": "prod_VbZUoT2GPMtOHM",

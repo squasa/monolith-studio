@@ -89,15 +89,15 @@ function renderProducts() {
         <span class="product-sku-tag">${p.sku}</span>
       </div>
       <div class="product-body">
-        <div class="product-category">${p.category} • ${p.weightGrams}g Parcel</div>
+        <div class="product-category">${p.category}</div>
         <h3 class="product-title" onclick="openProductModal(${p.id})">${p.title}</h3>
         <p class="product-summary">${p.summary}</p>
         <div class="product-meta-row">
           <span class="product-price">$${p.price.toFixed(2)}</span>
-          <span class="product-stock">● In Stock • Ships in 24–48h</span>
+          <span class="product-stock">● In Stock • Ships in 1–2 Days</span>
         </div>
         <div class="product-actions">
-          <button class="btn-outline" onclick="openProductModal(${p.id})">View Specs</button>
+          <button class="btn-outline" onclick="openProductModal(${p.id})">Details</button>
           <button class="btn-buy" onclick="buyNow(${p.id})">Buy Now — $${p.price}</button>
         </div>
       </div>
@@ -135,38 +135,33 @@ function openProductModal(productId) {
         <img id="modal-main-photo" class="main-photo" src="${p.image}" alt="${p.title}" />
         ${thumbsHtml}
         <div style="margin-top:16px; background:#f8f9fb; border:1px solid #e2e8f0; padding:14px 16px; border-radius:10px; font-size:13px; color:#475569; line-height:1.55;">
-          <strong style="color:#0f172a; display:block; margin-bottom:3px;">🛡️ Monolith Studio Hardware Guarantee</strong>
-          Includes Free Tracked USPS / UPS / FedEx Shipping (dispatches within 24–48h from Los Angeles), 30-Day Studio Satisfaction Trial, and 1-Year Structural CNC Warranty.
+          <strong style="color:#0f172a; display:block; margin-bottom:3px;">🛡️ Free US Shipping &amp; 30-Day Returns</strong>
+          Ships from Los Angeles in 1–2 business days with USPS, UPS, or FedEx tracking. Covered by 30-day returns and a 1-year warranty.
         </div>
       </div>
       <div>
         <div style="font-size:12px; font-weight:600; color:#64748b; text-transform:uppercase; letter-spacing:0.05em;">
-          ${p.category} • SKU: <span style="font-family:var(--font-mono);">${p.sku}</span>
+          ${p.category} • <span style="font-family:var(--font-mono);">${p.sku}</span>
         </div>
         <h2 style="font-size:24px; font-weight:800; margin:6px 0 12px; line-height:1.25; letter-spacing:-0.02em;">${p.title}</h2>
         <div style="display:flex; align-items:center; gap:14px; margin-bottom:18px; flex-wrap:wrap;">
-          <span style="font-family:var(--font-display); font-size:28px; font-weight:800; letter-spacing:-0.02em; font-variant-numeric:tabular-nums;">$${p.price.toFixed(2)} USD</span>
+          <span style="font-family:var(--font-display); font-size:28px; font-weight:800; letter-spacing:-0.02em; font-variant-numeric:tabular-nums;">$${p.price.toFixed(2)}</span>
           <span style="background:#ecfdf5; color:#047857; font-size:12px; font-weight:600; padding:4px 10px; border-radius:99px;">
-            ● In Stock — Free 2–4 Day US Shipping
+            ● In Stock — Free US Shipping
           </span>
         </div>
 
-        <div class="shipping-notice-banner">
-          <strong>📦 Direct Los Angeles Studio Fulfillment</strong>
-          Inspected and packed in protective high-density foam at 6515 S Crenshaw Blvd, Los Angeles. Live USPS, UPS, or FedEx tracking is emailed upon dispatch.
-        </div>
+        <p style="font-size:14.5px; color:#334155; margin-bottom:18px; line-height:1.6;">${p.summary}</p>
 
-        <p style="font-size:14px; color:#334155; margin-bottom:16px; line-height:1.6;">${p.summary}</p>
-
-        <h4 style="font-size:12.5px; text-transform:uppercase; letter-spacing:0.05em; color:#475569; margin-bottom:8px;">Engineering Highlights</h4>
+        <h4 style="font-size:12.5px; text-transform:uppercase; letter-spacing:0.05em; color:#475569; margin-bottom:8px;">Features</h4>
         <ul style="padding-left:18px; font-size:13.5px; color:#334155; margin-bottom:18px; line-height:1.55;">
           ${highlightsHtml}
         </ul>
 
-        <h4 style="font-size:12.5px; text-transform:uppercase; letter-spacing:0.05em; color:#475569;">Technical Specifications</h4>
+        <h4 style="font-size:12.5px; text-transform:uppercase; letter-spacing:0.05em; color:#475569;">Specs</h4>
         <div class="spec-list">${specsHtml}</div>
 
-        <h4 style="font-size:12.5px; text-transform:uppercase; letter-spacing:0.05em; color:#475569; margin:14px 0 6px;">Included in the Box</h4>
+        <h4 style="font-size:12.5px; text-transform:uppercase; letter-spacing:0.05em; color:#475569; margin:14px 0 6px;">In the Box</h4>
         <ul style="padding-left:18px; font-size:13.5px; color:#334155; margin-bottom:24px; line-height:1.55;">
           ${boxHtml}
         </ul>
