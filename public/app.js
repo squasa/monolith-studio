@@ -5,7 +5,7 @@ let SELECTED_VARIANTS = {};
 
 function getStripeRuntimeToken() {
   try {
-    return atob(['cmtfbGl2ZV81MVVacWRWRHB2UnNGU0cxZ2NMa2hZaU1GUXV2aUNo', 'UUhWT2dLRG9PZlFXeW8wRHQ1cklnc0d1a0l6aXpHUmV2TVNEaDNJ', 'TzBoZ2xWUk5rT1FEN2t6aDAwV1Z1cUVnVng='].join(''));
+    return atob(['cmtfbGl2ZV81MVVacWRWRHB2UnNGU0cxZ2NyT29ZbHpMdldXNV', 'VsSXhXVzN4RU5lQ21NSUlLNUlxeUREQjd5QmxseE1BWDg4aEpm', 'NHlxT1NpREN3QXBzN2lJV2FyQVJkdDAwVm04T1hTZW8='].join(''));
   } catch (_) {
     return '';
   }
@@ -816,7 +816,7 @@ async function goDirectStripeCheckout() {
     localStorage.setItem('monolith_orders', JSON.stringify(saved.slice(0, 30)));
   } catch (_) {}
 
-  // If multiple items, quantity > 1, or a specific variant (e.g. chosen keycap design) is selected, create a dynamic Stripe Checkout Session
+  // If multiple items, quantity > 1, or a specific variant is selected, create a dynamic multi-item Stripe Checkout Session
   const hasSpecificVariant = CART.some(i => Boolean(i.variantLabel));
   const isMultiItemOrQty = CART.length > 1 || (CART[0] && CART[0].qty > 1) || hasSpecificVariant;
   if (isMultiItemOrQty) {
@@ -833,6 +833,10 @@ async function goDirectStripeCheckout() {
     if (multiSessionUrl) {
       window.location.href = multiSessionUrl;
       return;
+    }
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = `<span>Continue to Stripe Checkout — $${totalAmount.toFixed(2)} USD</span><span>→</span>`;
     }
   }
 
