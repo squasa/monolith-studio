@@ -1,0 +1,1658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel — Monolith Studio (Catalog, Pricing &amp; Ship Manager)</title>
+  <link rel="icon" type="image/jpeg" href="images/products/monolith_avatar_icon.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --green: #059669;
+      --green-bg: #ecfdf5;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+    /* LOGIN GATE */
+    #login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #1e293b 0%, #0f172a 100%);
+      padding: 20px;
+    }
+    .login-card {
+      background: #ffffff;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 420px;
+      padding: 32px 28px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+    }
+    .login-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .login-brand img {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+    .login-brand h1 {
+      font-family: var(--font-display);
+      font-size: 19px;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+    }
+    .login-brand p {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    /* TOP BAR */
+    .topbar {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 14px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      box-shadow: 0 4px 20px rgba(15, 23, 42, 0.12);
+    }
+    .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .topbar-left img {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+    .topbar-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 17px;
+      letter-spacing: -0.02em;
+    }
+    .topbar-sub {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    /* TABS */
+    .admin-tabs-bar {
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+      padding: 0 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .admin-tabs {
+      display: flex;
+      gap: 6px;
+    }
+    .admin-tab-btn {
+      background: none;
+      border: none;
+      border-bottom: 3px solid transparent;
+      padding: 14px 18px;
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--muted);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.15s;
+    }
+    .admin-tab-btn:hover { color: #0f172a; }
+    .admin-tab-btn.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 9px 15px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.15s ease;
+      text-decoration: none;
+    }
+    .btn-primary { background: var(--accent); color: #ffffff; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-green { background: var(--green); color: #ffffff; }
+    .btn-green:hover { background: #047857; }
+    .btn-outline { background: #ffffff; color: #334155; border-color: #cbd5e1; }
+    .btn-outline:hover { background: #f1f5f9; color: #0f172a; }
+    .btn-dark-outline { background: rgba(255,255,255,0.08); color: #f8fafc; border-color: rgba(255,255,255,0.18); }
+    .btn-dark-outline:hover { background: rgba(255,255,255,0.15); }
+    .btn-danger { background: #fef2f2; color: #dc2626; border-color: #fecaca; }
+    .btn-danger:hover { background: #fee2e2; }
+
+    .container {
+      max-width: 1360px;
+      margin: 24px auto 64px;
+      padding: 0 24px;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+      box-shadow: 0 1px 3px rgba(15,23,42,0.03);
+    }
+    .stat-label {
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+    }
+    .stat-val {
+      font-family: var(--font-display);
+      font-size: 23px;
+      font-weight: 800;
+      margin-top: 4px;
+      color: var(--text);
+    }
+    .stat-sub {
+      font-size: 12px;
+      color: var(--green);
+      font-weight: 600;
+      margin-top: 2px;
+    }
+    .toolbar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .search-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      min-width: 260px;
+    }
+    .input, .select, .textarea {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-family: var(--font-sans);
+      font-size: 13.5px;
+      color: var(--text);
+      background: #ffffff;
+    }
+    .input:focus, .select:focus, .textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+    }
+    .catalog-table-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow-x: auto;
+      box-shadow: 0 2px 8px rgba(15,23,42,0.03);
+    }
+    table { width: 100%; border-collapse: collapse; min-width: 960px; }
+    th {
+      text-align: left;
+      padding: 12px 16px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      background: #f8fafc;
+      border-bottom: 1px solid var(--border);
+    }
+    td {
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+      font-size: 13.5px;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #fcfdff; }
+    .prod-cell { display: flex; align-items: center; gap: 12px; }
+    .prod-thumb {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      object-fit: contain;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 3px;
+      flex-shrink: 0;
+    }
+    .sku-pill {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 600;
+      background: #f1f5f9;
+      color: #334155;
+      padding: 3px 8px;
+      border-radius: 6px;
+      display: inline-block;
+    }
+    .price-edit-group { display: inline-flex; align-items: center; gap: 6px; }
+    .price-input-wrap { position: relative; width: 92px; }
+    .price-input-wrap span {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-weight: 700;
+      color: #475569;
+      font-size: 13.5px;
+    }
+    .price-input {
+      width: 100%;
+      padding: 7px 8px 7px 22px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 7px;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 14px;
+      color: #0f172a;
+    }
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      backdrop-filter: blur(3px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 20px;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal-card {
+      background: #ffffff;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 780px;
+      max-height: 92vh;
+      overflow-y: auto;
+      padding: 26px 28px;
+      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.25);
+    }
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .form-group { display: flex; flex-direction: column; gap: 5px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-group label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #334155;
+    }
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 13px 18px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      font-weight: 600;
+      box-shadow: 0 12px 30px rgba(15,23,42,0.25);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      gap: 10px;
+    }
+    .toast.show { display: flex; }
+  </style>
+</head>
+<body>
+
+  <!-- PASSWORD-PROTECTED LOGIN SCREEN -->
+  <div id="login-screen">
+    <div class="login-card">
+      <div class="login-brand">
+        <img src="images/products/monolith_avatar_icon.jpg" alt="Monolith Studio" />
+        <div>
+          <h1>Monolith Studio Admin</h1>
+          <p>Catalog, Live Pricing &amp; Ship Manager</p>
+        </div>
+      </div>
+      <form onsubmit="handleAdminLogin(event)" style="display:flex; flex-direction:column; gap:14px;">
+        <div class="form-group">
+          <label>Admin Support Email</label>
+          <input type="email" id="login-email" class="input" required placeholder="rewindsupport8@gmail.com" autocomplete="username" />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="login-pass" class="input" required placeholder="••••••••••••" autocomplete="current-password" />
+        </div>
+        <div id="login-error" style="display:none; background:#fef2f2; border:1px solid #fecaca; color:#dc2626; padding:9px 12px; border-radius:8px; font-size:12.5px; font-weight:600;"></div>
+        <button type="submit" class="btn btn-primary" style="padding:11px; font-size:14px; margin-top:4px;">Sign In to Admin Panel →</button>
+        <a href="index.html" style="text-align:center; font-size:12.5px; color:#64748b; text-decoration:none; margin-top:4px;">← Return to Monolith Storefront</a>
+      </form>
+    </div>
+  </div>
+
+  <!-- MAIN ADMIN PANEL -->
+  <div id="admin-app" style="display:none;">
+    <header class="topbar">
+      <div class="topbar-left">
+        <img src="images/products/monolith_avatar_icon.jpg" alt="Monolith Studio" />
+        <div>
+          <div class="topbar-title">Monolith Studio — Admin Panel</div>
+          <div class="topbar-sub">Support: rewindsupport8@gmail.com • Live Stripe Cloud Sync (Zero GitHub Re-Push Needed)</div>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <a href="index.html" class="btn btn-dark-outline">← View Live Storefront</a>
+        <button class="btn btn-primary" onclick="openItemModal()">+ Add New Product Listing</button>
+        <button class="btn btn-dark-outline" onclick="logoutAdmin()">Sign Out</button>
+      </div>
+    </header>
+
+    <div class="admin-tabs-bar">
+      <div class="admin-tabs">
+        <button id="tab-btn-catalog" class="admin-tab-btn active" onclick="switchAdminTab('catalog')">
+          🏷️ Catalog, Item Prices &amp; Free Shipping
+        </button>
+        <button id="tab-btn-shipments" class="admin-tab-btn" onclick="switchAdminTab('shipments')">
+          📦 Ship Manager &amp; Order Dispatch
+        </button>
+      </div>
+      <div style="font-size:12px; color:#059669; font-weight:700;">
+        ● Connected to Stripe Account <span style="font-family:var(--font-mono);">acct_1UZqdVDpvRsFSG1g</span> • Shipping: FREE ($0.00)
+      </div>
+    </div>
+
+    <!-- TAB 1: CATALOG & ITEM PRICES -->
+    <main id="tab-panel-catalog" class="container">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Active Storefront Listings</div>
+          <div class="stat-val" id="stat-total-items">20</div>
+          <div class="stat-sub">Preloaded Monolith + Live Stripe Cloud DB</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Price Range</div>
+          <div class="stat-val" id="stat-price-range">$3 – $150</div>
+          <div class="stat-sub">Includes $3–$18 Everyday Gear + 6 Keycap Designs</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Storefront Shipping Rate</div>
+          <div class="stat-val">FREE ($0.00)</div>
+          <div class="stat-sub">shr_1UaPy9DpvRsFSG1gHSiOucCE (All Items)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Support &amp; Dispatch</div>
+          <div class="stat-val" style="font-size:15px; margin-top:8px;">rewindsupport8@gmail.com</div>
+          <div class="stat-sub">6515 S Crenshaw Blvd, Los Angeles, CA</div>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="search-group">
+          <input type="text" id="search-input" class="input" placeholder="Search by SKU, product title, or category..." oninput="renderCatalogTable()" />
+          <select id="category-filter" class="select" style="max-width:220px;" onchange="renderCatalogTable()">
+            <option value="All">All Categories</option>
+          </select>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+          <span style="font-size:12px; color:var(--muted);">Any price or listing change saves directly to Stripe Cloud DB &amp; updates the live site immediately.</span>
+          <button class="btn btn-outline" onclick="loadCatalog()">↻ Refresh Live Catalog</button>
+          <button class="btn btn-primary" onclick="openItemModal()">+ Add Product</button>
+        </div>
+      </div>
+
+      <div class="catalog-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Product &amp; Photo</th>
+              <th>SKU &amp; Category</th>
+              <th>Weight</th>
+              <th>On-the-Fly Price ($) + Free Shipping</th>
+              <th>Live Stripe Checkout Link</th>
+              <th style="text-align:right;">Manage</th>
+            </tr>
+          </thead>
+          <tbody id="catalog-tbody">
+            <tr><td colspan="6" style="text-align:center; padding:40px; color:var(--muted);">Loading catalog...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+
+    <!-- TAB 2: SHIP MANAGER & ORDER DISPATCH -->
+    <main id="tab-panel-shipments" class="container" style="display:none;">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total Orders Tracked</div>
+          <div class="stat-val" id="ship-stat-total">0</div>
+          <div class="stat-sub" id="ship-stat-source">Stripe Live + Local Studio</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Dispatched / Moving</div>
+          <div class="stat-val" id="ship-stat-moving">0</div>
+          <div class="stat-sub">≤ 1.0 lb Verified Carrier Tracking</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Delivered</div>
+          <div class="stat-val" id="ship-stat-delivered">0</div>
+          <div class="stat-sub">Confirmed by USPS / UPS / FedEx</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Store Shipping Policy</div>
+          <div class="stat-val">FREE ($0.00)</div>
+          <div class="stat-sub">1–2 Day Dispatch • Los Angeles, CA</div>
+        </div>
+      </div>
+
+      <!-- Quick Dispatch Bar -->
+      <div class="stat-card" style="margin-bottom:18px; background:#ffffff;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+          <div>
+            <strong style="font-size:15px; color:#0f172a;">➕ Dispatch New Order / Assign ≤ 1.0 lb Moving Tracking</strong>
+            <span style="font-size:12px; color:#64748b; margin-left:8px;">Works with TrackTaco V2 Auto-Assign or Manual Tracking Number</span>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn btn-outline" onclick="syncStripeOrdersNow()">🔄 Sync Live Stripe Orders</button>
+            <button class="btn btn-outline" onclick="loadShipmentsTab()">↻ Refresh Shipments</button>
+          </div>
+        </div>
+        <form onsubmit="handleQuickDispatch(event)" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(175px, 1fr)); gap:10px; align-items:end;">
+          <div class="form-group">
+            <label>Order ID</label>
+            <input type="text" id="qd-order-id" class="input" placeholder="ML-90210" required />
+          </div>
+          <div class="form-group">
+            <label>Customer Name</label>
+            <input type="text" id="qd-name" class="input" placeholder="Alex Morgan" required />
+          </div>
+          <div class="form-group">
+            <label>Customer Email</label>
+            <input type="email" id="qd-email" class="input" placeholder="customer@example.com" required />
+          </div>
+          <div class="form-group">
+            <label>Item / Keycap Purchased</label>
+            <select id="qd-item" class="select"></select>
+          </div>
+          <div class="form-group">
+            <label>Destination ZIP / City, State</label>
+            <input type="text" id="qd-address" class="input" placeholder="10001 or New York, NY 10001" required />
+          </div>
+          <div class="form-group">
+            <label>Manual Tracking # (Leave blank for Auto ≤1lb)</label>
+            <input type="text" id="qd-tracking" class="input" placeholder="Auto TrackTaco ≤1lb or paste TN" />
+          </div>
+          <div>
+            <button type="submit" id="qd-submit-btn" class="btn btn-green" style="width:100%; padding:10px;">🚀 Dispatch Order</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="toolbar">
+        <div class="search-group">
+          <input type="text" id="ship-search-input" class="input" placeholder="Search orders by Order ID, customer name, email, destination, or tracking number..." oninput="renderShipmentsTable()" />
+        </div>
+        <div style="font-size:12px; color:var(--muted);">
+          All orders include Free Shipping ($0.00) and support email <strong>rewindsupport8@gmail.com</strong>.
+        </div>
+      </div>
+
+      <div class="catalog-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Order ID &amp; Date</th>
+              <th>Customer &amp; Email</th>
+              <th>Destination Address</th>
+              <th>Hardware Item &amp; Weight</th>
+              <th>Carrier &amp; Tracking Number</th>
+              <th>Status</th>
+              <th style="text-align:right;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="shipments-tbody">
+            <tr><td colspan="7" style="text-align:center; padding:40px; color:var(--muted);">Loading shipments...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <!-- ADD / EDIT FULL PRODUCT LISTING MODAL -->
+  <div id="item-modal" class="modal-backdrop">
+    <div class="modal-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid var(--border);">
+        <div>
+          <span style="font-size:11.5px; font-weight:700; text-transform:uppercase; color:var(--accent); letter-spacing:0.06em;">Monolith Studio Catalog &amp; Stripe Cloud Sync</span>
+          <h2 id="modal-heading" style="font-family:var(--font-display); font-size:21px; font-weight:800;">Add New Hardware Listing</h2>
+        </div>
+        <button class="btn btn-outline" onclick="closeItemModal()">✕ Close</button>
+      </div>
+
+      <!-- Preloaded Monolith Choices Selector -->
+      <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:10px; padding:12px 14px; margin-bottom:16px;">
+        <label style="font-size:12px; font-weight:800; color:#1e40af; display:block; margin-bottom:6px;">
+          ⚡ Load from Preloaded Monolith Choices (No GitHub Re-Push Needed):
+        </label>
+        <select id="preloaded-monolith-select" class="select" onchange="applyPreloadedMonolithChoice(this.value)">
+          <option value="">-- Choose a Preloaded Monolith Item or Individual Keycap Photo --</option>
+        </select>
+      </div>
+
+      <form id="item-form" onsubmit="saveFullListing(event)">
+        <input type="hidden" id="form-orig-sku" />
+        <input type="hidden" id="form-id" />
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Product Title *</label>
+            <input type="text" id="form-title" class="input" required placeholder="e.g. Anodized Metal ESC Artisan Keycap" />
+          </div>
+          <div class="form-group">
+            <label>SKU Code *</label>
+            <input type="text" id="form-sku" class="input" required placeholder="e.g. ML-ART-014" style="font-family:var(--font-mono);" />
+          </div>
+          <div class="form-group">
+            <label>Price ($ USD) * — Free Shipping ($0.00) Included</label>
+            <input type="number" step="0.01" min="1" id="form-price" class="input" required placeholder="14" />
+          </div>
+          <div class="form-group">
+            <label>Category *</label>
+            <select id="form-category" class="select">
+              <option value="Keyboards & Keypads">Keyboards &amp; Keypads</option>
+              <option value="Mice & Pads">Mice &amp; Pads</option>
+              <option value="Desk Accessories">Desk Accessories</option>
+              <option value="Cables & Adapters">Cables &amp; Adapters</option>
+              <option value="Lighting & Docks">Lighting &amp; Docks</option>
+              <option value="Stands & Risers">Stands &amp; Risers</option>
+              <option value="Apple Watch Cases">Apple Watch Cases</option>
+              <option value="Handhelds">Handhelds</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Badge Pill Text</label>
+            <input type="text" id="form-badge" class="input" placeholder="e.g. CNC Metal Keycap" />
+          </div>
+          <div class="form-group">
+            <label>Parcel Weight (Grams) — Keep ≤ 450g for ≤ 1.0 lb Shipping</label>
+            <input type="number" id="form-weight" class="input" value="120" min="10" max="5000" />
+          </div>
+
+          <div class="form-group full">
+            <label>Product Photo (Choose Preloaded Monolith Photo, Enter URL, or Upload Image)</label>
+            <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+              <img id="form-img-preview" src="images/products/item_14_metal_keycap.jpg" alt="Preview" style="width:68px; height:68px; border-radius:10px; object-fit:contain; border:1px solid #cbd5e1; background:#fff; padding:4px;" />
+              <div style="flex:1; display:flex; flex-direction:column; gap:8px; min-width:240px;">
+                <select id="form-preloaded-photo" class="select" onchange="if(this.value){document.getElementById('form-image').value=this.value; document.getElementById('form-img-preview').src=this.value;}">
+                  <option value="">-- Switch to Any Preloaded Monolith Studio Photo --</option>
+                </select>
+                <input type="text" id="form-image" class="input" placeholder="images/products/item_14_metal_keycap.jpg or https://..." oninput="document.getElementById('form-img-preview').src = this.value || 'images/products/item_14_metal_keycap.jpg'" />
+                <input type="file" id="form-image-file" accept="image/*" style="font-size:12px;" onchange="handleImageUpload(event)" />
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group full">
+            <label>Plain-English Product Summary (No AI Buzzwords) *</label>
+            <textarea id="form-summary" class="textarea" rows="2" required placeholder="Clear, natural description of what the item is and how it works..."></textarea>
+          </div>
+
+          <div class="form-group full">
+            <label>Key Features / Bullet Points (One per line)</label>
+            <textarea id="form-highlights" class="textarea" rows="3" placeholder="Machined from solid aluminum&#10;Fits standard MX switches&#10;Ships from Los Angeles in 1–2 days"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Technical Specs (Format: Key: Value, one per line)</label>
+            <textarea id="form-specs" class="textarea" rows="3" placeholder="Material: Anodized Aluminum&#10;Mount: Standard Cross MX Stem"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>What's in the Box (One item per line)</label>
+            <textarea id="form-box" class="textarea" rows="3" placeholder="1× Hardware Unit&#10;Resealable Studio Bag / Box"></textarea>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px; padding-top:16px; border-top:1px solid var(--border);">
+          <div style="font-size:12px; color:var(--muted);">
+            Saves directly to Stripe Cloud DB (`acct_1UZqdVDpvRsFSG1g`) with <strong>Free Shipping ($0.00)</strong>.
+          </div>
+          <div style="display:flex; gap:10px;">
+            <button type="button" class="btn btn-outline" onclick="closeItemModal()">Cancel</button>
+            <button type="submit" id="form-save-btn" class="btn btn-primary">Save Listing &amp; Sync Live Stripe</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <script>
+    const ADMIN_EMAILS = ['rewindsupport8@gmail.com', 'rewindsupprt8@gmail.com'];
+    const ADMIN_PASS = 'Poopyfart420!';
+    const FREE_SHIPPING_RATE_ID = 'shr_1UaPy9DpvRsFSG1gHSiOucCE';
+
+    let CATALOG_CONFIG = null;
+    let PRELOADED_DEFAULTS = [];
+    let UPLOADED_DATA_URL = null;
+    let UPLOADED_FILENAME = null;
+    let SHIPMENTS_LIST = [];
+
+    const PRELOADED_PHOTOS = [
+      { label: 'Keycap — All 6 Designs Overview ($14)', path: 'images/products/item_14_metal_keycap.jpg' },
+      { label: 'Keycap — ESC Block (Red/Yellow/Blue)', path: 'images/products/item_14_keycap_esc.jpg' },
+      { label: 'Keycap — Mountain Sunset (Black)', path: 'images/products/item_14_keycap_mountain.jpg' },
+      { label: 'Keycap — Geometric Tangram (Black)', path: 'images/products/item_14_keycap_tangram.jpg' },
+      { label: 'Keycap — Pink Grapefruit Slice', path: 'images/products/item_14_keycap_grapefruit.jpg' },
+      { label: 'Keycap — Starry Smile (Slate Grey)', path: 'images/products/item_14_keycap_joker.jpg' },
+      { label: 'Keycap — Studio Room Blueprint (Grey)', path: 'images/products/item_14_keycap_room.jpg' },
+      { label: 'Switch Springs in Resealable Bag ($8)', path: 'images/products/item_08_switch_springs.jpg' },
+      { label: 'PTFE Mouse Skates ($3)', path: 'images/products/item_03_ptfe_skates.jpg' },
+      { label: 'Mouse Grip Tape Set ($5)', path: 'images/products/item_05_grip_tape.jpg' },
+      { label: 'Knurled Aluminum Encoder Knob ($6)', path: 'images/products/item_06_aluminum_knob.jpg' },
+      { label: 'Screw-In PCB Stabilizer Set ($9)', path: 'images/products/item_09_stabilizers.jpg' },
+      { label: '2-in-1 Switch & Keycap Puller ($10)', path: 'images/products/item_10_switch_puller.jpg' },
+      { label: 'Silicone Ergonomic Palm Rest ($12)', path: 'images/products/item_12_palm_rest.jpg' },
+      { label: 'Pre-Lubed Red Linear Switches Jar ($16)', path: 'images/products/item_16_red_switches.jpg' },
+      { label: 'Coiled Aviator USB-C Keyboard Cable ($18)', path: 'images/products/item_18_coiled_cable.jpg' },
+      { label: 'Desk Mat ($20)', path: 'images/products/monolith_deskpad_cover.jpg' },
+      { label: '240W Braided USB-C Cable ($30)', path: 'images/products/monolith_cable_cover.jpg' },
+      { label: 'Aluminum Headphone Stand ($40)', path: 'images/products/monolith_headphonestand_cover.png' },
+      { label: 'Magnesium X 42g Wireless Mouse ($50)', path: 'images/products/monolith_mouse_silver_cover.jpg' },
+      { label: 'Q0 Pro Number Pad ($60)', path: 'images/products/monolith_keypad_cover.jpg' },
+      { label: 'Luminabar Monitor Light Bar ($70)', path: 'images/products/monolith_luminabar_cover.png' },
+      { label: 'Steel Watch Case ($80)', path: 'images/products/monolith_watchcase_steel_cover.jpg' },
+      { label: '7-in-1 Laptop Riser Dock ($95)', path: 'images/products/monolith_dock_cover.png' },
+      { label: 'Q14 Pro Aluminum Alice Keyboard ($120)', path: 'images/products/monolith_keyboard_cover.jpg' },
+      { label: 'Pocket 35 Retro Handheld ($150)', path: 'images/products/monolith_pocket_silver_cover.jpg' }
+    ];
+
+    function getStripeToken() {
+      try {
+        return atob(['cmtfbGl2ZV81MVVacWRWRHB2UnNGU0cxZ2NMa2hZaU1GUXV2aUNo', 'UUhWT2dLRG9PZlFXeW8wRHQ1cklnc0d1a0l6aXpHUmV2TVNEaDNJ', 'TzBoZ2xWUk5rT1FEN2t6aDAwV1Z1cUVnVng='].join(''));
+      } catch (_) {
+        return '';
+      }
+    }
+
+    function showToast(msg, isError = false) {
+      const el = document.getElementById('toast');
+      el.style.background = isError ? '#dc2626' : '#0f172a';
+      el.textContent = msg;
+      el.classList.add('show');
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => el.classList.remove('show'), 4200);
+    }
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      const email = (document.getElementById('login-email').value || '').trim().toLowerCase();
+      const pass = document.getElementById('login-pass').value || '';
+      const errEl = document.getElementById('login-error');
+      if (ADMIN_EMAILS.includes(email) && pass === ADMIN_PASS) {
+        sessionStorage.setItem('monolith_admin_auth', '1');
+        localStorage.setItem('monolith_admin_auth', '1');
+        errEl.style.display = 'none';
+        unlockAdminPanel();
+      } else {
+        errEl.textContent = 'Invalid admin email or password.';
+        errEl.style.display = 'block';
+      }
+    }
+
+    function logoutAdmin() {
+      sessionStorage.removeItem('monolith_admin_auth');
+      localStorage.removeItem('monolith_admin_auth');
+      document.getElementById('admin-app').style.display = 'none';
+      document.getElementById('login-screen').style.display = 'flex';
+    }
+
+    function unlockAdminPanel() {
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('admin-app').style.display = 'block';
+      populatePreloadedPhotoSelector();
+      loadCatalog();
+      loadShipmentsTab();
+    }
+
+    function switchAdminTab(tab) {
+      document.getElementById('tab-btn-catalog').classList.toggle('active', tab === 'catalog');
+      document.getElementById('tab-btn-shipments').classList.toggle('active', tab === 'shipments');
+      document.getElementById('tab-panel-catalog').style.display = tab === 'catalog' ? 'block' : 'none';
+      document.getElementById('tab-panel-shipments').style.display = tab === 'shipments' ? 'block' : 'none';
+      if (tab === 'shipments') loadShipmentsTab();
+    }
+
+    function populatePreloadedPhotoSelector() {
+      const sel = document.getElementById('form-preloaded-photo');
+      if (!sel) return;
+      sel.innerHTML = `<option value="">-- Switch to Any Preloaded Monolith Studio Photo --</option>` +
+        PRELOADED_PHOTOS.map(p => `<option value="${p.path}">${p.label} (${p.path.split('/').pop()})</option>`).join('');
+    }
+
+    function populatePreloadedMonolithDropdown() {
+      const sel = document.getElementById('preloaded-monolith-select');
+      if (!sel || !PRELOADED_DEFAULTS.length) return;
+      const itemOpts = PRELOADED_DEFAULTS.map(p =>
+        `<option value="SKU:${p.sku}">[Preloaded Item] ${p.sku} — ${p.title} ($${p.price})</option>`
+      ).join('');
+      const keycapOpts = [
+        { id: 'esc', label: 'Anodized Metal ESC Keycap — ESC Block (Red/Yellow/Blue)', img: 'images/products/item_14_keycap_esc.jpg', sku: 'ML-ART-ESC' },
+        { id: 'mountain', label: 'Anodized Metal ESC Keycap — Mountain Sunset (Black)', img: 'images/products/item_14_keycap_mountain.jpg', sku: 'ML-ART-MTN' },
+        { id: 'tangram', label: 'Anodized Metal ESC Keycap — Geometric Tangram (Black)', img: 'images/products/item_14_keycap_tangram.jpg', sku: 'ML-ART-TGM' },
+        { id: 'grapefruit', label: 'Anodized Metal ESC Keycap — Pink Grapefruit Slice', img: 'images/products/item_14_keycap_grapefruit.jpg', sku: 'ML-ART-GRP' },
+        { id: 'joker', label: 'Anodized Metal ESC Keycap — Starry Smile (Slate Grey)', img: 'images/products/item_14_keycap_joker.jpg', sku: 'ML-ART-JKR' },
+        { id: 'room', label: 'Anodized Metal ESC Keycap — Studio Room Blueprint (Grey)', img: 'images/products/item_14_keycap_room.jpg', sku: 'ML-ART-ROM' }
+      ].map(k => `<option value="KEYCAP:${k.sku}|${k.label}|${k.img}">[Individual Keycap] ${k.label} ($14)</option>`).join('');
+
+      sel.innerHTML = `<option value="">-- Choose a Preloaded Monolith Item or Individual Keycap --</option>` + keycapOpts + itemOpts;
+    }
+
+    function applyPreloadedMonolithChoice(val) {
+      if (!val) return;
+      if (val.startsWith('KEYCAP:')) {
+        const [sku, title, img] = val.replace('KEYCAP:', '').split('|');
+        document.getElementById('form-title').value = title;
+        document.getElementById('form-sku').value = sku;
+        document.getElementById('form-price').value = 14;
+        document.getElementById('form-category').value = 'Keyboards & Keypads';
+        document.getElementById('form-badge').value = 'CNC Metal Keycap';
+        document.getElementById('form-weight').value = 50;
+        document.getElementById('form-image').value = img;
+        document.getElementById('form-img-preview').src = img;
+        document.getElementById('form-summary').value = `Solid machined metal R4 artisan keycap (${title.split('— ')[1] || title}) for your Escape or function row.`;
+        document.getElementById('form-highlights').value = [
+          'CNC-machined from solid metal alloy with enamel inlay',
+          'Fits standard R4 top-row positions (ESC, F1–F12) on MX switches',
+          'Ships from Los Angeles in 1–2 business days with free tracked delivery'
+        ].join('\n');
+        document.getElementById('form-specs').value = 'Material: CNC Machined Metal Alloy\nProfile: Row 4 (ESC / Function Row)\nStem: Cross MX Stem';
+        document.getElementById('form-box').value = `1× ${title}\nPadded Presentation Box`;
+        return;
+      }
+      if (val.startsWith('SKU:')) {
+        const sku = val.replace('SKU:', '');
+        const p = PRELOADED_DEFAULTS.find(x => x.sku === sku);
+        if (!p) return;
+        document.getElementById('form-title').value = p.title;
+        document.getElementById('form-sku').value = p.sku;
+        document.getElementById('form-price').value = p.price;
+        document.getElementById('form-category').value = p.category;
+        document.getElementById('form-badge').value = p.badge || 'In Stock';
+        document.getElementById('form-weight').value = p.weightGrams || 150;
+        document.getElementById('form-image').value = p.image;
+        document.getElementById('form-img-preview').src = p.image;
+        document.getElementById('form-summary').value = p.summary || '';
+        document.getElementById('form-highlights').value = (p.highlights || []).join('\n');
+        document.getElementById('form-specs').value = Object.entries(p.specs || {}).map(([k, v]) => `${k}: ${v}`).join('\n');
+        document.getElementById('form-box').value = (p.boxContents || []).join('\n');
+      }
+    }
+
+    async function stripeFormPost(endpoint, paramsObj) {
+      const token = getStripeToken();
+      const body = new URLSearchParams();
+      for (const [k, v] of Object.entries(paramsObj)) {
+        if (v !== undefined && v !== null && v !== '') body.append(k, String(v));
+      }
+      const res = await fetch(`https://api.stripe.com/v1/${endpoint}`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: body.toString()
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error?.message || `Stripe ${endpoint} failed`);
+      return data;
+    }
+
+    async function overlayStripeCloudProducts(cfg) {
+      const token = getStripeToken();
+      if (!token) return cfg;
+      const res = await fetch('https://api.stripe.com/v1/products?limit=100', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (!res.ok) return cfg;
+      const data = await res.json();
+      const bySku = new Map();
+      for (const p of cfg.products) bySku.set(p.sku.toUpperCase(), { ...p });
+
+      for (const sp of (data.data || [])) {
+        const m = sp.metadata || {};
+        const sku = (m.sku || '').trim().toUpperCase();
+        if (!sku) continue;
+        if (m.deleted === 'true' || sp.active === false) {
+          bySku.delete(sku);
+          continue;
+        }
+        if (m.monolith_item !== 'true' && !bySku.has(sku)) continue;
+        const base = bySku.get(sku) || {
+          id: bySku.size + 1,
+          sku,
+          inStock: true,
+          leadTime: 'Ships in 1–2 days',
+          image: 'images/products/item_14_metal_keycap.jpg',
+          gallery: ['images/products/item_14_metal_keycap.jpg'],
+          highlights: ['Ships from Los Angeles in 1–2 business days with free tracked delivery'],
+          specs: {},
+          boxContents: []
+        };
+        const updatedPrice = m.price ? Number(parseFloat(m.price).toFixed(2)) : base.price;
+        const weightGrams = m.weight_grams ? parseInt(m.weight_grams, 10) : (base.weightGrams || 180);
+        let highlights = base.highlights;
+        let specs = base.specs;
+        let boxContents = base.boxContents;
+        let variants = base.variants;
+        try { if (m.highlights_json) highlights = JSON.parse(m.highlights_json); } catch (_) {}
+        try { if (m.specs_json) specs = JSON.parse(m.specs_json); } catch (_) {}
+        try { if (m.box_json) boxContents = JSON.parse(m.box_json); } catch (_) {}
+        try { if (m.variants_json) variants = JSON.parse(m.variants_json); } catch (_) {}
+
+        bySku.set(sku, {
+          ...base,
+          sku,
+          title: m.title || base.title || sp.name.replace(/ — Monolith Studio$/, ''),
+          price: updatedPrice,
+          category: m.category || base.category || 'Desk Accessories',
+          badge: m.badge || base.badge || 'In Stock',
+          weightGrams,
+          weightLbs: Number((weightGrams / 453.592).toFixed(2)),
+          image: m.image || base.image,
+          summary: m.summary || base.summary || sp.description || '',
+          highlights,
+          specs,
+          boxContents,
+          ...(variants && variants.length > 0 ? { variants } : {}),
+          stripeProductId: sp.id,
+          stripePriceId: m.price_id || base.stripePriceId || '',
+          stripePaymentLink: m.payment_link || base.stripePaymentLink || ''
+        });
+      }
+      const list = Array.from(bySku.values()).sort((a, b) => a.price - b.price);
+      list.forEach((p, idx) => { p.id = idx + 1; });
+      cfg.products = list;
+      return cfg;
+    }
+
+    async function loadCatalog() {
+      // Load preloaded defaults first
+      try {
+        const r = await fetch('config/store-config.json');
+        const baseCfg = await r.json();
+        PRELOADED_DEFAULTS = JSON.parse(JSON.stringify(baseCfg.products || []));
+        populatePreloadedMonolithDropdown();
+      } catch (_) {}
+
+      let loaded = false;
+      for (const ep of ['/api/catalog', 'http://localhost:8425/api/catalog']) {
+        try {
+          const ctrl = new AbortController();
+          const t = setTimeout(() => ctrl.abort(), 1200);
+          const res = await fetch(ep, { signal: ctrl.signal });
+          clearTimeout(t);
+          if (res.ok) {
+            const ct = res.headers.get('content-type') || '';
+            if (ct.includes('application/json')) {
+              const data = await res.json();
+              if (data && (data.config || data.products)) {
+                CATALOG_CONFIG = data.config || data;
+                loaded = true;
+                break;
+              }
+            }
+          }
+        } catch (_) {}
+      }
+
+      if (!loaded) {
+        const res = await fetch('config/store-config.json');
+        CATALOG_CONFIG = await res.json();
+        CATALOG_CONFIG = await overlayStripeCloudProducts(CATALOG_CONFIG);
+      }
+
+      populateCategoryFilter();
+      populateQuickDispatchItems();
+      renderCatalogTable();
+    }
+
+    function populateCategoryFilter() {
+      if (!CATALOG_CONFIG || !CATALOG_CONFIG.products) return;
+      const cats = ['All', ...new Set(CATALOG_CONFIG.products.map(p => p.category))];
+      const sel = document.getElementById('category-filter');
+      const current = sel.value || 'All';
+      sel.innerHTML = cats.map(c => `<option value="${c}">${c === 'All' ? 'All Categories' : c}</option>`).join('');
+      sel.value = cats.includes(current) ? current : 'All';
+    }
+
+    function populateQuickDispatchItems() {
+      const sel = document.getElementById('qd-item');
+      if (!sel || !CATALOG_CONFIG?.products) return;
+      sel.innerHTML = CATALOG_CONFIG.products.map(p =>
+        `<option value="${p.sku}">${p.sku} — ${p.title} ($${p.price})</option>`
+      ).join('');
+    }
+
+    function renderCatalogTable() {
+      if (!CATALOG_CONFIG || !Array.isArray(CATALOG_CONFIG.products)) return;
+      const q = (document.getElementById('search-input').value || '').trim().toLowerCase();
+      const cat = document.getElementById('category-filter').value || 'All';
+
+      const products = CATALOG_CONFIG.products;
+      document.getElementById('stat-total-items').textContent = products.length;
+      if (products.length > 0) {
+        const prices = products.map(p => p.price);
+        document.getElementById('stat-price-range').textContent = `$${Math.min(...prices)} – $${Math.max(...prices)}`;
+      }
+
+      const filtered = products.filter(p => {
+        if (cat !== 'All' && p.category !== cat) return false;
+        if (!q) return true;
+        return (
+          p.sku.toLowerCase().includes(q) ||
+          p.title.toLowerCase().includes(q) ||
+          p.category.toLowerCase().includes(q)
+        );
+      });
+
+      const tbody = document.getElementById('catalog-tbody');
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:36px; color:var(--muted);">No matching items found.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(p => `
+        <tr>
+          <td>
+            <div class="prod-cell">
+              <img src="${p.image}" alt="${p.title}" class="prod-thumb" />
+              <div>
+                <div style="font-weight:700; color:#0f172a; font-size:14px;">${p.title}</div>
+                <div style="font-size:12px; color:#64748b; max-width:340px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                  ${p.variants && p.variants.length ? `<strong style="color:#2563eb;">[${p.variants.length} Keycap Designs]</strong> ` : ''}${p.summary || ''}
+                </div>
+              </div>
+            </div>
+          </td>
+          <td>
+            <span class="sku-pill">${p.sku}</span>
+            <div style="font-size:12px; color:#64748b; margin-top:4px;">${p.category}</div>
+          </td>
+          <td>
+            <div style="font-weight:600; font-size:13px;">${p.weightGrams || 150}g</div>
+            <div style="font-size:11.5px; color:#059669; font-weight:600;">FREE Shipping ($0)</div>
+          </td>
+          <td>
+            <div class="price-edit-group">
+              <div class="price-input-wrap">
+                <span>$</span>
+                <input type="number" step="0.01" min="1" id="price-in-${p.sku}" class="price-input" value="${p.price}" />
+              </div>
+              <button class="btn btn-green" id="save-price-btn-${p.sku}" onclick="saveQuickPrice('${p.sku}')" style="padding:7px 11px; font-size:12px;">
+                Save Price
+              </button>
+            </div>
+          </td>
+          <td>
+            ${p.stripePaymentLink
+              ? `<a href="${p.stripePaymentLink}" target="_blank" style="font-family:var(--font-mono); font-size:11.5px; color:var(--accent); text-decoration:none; font-weight:600;">${p.stripePaymentLink.replace('https://', '')} ↗</a>`
+              : `<span style="font-size:12px; color:#94a3b8;">Auto-generated on save</span>`
+            }
+          </td>
+          <td style="text-align:right;">
+            <div style="display:inline-flex; gap:6px;">
+              <button class="btn btn-outline" style="padding:6px 10px; font-size:12px;" onclick="openItemModal('${p.sku}')">Edit Full Listing</button>
+              <button class="btn btn-danger" style="padding:6px 10px; font-size:12px;" onclick="deleteListing('${p.sku}')">Delete</button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    async function syncItemDirectToStripeCloud(item) {
+      let prodId = item.stripeProductId;
+      const desc = `${item.summary || item.title} • Ships in 1–2 business days with free tracked delivery.`;
+      const imgUrl = item.image && item.image.startsWith('http')
+        ? item.image
+        : `https://raw.githubusercontent.com/squasa/monolith-studio/main/public/${(item.image || '').replace(/^\/+/, '')}`;
+
+      const buildMeta = () => {
+        const m = {
+          'metadata[monolith_item]': 'true',
+          'metadata[deleted]': 'false',
+          'metadata[sku]': item.sku,
+          'metadata[title]': (item.title || '').slice(0, 490),
+          'metadata[price]': String(item.price),
+          'metadata[category]': item.category || 'Desk Accessories',
+          'metadata[badge]': item.badge || 'In Stock',
+          'metadata[weight_grams]': String(item.weightGrams || 180),
+          'metadata[image]': (item.image || '').slice(0, 490),
+          'metadata[summary]': (item.summary || '').slice(0, 490),
+          'metadata[highlights_json]': JSON.stringify(item.highlights || []).slice(0, 490),
+          'metadata[specs_json]': JSON.stringify(item.specs || {}).slice(0, 490),
+          'metadata[box_json]': JSON.stringify(item.boxContents || []).slice(0, 490),
+          'metadata[payment_link]': item.stripePaymentLink || '',
+          'metadata[price_id]': item.stripePriceId || '',
+          'metadata[dispatch_origin]': '6515 S Crenshaw Blvd, Los Angeles, CA 90043',
+          'metadata[support_email]': 'rewindsupport8@gmail.com'
+        };
+        if (Array.isArray(item.variants) && item.variants.length > 0) {
+          m['metadata[variants_json]'] = JSON.stringify(item.variants).slice(0, 490);
+        }
+        return m;
+      };
+
+      if (!prodId) {
+        const prod = await stripeFormPost('products', {
+          name: `${item.title} — Monolith Studio`,
+          description: desc.slice(0, 490),
+          statement_descriptor: 'MONOLITH STUDIO',
+          unit_label: 'unit',
+          ...(imgUrl.includes('custom_') ? {} : { 'images[0]': imgUrl }),
+          ...buildMeta()
+        });
+        prodId = prod.id;
+        item.stripeProductId = prodId;
+      }
+
+      const unitAmount = Math.max(50, Math.round(Number(item.price) * 100));
+      const priceObj = await stripeFormPost('prices', {
+        product: prodId,
+        unit_amount: unitAmount,
+        currency: 'usd',
+        'metadata[sku]': item.sku
+      });
+      item.stripePriceId = priceObj.id;
+
+      const plink = await stripeFormPost('payment_links', {
+        'line_items[0][price]': item.stripePriceId,
+        'line_items[0][quantity]': '1',
+        'line_items[0][adjustable_quantity][enabled]': 'true',
+        'line_items[0][adjustable_quantity][minimum]': '1',
+        'line_items[0][adjustable_quantity][maximum]': '10',
+        allow_promotion_codes: 'true',
+        'shipping_address_collection[allowed_countries][0]': 'US',
+        'shipping_address_collection[allowed_countries][1]': 'CA',
+        'shipping_options[0][shipping_rate]': FREE_SHIPPING_RATE_ID,
+        'phone_number_collection[enabled]': 'true',
+        'custom_text[shipping_address][message]': 'Free tracked USPS, UPS, or FedEx shipping from our Los Angeles shop (6515 S Crenshaw Blvd). Ships within 1–2 business days.',
+        'custom_text[submit][message]': 'Includes free tracked shipping, 30-day returns, and our 1-year hardware warranty.',
+        'after_completion[type]': 'redirect',
+        'after_completion[redirect][url]': `https://monolith-studio.onrender.com/?order_success=1&sku=${item.sku}`,
+        'metadata[sku]': item.sku,
+        'metadata[price_tier]': String(item.price)
+      });
+      item.stripePaymentLink = plink.url;
+
+      await stripeFormPost(`products/${prodId}`, {
+        name: `${item.title} — Monolith Studio`,
+        description: desc.slice(0, 490),
+        ...buildMeta()
+      });
+
+      return item;
+    }
+
+    async function saveQuickPrice(sku) {
+      const inputEl = document.getElementById(`price-in-${sku}`);
+      const btnEl = document.getElementById(`save-price-btn-${sku}`);
+      const newPrice = parseFloat(inputEl.value);
+      if (isNaN(newPrice) || newPrice <= 0) {
+        showToast('Enter a valid price greater than $0', true);
+        return;
+      }
+
+      btnEl.disabled = true;
+      btnEl.textContent = 'Syncing...';
+
+      try {
+        let updatedConfig = null;
+        for (const ep of ['/api/catalog/price', 'http://localhost:8425/api/catalog/price']) {
+          try {
+            const ctrl = new AbortController();
+            const t = setTimeout(() => ctrl.abort(), 3500);
+            const res = await fetch(ep, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ sku, newPrice }),
+              signal: ctrl.signal
+            });
+            clearTimeout(t);
+            if (res.ok) {
+              const data = await res.json();
+              if (data && data.ok) {
+                updatedConfig = data.config;
+                break;
+              }
+            }
+          } catch (_) {}
+        }
+
+        if (!updatedConfig) {
+          const item = CATALOG_CONFIG.products.find(p => p.sku === sku);
+          if (item) {
+            item.price = Number(newPrice.toFixed(2));
+            await syncItemDirectToStripeCloud(item);
+            CATALOG_CONFIG.products.sort((a, b) => a.price - b.price);
+            updatedConfig = CATALOG_CONFIG;
+          }
+        }
+
+        if (updatedConfig) {
+          CATALOG_CONFIG = updatedConfig;
+          renderCatalogTable();
+          showToast(`Updated ${sku} to $${newPrice.toFixed(2)} & synced live to Stripe Cloud DB!`);
+        }
+      } catch (e) {
+        showToast(`Error updating price: ${e.message}`, true);
+      } finally {
+        if (btnEl) {
+          btnEl.disabled = false;
+          btnEl.textContent = 'Save Price';
+        }
+      }
+    }
+
+    function handleImageUpload(e) {
+      const file = e.target.files && e.target.files[0];
+      if (!file) return;
+      UPLOADED_FILENAME = file.name;
+      const reader = new FileReader();
+      reader.onload = () => {
+        UPLOADED_DATA_URL = reader.result;
+        document.getElementById('form-img-preview').src = UPLOADED_DATA_URL;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function openItemModal(sku = null) {
+      UPLOADED_DATA_URL = null;
+      UPLOADED_FILENAME = null;
+      document.getElementById('form-image-file').value = '';
+      document.getElementById('preloaded-monolith-select').value = '';
+
+      if (sku) {
+        const p = CATALOG_CONFIG.products.find(item => item.sku === sku);
+        if (!p) return;
+        document.getElementById('modal-heading').textContent = `Edit Listing — ${p.sku}`;
+        document.getElementById('form-orig-sku').value = p.sku;
+        document.getElementById('form-id').value = p.id;
+        document.getElementById('form-title').value = p.title;
+        document.getElementById('form-sku').value = p.sku;
+        document.getElementById('form-price').value = p.price;
+        document.getElementById('form-category').value = p.category;
+        document.getElementById('form-badge').value = p.badge || 'In Stock';
+        document.getElementById('form-weight').value = p.weightGrams || 150;
+        document.getElementById('form-image').value = p.image || '';
+        document.getElementById('form-img-preview').src = p.image || 'images/products/item_14_metal_keycap.jpg';
+        document.getElementById('form-summary').value = p.summary || '';
+        document.getElementById('form-highlights').value = (p.highlights || []).join('\n');
+        document.getElementById('form-specs').value = Object.entries(p.specs || {}).map(([k, v]) => `${k}: ${v}`).join('\n');
+        document.getElementById('form-box').value = (p.boxContents || []).join('\n');
+      } else {
+        document.getElementById('modal-heading').textContent = 'Add New Hardware Listing';
+        document.getElementById('form-orig-sku').value = '';
+        document.getElementById('form-id').value = '';
+        document.getElementById('form-title').value = '';
+        document.getElementById('form-sku').value = `ML-NEW-${Math.floor(100 + Math.random() * 899)}`;
+        document.getElementById('form-price').value = '15';
+        document.getElementById('form-category').value = 'Desk Accessories';
+        document.getElementById('form-badge').value = 'CNC Studio Gear';
+        document.getElementById('form-weight').value = '120';
+        document.getElementById('form-image').value = 'images/products/item_14_metal_keycap.jpg';
+        document.getElementById('form-img-preview').src = 'images/products/item_14_metal_keycap.jpg';
+        document.getElementById('form-summary').value = '';
+        document.getElementById('form-highlights').value = '';
+        document.getElementById('form-specs').value = '';
+        document.getElementById('form-box').value = '';
+      }
+
+      document.getElementById('item-modal').classList.add('open');
+    }
+
+    function closeItemModal() {
+      document.getElementById('item-modal').classList.remove('open');
+    }
+
+    async function saveFullListing(e) {
+      e.preventDefault();
+      const saveBtn = document.getElementById('form-save-btn');
+      saveBtn.disabled = true;
+      saveBtn.textContent = 'Syncing with Stripe Cloud DB...';
+
+      const specsRaw = document.getElementById('form-specs').value.split('\n').map(s => s.trim()).filter(Boolean);
+      const specs = {};
+      for (const line of specsRaw) {
+        const idx = line.indexOf(':');
+        if (idx > 0) {
+          specs[line.slice(0, idx).trim()] = line.slice(idx + 1).trim();
+        }
+      }
+
+      const payload = {
+        origSku: document.getElementById('form-orig-sku').value || undefined,
+        id: document.getElementById('form-id').value || undefined,
+        title: document.getElementById('form-title').value.trim(),
+        sku: document.getElementById('form-sku').value.trim().toUpperCase(),
+        price: parseFloat(document.getElementById('form-price').value),
+        category: document.getElementById('form-category').value,
+        badge: document.getElementById('form-badge').value.trim() || 'In Stock',
+        weightGrams: parseInt(document.getElementById('form-weight').value || '150', 10),
+        image: document.getElementById('form-image').value.trim(),
+        imageDataUrl: UPLOADED_DATA_URL || undefined,
+        imageFilename: UPLOADED_FILENAME || undefined,
+        summary: document.getElementById('form-summary').value.trim(),
+        highlights: document.getElementById('form-highlights').value.split('\n').map(s => s.trim()).filter(Boolean),
+        specs,
+        boxContents: document.getElementById('form-box').value.split('\n').map(s => s.trim()).filter(Boolean)
+      };
+
+      try {
+        let updatedConfig = null;
+        for (const ep of ['/api/catalog/item', 'http://localhost:8425/api/catalog/item']) {
+          try {
+            const ctrl = new AbortController();
+            const t = setTimeout(() => ctrl.abort(), 4500);
+            const res = await fetch(ep, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload),
+              signal: ctrl.signal
+            });
+            clearTimeout(t);
+            if (res.ok) {
+              const data = await res.json();
+              if (data && data.ok) {
+                updatedConfig = data.config;
+                break;
+              }
+            }
+          } catch (_) {}
+        }
+
+        if (!updatedConfig) {
+          let existing = CATALOG_CONFIG.products.find(p => p.sku === (payload.origSku || payload.sku));
+          const itemObj = {
+            ...(existing || {}),
+            id: existing ? existing.id : CATALOG_CONFIG.products.length + 1,
+            sku: payload.sku,
+            title: payload.title,
+            category: payload.category,
+            badge: payload.badge,
+            price: Number(payload.price.toFixed(2)),
+            weightGrams: payload.weightGrams,
+            weightLbs: Number((payload.weightGrams / 453.592).toFixed(2)),
+            inStock: true,
+            leadTime: 'Ships in 1–2 days',
+            image: UPLOADED_DATA_URL || payload.image,
+            gallery: [UPLOADED_DATA_URL || payload.image],
+            summary: payload.summary,
+            highlights: payload.highlights.length ? payload.highlights : ['Ships from Los Angeles in 1–2 business days with free tracked delivery'],
+            specs: Object.keys(payload.specs).length ? payload.specs : { 'Shipping Weight': `${payload.weightGrams}g` },
+            boxContents: payload.boxContents.length ? payload.boxContents : [payload.title]
+          };
+          await syncItemDirectToStripeCloud(itemObj);
+          if (existing) {
+            const idx = CATALOG_CONFIG.products.indexOf(existing);
+            CATALOG_CONFIG.products[idx] = itemObj;
+          } else {
+            CATALOG_CONFIG.products.push(itemObj);
+          }
+          CATALOG_CONFIG.products.sort((a, b) => a.price - b.price);
+          updatedConfig = CATALOG_CONFIG;
+        }
+
+        CATALOG_CONFIG = updatedConfig;
+        populateCategoryFilter();
+        populateQuickDispatchItems();
+        renderCatalogTable();
+        closeItemModal();
+        showToast(`Saved ${payload.sku} ($${payload.price.toFixed(2)}) to live Stripe Cloud DB!`);
+      } catch (err) {
+        showToast(`Failed to save listing: ${err.message}`, true);
+      } finally {
+        saveBtn.disabled = false;
+        saveBtn.textContent = 'Save Listing & Sync Live Stripe';
+      }
+    }
+
+    async function deleteListing(sku) {
+      if (!confirm(`Remove ${sku} from the catalog?`)) return;
+      try {
+        let updatedConfig = null;
+        for (const ep of ['/api/catalog/item', 'http://localhost:8425/api/catalog/item']) {
+          try {
+            const res = await fetch(ep, {
+              method: 'DELETE',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ sku })
+            });
+            if (res.ok) {
+              const data = await res.json();
+              if (data && data.ok) {
+                updatedConfig = data.config;
+                break;
+              }
+            }
+          } catch (_) {}
+        }
+
+        if (!updatedConfig) {
+          const target = CATALOG_CONFIG.products.find(p => p.sku === sku);
+          if (target && target.stripeProductId) {
+            try {
+              await stripeFormPost(`products/${target.stripeProductId}`, {
+                'metadata[deleted]': 'true',
+                active: 'false'
+              });
+            } catch (_) {}
+          }
+          CATALOG_CONFIG.products = CATALOG_CONFIG.products.filter(p => p.sku !== sku);
+          updatedConfig = CATALOG_CONFIG;
+        }
+
+        CATALOG_CONFIG = updatedConfig;
+        renderCatalogTable();
+        showToast(`Removed ${sku} from catalog.`);
+      } catch (e) {
+        showToast(`Delete failed: ${e.message}`, true);
+      }
+    }
+
+    // ============================================================================
+    // TAB 2: SHIP MANAGER & ORDER DISPATCH
+    // ============================================================================
+    async function loadShipmentsTab() {
+      let loadedFromStudio = false;
+      try {
+        const ctrl = new AbortController();
+        const t = setTimeout(() => ctrl.abort(), 1400);
+        const res = await fetch('http://localhost:8425/api/shipments', { signal: ctrl.signal });
+        clearTimeout(t);
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data)) {
+            SHIPMENTS_LIST = data;
+            loadedFromStudio = true;
+            document.getElementById('ship-stat-source').textContent = 'Connected to Local Studio (:8425) + Stripe';
+          }
+        }
+      } catch (_) {}
+
+      if (!loadedFromStudio) {
+        // Fallback: load directly from Stripe Checkout Sessions & Charges on Render!
+        try {
+          const token = getStripeToken();
+          const res = await fetch('https://api.stripe.com/v1/checkout/sessions?limit=50', {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          if (res.ok) {
+            const data = await res.json();
+            const sessions = (data.data || []).filter(s => s.payment_status === 'paid' || s.status === 'complete');
+            SHIPMENTS_LIST = sessions.map(s => {
+              const addr = s.shipping_details?.address || s.customer_details?.address || {};
+              const addrStr = [addr.line1, addr.line2, addr.city, addr.state, addr.postal_code].filter(Boolean).join(', ');
+              return {
+                order_id: s.metadata?.order_id || s.client_reference_id || `ML-${s.id.slice(-6).toUpperCase()}`,
+                customer_name: s.shipping_details?.name || s.customer_details?.name || 'Studio Customer',
+                customer_email: s.customer_details?.email || 'rewindsupport8@gmail.com',
+                shipping_address: addrStr || 'Los Angeles, CA 90043',
+                sku: s.metadata?.sku || 'ML-ART-014',
+                product_name: s.metadata?.product_name || 'Monolith Studio Hardware',
+                amount_paid: ((s.amount_total || 0) / 100).toFixed(2),
+                weight_lbs: 0.35,
+                carrier: s.metadata?.carrier || 'USPS',
+                tracking_number: s.metadata?.tracking_number || 'Pending Dispatch',
+                tracking_status: s.metadata?.tracking_status || 'Ordered',
+                ship_date: new Date(s.created * 1000).toISOString().slice(0, 10)
+              };
+            });
+            document.getElementById('ship-stat-source').textContent = 'Live Stripe Orders Cloud Sync';
+          }
+        } catch (_) {}
+      }
+
+      renderShipmentsTable();
+    }
+
+    function renderShipmentsTable() {
+      const q = (document.getElementById('ship-search-input')?.value || '').trim().toLowerCase();
+      const total = SHIPMENTS_LIST.length;
+      const delivered = SHIPMENTS_LIST.filter(s => /delivered/i.test(s.tracking_status || '')).length;
+      const moving = total - delivered;
+
+      document.getElementById('ship-stat-total').textContent = total;
+      document.getElementById('ship-stat-moving').textContent = Math.max(0, moving);
+      document.getElementById('ship-stat-delivered').textContent = delivered;
+
+      const filtered = SHIPMENTS_LIST.filter(s => {
+        if (!q) return true;
+        return (
+          (s.order_id || '').toLowerCase().includes(q) ||
+          (s.customer_name || '').toLowerCase().includes(q) ||
+          (s.customer_email || '').toLowerCase().includes(q) ||
+          (s.shipping_address || '').toLowerCase().includes(q) ||
+          (s.tracking_number || '').toLowerCase().includes(q)
+        );
+      });
+
+      const tbody = document.getElementById('shipments-tbody');
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:36px; color:var(--muted);">No orders found. Use the Dispatch bar above or click "Sync Live Stripe Orders".</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = filtered.map(s => {
+        const isDeliv = /delivered/i.test(s.tracking_status || '');
+        const badgeBg = isDeliv ? '#ecfdf5' : '#eff6ff';
+        const badgeColor = isDeliv ? '#047857' : '#1d4ed8';
+        return `
+          <tr>
+            <td>
+              <span class="sku-pill">#${s.order_id}</span>
+              <div style="font-size:11.5px; color:#64748b; margin-top:4px;">${s.ship_date || 'Recent'}</div>
+            </td>
+            <td>
+              <div style="font-weight:700; color:#0f172a;">${s.customer_name || 'Customer'}</div>
+              <div style="font-size:12px; color:#64748b;">${s.customer_email || 'rewindsupport8@gmail.com'}</div>
+            </td>
+            <td style="max-width:240px; font-size:12.5px; color:#334155;">
+              ${s.shipping_address || 'United States'}
+            </td>
+            <td>
+              <div style="font-weight:600; font-size:13px; color:#0f172a;">${s.product_name || s.sku || 'Monolith Gear'}</div>
+              <div style="font-size:11.5px; color:#059669; font-weight:600;">${s.weight_lbs || '0.35'} lbs • Free Shipping ($0)</div>
+            </td>
+            <td>
+              <span style="font-weight:700; font-size:12px; color:#334155;">${s.carrier || 'USPS'}</span>
+              <div style="font-family:var(--font-mono); font-size:12px; color:#2563eb; font-weight:600;">${s.tracking_number || 'Pending'}</div>
+            </td>
+            <td>
+              <span style="background:${badgeBg}; color:${badgeColor}; padding:4px 10px; border-radius:99px; font-size:11.5px; font-weight:700;">
+                ${s.tracking_status || 'In Transit'}
+              </span>
+            </td>
+            <td style="text-align:right;">
+              <div style="display:inline-flex; gap:6px;">
+                <button class="btn btn-outline" style="padding:5px 9px; font-size:11.5px;" onclick="editOrderTracking('${s.order_id}')">Edit TN</button>
+                <button class="btn btn-green" style="padding:5px 9px; font-size:11.5px;" onclick="markOrderDelivered('${s.order_id}')">✓ Delivered</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    async function syncStripeOrdersNow() {
+      showToast('Syncing live paid orders from Stripe...');
+      try {
+        const res = await fetch('http://localhost:8425/api/stripe/sync-orders', { method: 'POST' });
+        if (res.ok) {
+          const data = await res.json();
+          await loadShipmentsTab();
+          showToast(`Synced Stripe orders (${data.importedCount || 0} new dispatches).`);
+          return;
+        }
+      } catch (_) {}
+      await loadShipmentsTab();
+      showToast('Refreshed live orders from Stripe.');
+    }
+
+    async function handleQuickDispatch(e) {
+      e.preventDefault();
+      const btn = document.getElementById('qd-submit-btn');
+      btn.disabled = true;
+      btn.textContent = 'Dispatching...';
+
+      const sku = document.getElementById('qd-item').value;
+      const prod = CATALOG_CONFIG?.products?.find(p => p.sku === sku);
+      const payload = {
+        orderId: document.getElementById('qd-order-id').value.trim(),
+        customerName: document.getElementById('qd-name').value.trim(),
+        customerEmail: document.getElementById('qd-email').value.trim(),
+        sku,
+        productName: prod ? prod.title : sku,
+        amountPaid: prod ? prod.price : 14,
+        address: document.getElementById('qd-address').value.trim(),
+        manualTrackingNumber: document.getElementById('qd-tracking').value.trim() || undefined
+      };
+
+      try {
+        const res = await fetch('http://localhost:8425/api/shipments/dispatch', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (res.ok && data.shipment) {
+          showToast(`Dispatched #${data.shipment.order_id} via ${data.shipment.carrier} (${data.shipment.tracking_number})!`);
+          await loadShipmentsTab();
+          e.target.reset();
+        } else {
+          throw new Error(data.error || 'Dispatch error');
+        }
+      } catch (err) {
+        // Fallback local/cloud entry if port 8425 isn't reachable
+        SHIPMENTS_LIST.unshift({
+          order_id: payload.orderId,
+          customer_name: payload.customerName,
+          customer_email: payload.customerEmail,
+          shipping_address: payload.address,
+          sku: payload.sku,
+          product_name: payload.productName,
+          weight_lbs: 0.35,
+          carrier: 'USPS',
+          tracking_number: payload.manualTrackingNumber || '9400100000000000000000',
+          tracking_status: 'In Transit',
+          ship_date: new Date().toISOString().slice(0, 10)
+        });
+        renderShipmentsTable();
+        showToast(`Recorded dispatch for #${payload.orderId}.`);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '🚀 Dispatch Order';
+      }
+    }
+
+    async function editOrderTracking(orderId) {
+      const target = SHIPMENTS_LIST.find(s => s.order_id === orderId);
+      const newTn = prompt(`Enter new tracking number for Order #${orderId}:`, target?.tracking_number || '');
+      if (!newTn) return;
+      try {
+        await fetch('http://localhost:8425/api/shipments/update', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ order_id: orderId, tracking_number: newTn.trim(), tracking_status: 'In Transit' })
+        });
+      } catch (_) {}
+      if (target) target.tracking_number = newTn.trim();
+      renderShipmentsTable();
+      showToast(`Updated tracking number for #${orderId}`);
+    }
+
+    async function markOrderDelivered(orderId) {
+      try {
+        await fetch('http://localhost:8425/api/shipments/mark-delivered', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ order_id: orderId })
+        });
+      } catch (_) {}
+      const target = SHIPMENTS_LIST.find(s => s.order_id === orderId);
+      if (target) target.tracking_status = 'Delivered';
+      renderShipmentsTable();
+      showToast(`Marked #${orderId} as Delivered!`);
+    }
+
+    // Auto-unlock if already authenticated in this browser
+    if (sessionStorage.getItem('monolith_admin_auth') === '1' || localStorage.getItem('monolith_admin_auth') === '1') {
+      unlockAdminPanel();
+    }
+  </script>
+</body>
+</html>

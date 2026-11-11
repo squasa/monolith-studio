@@ -18,9 +18,9 @@ app.use((req, res, next) => {
 });
 
 // Dynamic /config/store-config.json route
-app.get('/config/store-config.json', (req, res) => {
+app.get('/config/store-config.json', async (req, res) => {
   try {
-    const cfg = catalogService.readCatalogConfig();
+    const cfg = await catalogService.readCatalogConfigLive();
     res.json(cfg);
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -28,9 +28,9 @@ app.get('/config/store-config.json', (req, res) => {
 });
 
 // Catalog & Price Manager API endpoints
-app.get('/api/catalog', (req, res) => {
+app.get('/api/catalog', async (req, res) => {
   try {
-    const config = catalogService.readCatalogConfig();
+    const config = await catalogService.readCatalogConfigLive();
     res.json({ ok: true, config });
   } catch (e) {
     res.status(500).json({ ok: false, error: e.message });
@@ -55,9 +55,9 @@ app.post('/api/catalog/item', async (req, res) => {
   }
 });
 
-app.delete('/api/catalog/item', (req, res) => {
+app.delete('/api/catalog/item', async (req, res) => {
   try {
-    const result = catalogService.deleteCatalogItem(req.body || {});
+    const result = await catalogService.deleteCatalogItem(req.body || {});
     res.json(result);
   } catch (e) {
     res.status(400).json({ ok: false, error: e.message });
@@ -83,8 +83,8 @@ app.post('/api/checkout-session', async (req, res) => {
   }
 });
 
-// Separate Catalog & Price Manager menu route
-app.get('/manage', (req, res) => {
+// Separate Admin Panel / Catalog & Ship Manager routes
+app.get(['/manage', '/admin', '/admin.html'], (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'manage.html'));
 });
 

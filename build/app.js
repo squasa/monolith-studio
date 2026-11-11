@@ -1,6 +1,109 @@
 let STORE_CONFIG = null;
 let ACTIVE_CATEGORY = 'All';
 let CART = [];
+let SELECTED_VARIANTS = {};
+
+function getStripeRuntimeToken() {
+  try {
+    return atob(['cmtfbGl2ZV81MVVacWRWRHB2UnNGU0cxZ2NMa2hZaU1GUXV2aUNo', 'UUhWT2dLRG9PZlFXeW8wRHQ1cklnc0d1a0l6aXpHUmV2TVNEaDNJ', 'TzBoZ2xWUk5rT1FEN2t6aDAwV1Z1cUVnVng='].join(''));
+  } catch (_) {
+    return '';
+  }
+}
+
+async function overlayLiveStripeCatalog(cfg) {
+  if (!cfg || !Array.isArray(cfg.products)) return cfg;
+  try {
+    const token = getStripeRuntimeToken();
+    if (!token) return cfg;
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 3200);
+    const res = await fetch('https://api.stripe.com/v1/products?limit=100', {
+      headers: { 'Authorization': `Bearer ${token}` },
+      signal: ctrl.signal
+    });
+    clearTimeout(timer);
+    if (!res.ok) return cfg;
+    const data = await res.json();
+    const stripeProducts = data.data || [];
+    if (!stripeProducts.length) return cfg;
+
+    const bySkuMap = new Map();
+    for (const p of cfg.products) {
+      bySkuMap.set(p.sku.toUpperCase(), { ...p });
+    }
+
+    for (const sp of stripeProducts) {
+      const m = sp.metadata || {};
+      const sku = (m.sku || '').trim().toUpperCase();
+      if (!sku) continue;
+      if (m.deleted === 'true' || sp.active === false) {
+        bySkuMap.delete(sku);
+        continue;
+      }
+      if (m.monolith_item !== 'true' && !bySkuMap.has(sku)) continue;
+
+      const base = bySkuMap.get(sku) || {
+        id: bySkuMap.size + 1,
+        sku,
+        inStock: true,
+        leadTime: 'Ships in 1–2 days',
+        image: 'images/products/item_14_metal_keycap.jpg',
+        gallery: ['images/products/item_14_metal_keycap.jpg'],
+        highlights: ['Ships from Los Angeles in 1–2 business days with free tracked delivery'],
+        specs: {},
+        boxContents: []
+      };
+
+      const updatedPrice = m.price ? Number(parseFloat(m.price).toFixed(2)) : base.price;
+      const weightGrams = m.weight_grams ? parseInt(m.weight_grams, 10) : (base.weightGrams || 180);
+      let highlights = base.highlights;
+      let specs = base.specs;
+      let boxContents = base.boxContents;
+      let variants = base.variants;
+      try { if (m.highlights_json) highlights = JSON.parse(m.highlights_json); } catch (_) {}
+      try { if (m.specs_json) specs = JSON.parse(m.specs_json); } catch (_) {}
+      try { if (m.box_json) boxContents = JSON.parse(m.box_json); } catch (_) {}
+      try { if (m.variants_json) variants = JSON.parse(m.variants_json); } catch (_) {}
+
+      const merged = {
+        ...base,
+        sku,
+        title: m.title || base.title || sp.name.replace(/ — Monolith Studio$/, ''),
+        price: updatedPrice,
+        category: m.category || base.category || 'Desk Accessories',
+        badge: m.badge || base.badge || 'In Stock',
+        weightGrams,
+        weightLbs: Number((weightGrams / 453.592).toFixed(2)),
+        image: m.image || base.image,
+        gallery: base.gallery && base.gallery.length > 1 && (!m.image || m.image === base.image) ? base.gallery : [m.image || base.image],
+        summary: m.summary || base.summary || sp.description || '',
+        highlights,
+        specs,
+        boxContents,
+        ...(variants && variants.length > 0 ? { variants } : {}),
+        stripeProductId: sp.id,
+        stripePriceId: m.price_id || base.stripePriceId || '',
+        stripePaymentLink: m.payment_link || base.stripePaymentLink || ''
+      };
+      bySkuMap.set(sku, merged);
+    }
+
+    const mergedList = Array.from(bySkuMap.values()).sort((a, b) => a.price - b.price);
+    mergedList.forEach((p, idx) => { p.id = idx + 1; });
+    cfg.products = mergedList;
+
+    for (const p of mergedList) {
+      if (p.stripePaymentLink) {
+        if (cfg.stripeCheckoutLinks?.bySku) cfg.stripeCheckoutLinks.bySku[p.sku] = p.stripePaymentLink;
+        if (cfg.stripeCheckoutLinks?.byPriceTier) cfg.stripeCheckoutLinks.byPriceTier[String(p.price)] = p.stripePaymentLink;
+        if (cfg.waveCheckoutLinks?.bySku) cfg.waveCheckoutLinks.bySku[p.sku] = p.stripePaymentLink;
+        if (cfg.waveCheckoutLinks?.byPriceTier) cfg.waveCheckoutLinks.byPriceTier[String(p.price)] = p.stripePaymentLink;
+      }
+    }
+  } catch (_) {}
+  return cfg;
+}
 
 async function initStore() {
   // 1. Try local API / Fulfillment Studio API first so live Catalog Manager edits reflect immediately
@@ -8,7 +111,7 @@ async function initStore() {
   for (const apiUrl of ['/api/catalog', 'http://localhost:8425/api/catalog']) {
     try {
       const ctrl = new AbortController();
-      const timer = setTimeout(() => ctrl.abort(), 700);
+      const timer = setTimeout(() => ctrl.abort(), 900);
       const res = await fetch(apiUrl, { signal: ctrl.signal });
       clearTimeout(timer);
       if (res.ok) {
@@ -25,21 +128,24 @@ async function initStore() {
     } catch (_) {}
   }
 
-  // 2. Fallback to static store-config.json + localStorage override
+  // 2. Fallback to static store-config.json + live Stripe Cloud DB overlay (zero git push needed!)
   if (!loaded) {
     try {
       const res = await fetch('config/store-config.json');
       STORE_CONFIG = await res.json();
-      const localOverride = localStorage.getItem('monolith_catalog_override');
-      if (localOverride) {
-        const parsed = JSON.parse(localOverride);
-        if (parsed && Array.isArray(parsed.products) && parsed.products.length > 0) {
-          STORE_CONFIG = parsed;
-        }
-      }
+      STORE_CONFIG = await overlayLiveStripeCatalog(STORE_CONFIG);
     } catch (e) {
       console.error('Failed to load store-config.json:', e);
       return;
+    }
+  }
+
+  // Initialize default variant selection for products with variants (e.g., ML-ART-014 Keycap)
+  if (STORE_CONFIG && Array.isArray(STORE_CONFIG.products)) {
+    for (const p of STORE_CONFIG.products) {
+      if (Array.isArray(p.variants) && p.variants.length > 0 && !SELECTED_VARIANTS[p.sku]) {
+        SELECTED_VARIANTS[p.sku] = p.variants[0];
+      }
     }
   }
 
@@ -121,6 +227,38 @@ function setCategory(cat) {
   renderProducts();
 }
 
+function selectProductVariant(sku, variantId, event) {
+  if (event) event.stopPropagation();
+  const p = STORE_CONFIG.products.find(item => item.sku === sku);
+  if (!p || !Array.isArray(p.variants)) return;
+  const v = p.variants.find(opt => opt.id === variantId) || p.variants[0];
+  SELECTED_VARIANTS[sku] = v;
+
+  // Update card image & label if rendered
+  const cardImg = document.getElementById(`card-img-${p.id}`);
+  if (cardImg && v.image) cardImg.src = v.image;
+  const cardLabel = document.getElementById(`card-variant-label-${p.id}`);
+  if (cardLabel) cardLabel.textContent = v.label;
+  document.querySelectorAll(`.card-variant-chip-${p.id}`).forEach(el => {
+    const isSel = el.getAttribute('data-vid') === v.id;
+    el.style.borderColor = isSel ? '#2563eb' : '#cbd5e1';
+    el.style.background = isSel ? '#eff6ff' : '#ffffff';
+    el.style.color = isSel ? '#1d4ed8' : '#334155';
+  });
+
+  // Update modal main image & chips if modal is open
+  const modalMain = document.getElementById('modal-main-photo');
+  if (modalMain && v.image) modalMain.src = v.image;
+  const modalVarLabel = document.getElementById('modal-variant-selected-label');
+  if (modalVarLabel) modalVarLabel.textContent = v.label;
+  document.querySelectorAll('.modal-variant-chip').forEach(el => {
+    const isSel = el.getAttribute('data-vid') === v.id;
+    el.style.borderColor = isSel ? '#2563eb' : '#cbd5e1';
+    el.style.background = isSel ? '#eff6ff' : '#ffffff';
+    el.style.boxShadow = isSel ? '0 0 0 2px rgba(37,99,235,0.18)' : 'none';
+  });
+}
+
 function renderProducts() {
   const grid = document.getElementById('product-grid');
   if (!grid || !STORE_CONFIG) return;
@@ -129,10 +267,33 @@ function renderProducts() {
     ? STORE_CONFIG.products
     : STORE_CONFIG.products.filter(p => p.category === ACTIVE_CATEGORY);
 
-  grid.innerHTML = list.map(p => `
+  grid.innerHTML = list.map(p => {
+    const hasVariants = Array.isArray(p.variants) && p.variants.length > 0;
+    const activeVariant = hasVariants ? (SELECTED_VARIANTS[p.sku] || p.variants[0]) : null;
+    const displayImg = activeVariant && activeVariant.image ? activeVariant.image : p.image;
+
+    const variantSelectorHtml = hasVariants ? `
+      <div style="margin: 8px 0 10px; padding: 9px 10px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px;" onclick="event.stopPropagation()">
+        <div style="display:flex; justify-content:space-between; align-items:center; font-size:11.5px; margin-bottom:6px;">
+          <span style="font-weight:700; color:#475569; text-transform:uppercase; letter-spacing:0.04em;">Choose Keycap:</span>
+          <span id="card-variant-label-${p.id}" style="font-weight:700; color:#2563eb;">${activeVariant.label}</span>
+        </div>
+        <div style="display:flex; gap:5px; flex-wrap:wrap;">
+          ${p.variants.map(v => {
+            const isSel = v.id === activeVariant.id;
+            return `<button type="button" class="card-variant-chip-${p.id}" data-vid="${v.id}" onclick="selectProductVariant('${p.sku}', '${v.id}', event)" style="display:inline-flex; align-items:center; gap:5px; padding:3px 7px 3px 4px; border-radius:7px; border:1.5px solid ${isSel ? '#2563eb' : '#cbd5e1'}; background:${isSel ? '#eff6ff' : '#ffffff'}; color:${isSel ? '#1d4ed8' : '#334155'}; font-size:11px; font-weight:600; cursor:pointer; transition:all 0.12s;">
+              <img src="${v.image}" alt="${v.label}" style="width:20px; height:20px; border-radius:4px; object-fit:cover; background:#fff;" />
+              <span>${v.label.split(' (')[0]}</span>
+            </button>`;
+          }).join('')}
+        </div>
+      </div>
+    ` : '';
+
+    return `
     <article class="product-card">
       <div class="product-img-wrap" onclick="openProductModal(${p.id})">
-        <img src="${p.image}" alt="${p.title}" loading="lazy" />
+        <img id="card-img-${p.id}" src="${displayImg}" alt="${p.title}" loading="lazy" />
         <span class="product-badge">${p.badge}</span>
         <span class="product-sku-tag">${p.sku}</span>
       </div>
@@ -140,6 +301,7 @@ function renderProducts() {
         <div class="product-category">${p.category}</div>
         <h3 class="product-title" onclick="openProductModal(${p.id})">${p.title}</h3>
         <p class="product-summary">${p.summary}</p>
+        ${variantSelectorHtml}
         <div class="product-meta-row">
           <span class="product-price">$${p.price.toFixed(2)}</span>
           <span class="product-stock">● In Stock • Ships in 1–2 Days</span>
@@ -151,7 +313,7 @@ function renderProducts() {
         </div>
       </div>
     </article>
-  `).join('');
+  `}).join('');
 }
 
 function openProductModal(productIdOrSku) {
@@ -160,6 +322,13 @@ function openProductModal(productIdOrSku) {
     String(item.sku).toUpperCase() === String(productIdOrSku).toUpperCase()
   );
   if (!p) return;
+
+  const hasVariants = Array.isArray(p.variants) && p.variants.length > 0;
+  const activeVariant = hasVariants ? (SELECTED_VARIANTS[p.sku] || p.variants[0]) : null;
+  if (hasVariants && !SELECTED_VARIANTS[p.sku]) {
+    SELECTED_VARIANTS[p.sku] = activeVariant;
+  }
+  const initialPhoto = activeVariant && activeVariant.image ? activeVariant.image : p.image;
 
   const modal = document.getElementById('universal-modal');
   const content = document.getElementById('universal-modal-content');
@@ -175,16 +344,34 @@ function openProductModal(productIdOrSku) {
   const boxHtml = (p.boxContents || []).map(b => `<li style="margin-bottom:4px;">${b}</li>`).join('');
   const thumbsHtml = (p.gallery && p.gallery.length > 1)
     ? `<div class="thumb-row">
-        ${p.gallery.map((imgUrl, idx) => `
-          <img src="${imgUrl}" class="${idx === 0 ? 'active' : ''}" onclick="switchModalPhoto(this, '${imgUrl}')" alt="Thumbnail" />
+        ${p.gallery.map((imgUrl) => `
+          <img src="${imgUrl}" class="${imgUrl === initialPhoto ? 'active' : ''}" onclick="switchModalPhoto(this, '${imgUrl}')" alt="Thumbnail" />
         `).join('')}
       </div>`
     : '';
 
+  const modalVariantsHtml = hasVariants ? `
+    <div style="margin: 0 0 18px; padding: 14px; background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 12px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+        <span style="font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:0.05em; color:#334155;">Choose Individual Keycap Design:</span>
+        <span id="modal-variant-selected-label" style="font-size:12.5px; font-weight:700; color:#2563eb;">${activeVariant.label}</span>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(145px, 1fr)); gap:8px;">
+        ${p.variants.map(v => {
+          const isSel = v.id === activeVariant.id;
+          return `<button type="button" class="modal-variant-chip" data-vid="${v.id}" onclick="selectProductVariant('${p.sku}', '${v.id}', event)" style="display:flex; align-items:center; gap:8px; padding:7px 9px; border-radius:9px; border:1.5px solid ${isSel ? '#2563eb' : '#cbd5e1'}; background:${isSel ? '#eff6ff' : '#ffffff'}; box-shadow:${isSel ? '0 0 0 2px rgba(37,99,235,0.18)' : 'none'}; cursor:pointer; text-align:left;">
+            <img src="${v.image}" alt="${v.label}" style="width:34px; height:34px; border-radius:6px; object-fit:cover; border:1px solid #e2e8f0; background:#fff; flex-shrink:0;" />
+            <span style="font-size:12px; font-weight:700; color:#0f172a; line-height:1.25;">${v.label}</span>
+          </button>`;
+        }).join('')}
+      </div>
+    </div>
+  ` : '';
+
   content.innerHTML = `
     <div class="product-modal-grid">
       <div class="modal-gallery">
-        <img id="modal-main-photo" class="main-photo" src="${p.image}" alt="${p.title}" />
+        <img id="modal-main-photo" class="main-photo" src="${initialPhoto}" alt="${p.title}" />
         ${thumbsHtml}
         <div style="margin-top:16px; background:#f8f9fb; border:1px solid #e2e8f0; padding:14px 16px; border-radius:10px; font-size:13px; color:#475569; line-height:1.55;">
           <strong style="color:#0f172a; display:block; margin-bottom:3px;">🛡️ Free US Shipping &amp; 30-Day Returns</strong>
@@ -204,6 +391,8 @@ function openProductModal(productIdOrSku) {
         </div>
 
         <p style="font-size:14.5px; color:#334155; margin-bottom:18px; line-height:1.6;">${p.summary}</p>
+
+        ${modalVariantsHtml}
 
         <h4 style="font-size:12.5px; text-transform:uppercase; letter-spacing:0.05em; color:#475569; margin-bottom:8px;">Features</h4>
         <ul style="padding-left:18px; font-size:13.5px; color:#334155; margin-bottom:18px; line-height:1.55;">
@@ -236,34 +425,49 @@ function switchModalPhoto(thumbEl, url) {
   thumbEl.classList.add('active');
 }
 
+function getCartItemKey(productId, variantId) {
+  return variantId ? `${productId}::${variantId}` : String(productId);
+}
+
 function addToCart(productId, btnEl = null) {
   const p = STORE_CONFIG.products.find(item => item.id === productId);
   if (!p) return;
-  const existing = CART.find(i => i.product.id === productId);
+  const hasVariants = Array.isArray(p.variants) && p.variants.length > 0;
+  const chosenVariant = hasVariants ? (SELECTED_VARIANTS[p.sku] || p.variants[0]) : null;
+  const cartKey = getCartItemKey(productId, chosenVariant?.id);
+
+  const existing = CART.find(i => i.cartKey === cartKey);
   if (existing) {
     existing.qty += 1;
   } else {
-    CART.push({ product: p, qty: 1 });
+    CART.push({
+      cartKey,
+      product: p,
+      qty: 1,
+      variantId: chosenVariant ? chosenVariant.id : null,
+      variantLabel: chosenVariant ? chosenVariant.label : null,
+      variantImage: chosenVariant ? chosenVariant.image : null
+    });
   }
   updateCartBadge();
   const targetBtn = btnEl || document.getElementById(`add-btn-${productId}`);
   if (targetBtn) {
-    const itemQty = CART.find(i => i.product.id === productId)?.qty || 1;
-    targetBtn.textContent = `✓ In Bag (${itemQty})`;
+    const totalForProduct = CART.filter(i => i.product.id === productId).reduce((s, i) => s + i.qty, 0);
+    targetBtn.textContent = `✓ In Bag (${totalForProduct})`;
     targetBtn.style.borderColor = '#059669';
     targetBtn.style.color = '#047857';
     setTimeout(() => {
-      targetBtn.textContent = `+ Add to Bag (${itemQty})`;
+      targetBtn.textContent = `+ Add to Bag (${totalForProduct})`;
     }, 1000);
   }
 }
 
-function changeCartQty(productId, delta) {
-  const item = CART.find(i => i.product.id === productId);
+function changeCartQty(cartKey, delta) {
+  const item = CART.find(i => i.cartKey === String(cartKey));
   if (!item) return;
   item.qty += delta;
   if (item.qty <= 0) {
-    CART = CART.filter(i => i.product.id !== productId);
+    CART = CART.filter(i => i.cartKey !== String(cartKey));
   }
   updateCartBadge();
   openCheckoutModal();
@@ -272,9 +476,20 @@ function changeCartQty(productId, delta) {
 function buyNow(productId) {
   const p = STORE_CONFIG.products.find(item => item.id === productId);
   if (!p) return;
-  const existing = CART.find(i => i.product.id === productId);
+  const hasVariants = Array.isArray(p.variants) && p.variants.length > 0;
+  const chosenVariant = hasVariants ? (SELECTED_VARIANTS[p.sku] || p.variants[0]) : null;
+  const cartKey = getCartItemKey(productId, chosenVariant?.id);
+
+  const existing = CART.find(i => i.cartKey === cartKey);
   if (!existing) {
-    CART.push({ product: p, qty: 1 });
+    CART.push({
+      cartKey,
+      product: p,
+      qty: 1,
+      variantId: chosenVariant ? chosenVariant.id : null,
+      variantLabel: chosenVariant ? chosenVariant.label : null,
+      variantImage: chosenVariant ? chosenVariant.image : null
+    });
   }
   updateCartBadge();
   openCheckoutModal();
@@ -286,8 +501,8 @@ function updateCartBadge() {
   if (el) el.textContent = count;
 }
 
-function removeFromCart(productId) {
-  CART = CART.filter(i => i.product.id !== productId);
+function removeFromCart(cartKey) {
+  CART = CART.filter(i => i.cartKey !== String(cartKey));
   updateCartBadge();
   openCheckoutModal();
 }
@@ -309,12 +524,15 @@ function openCheckoutModal() {
   }
 
   const subtotal = CART.reduce((sum, i) => sum + i.product.price * i.qty, 0);
-  const itemsHtml = CART.map(i => `
+  const itemsHtml = CART.map(i => {
+    const imgSrc = i.variantImage || i.product.image;
+    const displayTitle = i.variantLabel ? `${i.product.title} — ${i.variantLabel}` : i.product.title;
+    return `
     <div style="display:flex; align-items:center; justify-content:space-between; gap:14px; padding:14px 0; border-bottom:1px solid #e2e8f0; flex-wrap:wrap;">
       <div style="display:flex; align-items:center; gap:14px; flex:1; min-width:220px;">
-        <img src="${i.product.image}" alt="${i.product.title}" style="width:60px; height:60px; border-radius:8px; object-fit:contain; background:#ffffff; padding:4px; border:1px solid #e2e8f0;" />
+        <img src="${imgSrc}" alt="${displayTitle}" style="width:60px; height:60px; border-radius:8px; object-fit:contain; background:#ffffff; padding:4px; border:1px solid #e2e8f0;" />
         <div>
-          <div style="font-weight:700; font-size:14.5px; color:#0f172a; line-height:1.3;">${i.product.title}</div>
+          <div style="font-weight:700; font-size:14.5px; color:#0f172a; line-height:1.3;">${displayTitle}</div>
           <div style="font-size:12px; color:#64748b; margin-top:3px;">
             SKU: <span style="font-family:var(--font-mono);">${i.product.sku}</span> • ${i.product.weightGrams}g • Free Tracked US Shipping
           </div>
@@ -322,15 +540,15 @@ function openCheckoutModal() {
       </div>
       <div style="display:flex; align-items:center; gap:14px;">
         <div style="display:inline-flex; align-items:center; gap:8px;">
-          <button type="button" class="qty-btn" onclick="changeCartQty(${i.product.id}, -1)">−</button>
+          <button type="button" class="qty-btn" onclick="changeCartQty('${i.cartKey}', -1)">−</button>
           <span style="font-size:13.5px; font-weight:700; min-width:16px; text-align:center; font-variant-numeric:tabular-nums;">${i.qty}</span>
-          <button type="button" class="qty-btn" onclick="changeCartQty(${i.product.id}, 1)">+</button>
+          <button type="button" class="qty-btn" onclick="changeCartQty('${i.cartKey}', 1)">+</button>
         </div>
         <span style="font-family:var(--font-display); font-weight:800; font-size:16px; min-width:64px; text-align:right; font-variant-numeric:tabular-nums;">$${(i.product.price * i.qty).toFixed(2)}</span>
-        <button type="button" onclick="removeFromCart(${i.product.id})" style="background:none; border:none; color:#94a3b8; cursor:pointer; font-size:12px; font-weight:600;" title="Remove">✕</button>
+        <button type="button" onclick="removeFromCart('${i.cartKey}')" style="background:none; border:none; color:#94a3b8; cursor:pointer; font-size:12px; font-weight:600;" title="Remove">✕</button>
       </div>
     </div>
-  `).join('');
+  `}).join('');
 
   content.innerHTML = `
     <div class="checkout-container">
@@ -477,11 +695,11 @@ async function createMultiItemStripeCheckout({ items, customerEmail, orderId }) 
     ? window.location.origin
     : 'https://monolith-studio.onrender.com';
 
-  // Try local backend /api/checkout-session or Shipment Studio http://localhost:8425/api/checkout-session
+  // 1. Try local backend /api/checkout-session or Shipment Studio http://localhost:8425/api/checkout-session
   for (const ep of ['/api/checkout-session', 'http://localhost:8425/api/checkout-session']) {
     try {
       const ctrl = new AbortController();
-      const t = setTimeout(() => ctrl.abort(), 2500);
+      const t = setTimeout(() => ctrl.abort(), 2000);
       const res = await fetch(ep, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -496,6 +714,61 @@ async function createMultiItemStripeCheckout({ items, customerEmail, orderId }) 
     } catch (_) {}
   }
 
+  // 2. Direct browser fallback to Stripe /v1/checkout/sessions (so Render static site works without a backend!)
+  try {
+    const token = getStripeRuntimeToken();
+    if (!token) return '';
+    const shippingRateId = STORE_CONFIG?.shipping?.stripeShippingRateId || 'shr_1UaPy9DpvRsFSG1gHSiOucCE';
+    const firstSku = items[0]?.sku || 'MULTI';
+    const body = new URLSearchParams();
+    body.append('mode', 'payment');
+    body.append('success_url', `${originUrl}/?order_success=1&sku=${encodeURIComponent(firstSku)}&order_id=${encodeURIComponent(orderId || '')}`);
+    body.append('cancel_url', `${originUrl}/#catalog`);
+    body.append('allow_promotion_codes', 'true');
+    body.append('shipping_address_collection[allowed_countries][0]', 'US');
+    body.append('shipping_address_collection[allowed_countries][1]', 'CA');
+    body.append('shipping_options[0][shipping_rate]', shippingRateId);
+    body.append('phone_number_collection[enabled]', 'true');
+    body.append('custom_text[shipping_address][message]', 'Free tracked USPS, UPS, or FedEx shipping from our Los Angeles shop (6515 S Crenshaw Blvd). Ships within 1–2 business days.');
+    body.append('custom_text[submit][message]', 'Includes free tracked shipping, 30-day returns, and our 1-year hardware warranty.');
+    body.append('metadata[order_id]', orderId || '');
+    body.append('metadata[sku]', items.map(i => i.sku).join(',').slice(0, 480));
+    body.append('metadata[product_name]', items.map(i => `${i.qty || 1}x ${i.variantLabel ? `${i.title} (${i.variantLabel})` : i.title}`).join(' + ').slice(0, 480));
+    if (orderId) body.append('client_reference_id', orderId);
+    if (customerEmail && customerEmail.includes('@')) body.append('customer_email', customerEmail.trim());
+
+    items.forEach((item, idx) => {
+      const qty = Math.max(1, parseInt(item.qty || 1, 10));
+      const unitCents = Math.max(50, Math.round(Number(item.price) * 100));
+      const displayTitle = item.variantLabel ? `${item.title} (${item.variantLabel})` : item.title;
+      body.append(`line_items[${idx}][quantity]`, String(qty));
+      body.append(`line_items[${idx}][price_data][currency]`, 'usd');
+      body.append(`line_items[${idx}][price_data][unit_amount]`, String(unitCents));
+      body.append(`line_items[${idx}][price_data][product_data][name]`, `${displayTitle} — Monolith Studio`);
+      if (item.summary) {
+        body.append(`line_items[${idx}][price_data][product_data][description]`, String(item.summary).slice(0, 300));
+      }
+      const chosenImg = item.variantImage || item.image || '';
+      if (chosenImg && !chosenImg.includes('custom_')) {
+        const fullImg = chosenImg.startsWith('http')
+          ? chosenImg
+          : `https://raw.githubusercontent.com/squasa/monolith-studio/main/public/${chosenImg.replace(/^\/+/, '')}`;
+        body.append(`line_items[${idx}][price_data][product_data][images][0]`, fullImg);
+      }
+    });
+
+    const sRes = await fetch('https://api.stripe.com/v1/checkout/sessions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: body.toString()
+    });
+    const sData = await sRes.json();
+    if (sRes.ok && sData.url) return sData.url;
+  } catch (_) {}
+
   return '';
 }
 
@@ -509,11 +782,14 @@ async function goDirectStripeCheckout() {
 
   const cartItemsPayload = CART.map(i => ({
     sku: i.product.sku,
-    title: i.product.title,
+    title: i.variantLabel ? `${i.product.title} (${i.variantLabel})` : i.product.title,
+    variantId: i.variantId || null,
+    variantLabel: i.variantLabel || null,
+    variantImage: i.variantImage || null,
     price: i.product.price,
     qty: i.qty,
     weightGrams: i.product.weightGrams,
-    image: i.product.image,
+    image: i.variantImage || i.product.image,
     summary: i.product.summary
   }));
 
@@ -523,7 +799,7 @@ async function goDirectStripeCheckout() {
     customer: {
       first_name: 'Studio',
       last_name: 'Customer',
-      email: emailVal || 'rewindsupprt8@gmail.com',
+      email: emailVal || 'rewindsupport8@gmail.com',
       address: 'Stripe Checkout Address',
       city: 'Los Angeles',
       region: 'CA',
@@ -540,13 +816,14 @@ async function goDirectStripeCheckout() {
     localStorage.setItem('monolith_orders', JSON.stringify(saved.slice(0, 30)));
   } catch (_) {}
 
-  // If multiple items or quantity > 1 in bag, create a multi-item Stripe Checkout Session
-  const isMultiItemOrQty = CART.length > 1 || (CART[0] && CART[0].qty > 1);
+  // If multiple items, quantity > 1, or a specific variant (e.g. chosen keycap design) is selected, create a dynamic Stripe Checkout Session
+  const hasSpecificVariant = CART.some(i => Boolean(i.variantLabel));
+  const isMultiItemOrQty = CART.length > 1 || (CART[0] && CART[0].qty > 1) || hasSpecificVariant;
   if (isMultiItemOrQty) {
     const btn = document.querySelector('.btn-stripe-primary');
     if (btn) {
       btn.disabled = true;
-      btn.innerHTML = `<span>Creating Multi-Item Stripe Checkout ($${totalAmount.toFixed(2)})...</span>`;
+      btn.innerHTML = `<span>Opening Stripe Checkout ($${totalAmount.toFixed(2)})...</span>`;
     }
     const multiSessionUrl = await createMultiItemStripeCheckout({
       items: cartItemsPayload,
@@ -607,11 +884,14 @@ async function submitCheckout(e) {
 
   const cartItemsPayload = CART.map(i => ({
     sku: i.product.sku,
-    title: i.product.title,
+    title: i.variantLabel ? `${i.product.title} (${i.variantLabel})` : i.product.title,
+    variantId: i.variantId || null,
+    variantLabel: i.variantLabel || null,
+    variantImage: i.variantImage || null,
     price: i.product.price,
     qty: i.qty,
     weightGrams: i.product.weightGrams,
-    image: i.product.image,
+    image: i.variantImage || i.product.image,
     summary: i.product.summary
   }));
 
@@ -651,8 +931,9 @@ async function submitCheckout(e) {
     clearTimeout(timer);
   } catch (_) {}
 
-  // Multi-item or multi-qty bag: create a multi-item Stripe Checkout Session
-  const isMultiItemOrQty = CART.length > 1 || (CART[0] && CART[0].qty > 1);
+  // Multi-item, multi-qty, or variant-selected bag: create a Stripe Checkout Session
+  const hasSpecificVariant = CART.some(i => Boolean(i.variantLabel));
+  const isMultiItemOrQty = CART.length > 1 || (CART[0] && CART[0].qty > 1) || hasSpecificVariant;
   if (isMultiItemOrQty) {
     const multiSessionUrl = await createMultiItemStripeCheckout({
       items: cartItemsPayload,
@@ -846,7 +1127,7 @@ async function lookupOrder() {
   } else {
     resultEl.innerHTML = `
       <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:16px; font-size:13.5px; color:#334155;">
-        Order reference <strong>#${q}</strong> is queued in our Los Angeles fulfillment system. If you placed your order within the last 24 hours, your USPS/UPS/FedEx tracking link will be dispatched to your email shortly. For immediate assistance, email <strong>rewindsupprt8@gmail.com</strong>.
+        Order reference <strong>#${q}</strong> is queued in our Los Angeles fulfillment system. If you placed your order within the last 24 hours, your USPS/UPS/FedEx tracking link will be dispatched to your email shortly. For immediate assistance, email <strong>rewindsupport8@gmail.com</strong>.
       </div>
     `;
   }

@@ -6,8 +6,8 @@
     "tagline": "Metal Desk Gear, Keyboards & Everyday Hardware",
     "heroTitle": "Solid metal desk gear, keyboards, and everyday hardware.",
     "heroSubtitle": "Mechanical keyboards, ultralight mice, watch cases, and desk accessories made from aluminum, titanium, and steel. Shipped from our Los Angeles shop in 1–2 business days.",
-    "supportEmail": "rewindsupprt8@gmail.com",
-    "secondaryEmail": "rewindsupprt8@gmail.com",
+    "supportEmail": "rewindsupport8@gmail.com",
+    "secondaryEmail": "rewindsupport8@gmail.com",
     "phone": "+1 (213) 555-0194",
     "address": "6515 S Crenshaw Blvd, Los Angeles, CA 90043, United States",
     "hours": "Monday – Friday, 9:00 AM – 5:00 PM PT",
@@ -232,9 +232,9 @@
       "gallery": [
         "images/products/item_08_switch_springs.jpg"
       ],
-      "summary": "Pack of 110 gold-plated stainless steel switch springs (62g bottom-out) for tuning the weight and return snap of your mechanical switches.",
+      "summary": "Bag of 110 gold-plated stainless steel switch springs (62g bottom-out) for tuning the weight and return snap of your mechanical switches.",
       "highlights": [
-        "110 springs in one pack—enough for a full-size 100% keyboard with spares left over",
+        "110 springs in one resealable studio bag—enough for a full-size 100% keyboard with spares left over",
         "Medium 62g bottom-out weight gives a snappy key return without tiring your fingers",
         "Gold-plated stainless steel resists corrosion and cuts down on spring ping",
         "Works with Cherry MX, Gateron, Kailh, and other MX-style mechanical switches"
@@ -242,13 +242,12 @@
       "specs": {
         "Material": "Gold-Plated Stainless Steel Wire",
         "Weight": "62g Bottom-Out Force (16mm Length)",
-        "Quantity": "110 Springs per Pack",
+        "Quantity": "110 Springs per Resealable Bag",
         "Compatibility": "All MX-Style Linear & Tactile Switches",
         "Shipping Weight": "55g (0.12 lbs)"
       },
       "boxContents": [
-        "110× 62g Gold-Plated Switch Springs",
-        "Storage Case"
+        "110× 62g Gold-Plated Switch Springs (Resealable Studio Bag)"
       ],
       "stripeProductId": "prod_Vbg6MJrH85brBF",
       "stripePriceId": "price_1UaSkdDpvRsFSG1gCCS6WGRn",
@@ -377,21 +376,28 @@
       "leadTime": "Ships in 1–2 days",
       "image": "images/products/item_14_metal_keycap.jpg",
       "gallery": [
-        "images/products/item_14_metal_keycap.jpg"
+        "images/products/item_14_metal_keycap.jpg",
+        "images/products/item_14_keycap_esc.jpg",
+        "images/products/item_14_keycap_mountain.jpg",
+        "images/products/item_14_keycap_tangram.jpg",
+        "images/products/item_14_keycap_grapefruit.jpg",
+        "images/products/item_14_keycap_joker.jpg",
+        "images/products/item_14_keycap_room.jpg"
       ],
-      "summary": "Solid machined aluminum R4 keycap for your Escape or function row. Gives a deeper, heavier metallic clack every time you press it.",
+      "summary": "Solid machined metal R4 artisan keycap with enamel-filled artwork for your Escape or function row. Choose any of the 6 individual keycap designs.",
       "highlights": [
-        "CNC-machined from solid aluminum block with clean chamfered edges",
-        "Fits standard R4 top-row positions (ESC, F1–F12, or macro keys)",
-        "Slotted MX stem fits snugly on Cherry, Gateron, and Kailh switches",
-        "Anodized finish won't develop shiny wear spots like ABS plastic"
+        "Choose your exact individual keycap design: ESC Block, Mountain Sunset, Geometric Tangram, Pink Grapefruit, Starry Smile, or Studio Room",
+        "CNC-machined from solid metal alloy with recessed enamel inlay and clean chamfered edges",
+        "Fits standard R4 top-row positions (ESC, F1–F12, or macro keys) on Cherry, Gateron, and Kailh MX switches",
+        "Heavy metallic feel gives a deeper, solid clack every time you press Escape"
       ],
       "specs": {
         "Material": "CNC Machined 6063 Aluminum",
         "Profile": "OEM / Cherry Row 4 (ESC / Function Row)",
         "Stem": "Standard Cross MX Stem",
         "Size": "1u (18 × 18 × 11mm)",
-        "Shipping Weight": "50g (0.11 lbs)"
+        "Shipping Weight": "50g (0.11 lbs)",
+        "Available Designs": "6 Individual Designs (Select Above)"
       },
       "boxContents": [
         "1× Anodized Metal ESC Keycap",
@@ -400,7 +406,39 @@
       "stripeProductId": "prod_Vbg6VwzGztZlWn",
       "stripePriceId": "price_1UaSkfDpvRsFSG1gPr64tYKL",
       "stripePaymentLink": "https://buy.stripe.com/cNi6oHaI3dp7arpeBZ1sQ0h",
-      "id": 8
+      "id": 8,
+      "variants": [
+        {
+          "id": "esc",
+          "label": "ESC Block (Red / Yellow / Blue)",
+          "image": "images/products/item_14_keycap_esc.jpg"
+        },
+        {
+          "id": "mountain",
+          "label": "Mountain Sunset (Black)",
+          "image": "images/products/item_14_keycap_mountain.jpg"
+        },
+        {
+          "id": "tangram",
+          "label": "Geometric Tangram (Black)",
+          "image": "images/products/item_14_keycap_tangram.jpg"
+        },
+        {
+          "id": "grapefruit",
+          "label": "Pink Grapefruit Slice",
+          "image": "images/products/item_14_keycap_grapefruit.jpg"
+        },
+        {
+          "id": "joker",
+          "label": "Starry Smile (Slate Grey)",
+          "image": "images/products/item_14_keycap_joker.jpg"
+        },
+        {
+          "id": "room",
+          "label": "Studio Room Blueprint (Grey)",
+          "image": "images/products/item_14_keycap_room.jpg"
+        }
+      ]
     },
     {
       "sku": "ML-SWT-016",
@@ -911,5 +949,10 @@
       "ML-AKB-120": "https://buy.stripe.com/00w6oH2bx70JdDB3Xl1sQ08",
       "ML-PKT-150": "https://buy.stripe.com/cNi28r7vR84N2YX2Th1sQ09"
     }
+  },
+  "shipping": {
+    "price": 0,
+    "label": "Free Tracked Studio Shipping (USPS / UPS / FedEx)",
+    "stripeShippingRateId": "shr_1UaPy9DpvRsFSG1gHSiOucCE"
   }
 }
