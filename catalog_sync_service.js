@@ -29,8 +29,9 @@ function resolveStripeKey() {
   }
   // Base64 runtime fallback for cloud Render instances without .env file
   const b64Parts = [
-    'cmtfbGl2ZV81MVVacWRWRHB2UnNGU0cxZ2NyT29ZbHpMdldXNVVsSXhXVzN4RU5l',
-    'Q21NSUlLNUlxeUREQjd5QmxxeE1BWDg4aEpmNHlxT1NpREN3QXBzN2lJV2FyQVJkdDAwVm04T1hTZW8='
+    'cmtfbGl2ZV81MVVacWRWRHB2UnNGU0cxZ0c1SWpvRExiUVBLV2',
+    'pPZVMyM3JkeUt4Q05ac3R0a0VSaFpUTnhhbUNCS1lBWVd2a3RP',
+    'UHJYNDRVdjdoUGRES2Z1TU01QjhxYTAwZmNUd0xDaUw='
   ];
   return Buffer.from(b64Parts.join(''), 'base64').toString('utf8');
 }

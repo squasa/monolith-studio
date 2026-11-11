@@ -5,7 +5,7 @@ let SELECTED_VARIANTS = {};
 
 function getStripeRuntimeToken() {
   try {
-    return atob(['cmtfbGl2ZV81MVVacWRWRHB2UnNGU0cxZ2NyT29ZbHpMdldXNV', 'VsSXhXVzN4RU5lQ21NSUlLNUlxeUREQjd5QmxseE1BWDg4aEpm', 'NHlxT1NpREN3QXBzN2lJV2FyQVJkdDAwVm04T1hTZW8='].join(''));
+    return atob(['cmtfbGl2ZV81MVVacWRWRHB2UnNGU0cxZ0c1SWpvRExiUVBLV2', 'pPZVMyM3JkeUt4Q05ac3R0a0VSaFpUTnhhbUNCS1lBWVd2a3RP', 'UHJYNDRVdjdoUGRES2Z1TU01QjhxYTAwZmNUd0xDaUw='].join(''));
   } catch (_) {
     return '';
   }
