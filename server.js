@@ -73,6 +73,40 @@ app.post('/api/catalog/deploy', (req, res) => {
   }
 });
 
+// Cart tracking and sync API
+const CARTS_FILE = path.join(__dirname, 'abandoned_carts.json');
+app.post('/api/cart/sync', (req, res) => {
+  try {
+    const payload = req.body || {};
+    let carts = [];
+    if (fs.existsSync(CARTS_FILE)) {
+      try { carts = JSON.parse(fs.readFileSync(CARTS_FILE, 'utf8')); } catch (_) {}
+    }
+    const idx = carts.findIndex(c => c.cartId === payload.cartId);
+    if (idx >= 0) {
+      carts[idx] = { ...carts[idx], ...payload, updatedAt: new Date().toISOString() };
+    } else {
+      carts.unshift({ ...payload, createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() });
+    }
+    fs.writeFileSync(CARTS_FILE, JSON.stringify(carts.slice(0, 300), null, 2));
+    res.json({ ok: true });
+  } catch (e) {
+    res.status(500).json({ ok: false, error: e.message });
+  }
+});
+
+app.get('/api/cart/list', (req, res) => {
+  try {
+    let carts = [];
+    if (fs.existsSync(CARTS_FILE)) {
+      carts = JSON.parse(fs.readFileSync(CARTS_FILE, 'utf8'));
+    }
+    res.json({ ok: true, carts });
+  } catch (e) {
+    res.status(500).json({ ok: false, error: e.message });
+  }
+});
+
 // Multi-item Stripe Checkout Session creator
 app.post('/api/checkout-session', async (req, res) => {
   try {

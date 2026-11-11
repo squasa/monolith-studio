@@ -105,6 +105,85 @@ async function overlayLiveStripeCatalog(cfg) {
   return cfg;
 }
 
+// Cookie & Storage Utilities for Persistent Carts
+function setCookie(name, val, days = 30) {
+  try {
+    const d = new Date();
+    d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+    const expires = 'expires=' + d.toUTCString();
+    document.cookie = `${encodeURIComponent(name)}=${encodeURIComponent(val)};${expires};path=/;SameSite=Lax`;
+  } catch (_) {}
+}
+
+function getCookie(name) {
+  try {
+    const cname = encodeURIComponent(name) + '=';
+    const decoded = decodeURIComponent(document.cookie || '');
+    const ca = decoded.split(';');
+    for (let c of ca) {
+      c = c.trim();
+      if (c.indexOf(cname) === 0) return c.substring(cname.length);
+    }
+  } catch (_) {}
+  return '';
+}
+
+function saveCartPersistent() {
+  try {
+    const serialized = JSON.stringify(CART);
+    localStorage.setItem('monolith_cart', serialized);
+    // Also save in cookies so browser refreshes, subdomains, and analytics retain the cart
+    setCookie('monolith_cart', serialized, 30);
+    const cartCount = CART.reduce((s, i) => s + i.qty, 0);
+    const cartTotal = CART.reduce((s, i) => s + (i.product.price * i.qty), 0);
+    setCookie('monolith_cart_count', String(cartCount), 30);
+    setCookie('monolith_cart_total', String(cartTotal), 30);
+
+    let cartId = getCookie('monolith_cart_id');
+    if (!cartId) {
+      cartId = 'CART-' + Math.random().toString(36).substring(2, 9).toUpperCase();
+      setCookie('monolith_cart_id', cartId, 30);
+    }
+
+    // Sync active/abandoned cart state to backend so you can track carts and recover them
+    if (CART.length > 0) {
+      try {
+        fetch('/api/cart/sync', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            cartId,
+            items: CART.map(i => ({
+              sku: i.product.sku,
+              title: i.variantLabel ? `${i.product.title} (${i.variantLabel})` : i.product.title,
+              price: i.product.price,
+              qty: i.qty
+            })),
+            cartCount,
+            cartTotal,
+            updatedAt: new Date().toISOString()
+          })
+        }).catch(() => {});
+      } catch (_) {}
+    }
+  } catch (_) {}
+}
+
+function restoreCartPersistent() {
+  try {
+    let saved = localStorage.getItem('monolith_cart');
+    if (!saved) {
+      saved = getCookie('monolith_cart');
+    }
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        CART = parsed;
+      }
+    }
+  } catch (_) {}
+}
+
 async function initStore() {
   // 1. Try local API / Fulfillment Studio API first so live Catalog Manager edits reflect immediately
   let loaded = false;
@@ -149,6 +228,7 @@ async function initStore() {
     }
   }
 
+  restoreCartPersistent();
   syncHeroDynamicPrices();
   renderFilters();
   renderProducts();
@@ -450,6 +530,7 @@ function addToCart(productId, btnEl = null) {
     });
   }
   updateCartBadge();
+  saveCartPersistent();
   const targetBtn = btnEl || document.getElementById(`add-btn-${productId}`);
   if (targetBtn) {
     const totalForProduct = CART.filter(i => i.product.id === productId).reduce((s, i) => s + i.qty, 0);
@@ -470,6 +551,7 @@ function changeCartQty(cartKey, delta) {
     CART = CART.filter(i => i.cartKey !== String(cartKey));
   }
   updateCartBadge();
+  saveCartPersistent();
   openCheckoutModal();
 }
 
@@ -492,6 +574,7 @@ function buyNow(productId) {
     });
   }
   updateCartBadge();
+  saveCartPersistent();
   openCheckoutModal();
 }
 
@@ -504,6 +587,7 @@ function updateCartBadge() {
 function removeFromCart(cartKey) {
   CART = CART.filter(i => i.cartKey !== String(cartKey));
   updateCartBadge();
+  saveCartPersistent();
   openCheckoutModal();
 }
 
