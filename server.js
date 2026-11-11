@@ -1,28 +1,91 @@
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
+const catalogService = require('./catalog_sync_service');
 
 const app = express();
 const PORT = parseInt(process.env.PORT || '3030', 10);
 
-app.use(express.json());
+app.use(express.json({ limit: '15mb' }));
 
-// Dynamic /config/store-config.json route that overlays WAVE_LINK_* env vars if set
+// CORS headers for local studio integration
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (req.method === 'OPTIONS') return res.sendStatus(204);
+  next();
+});
+
+// Dynamic /config/store-config.json route
 app.get('/config/store-config.json', (req, res) => {
   try {
-    const raw = fs.readFileSync(path.join(__dirname, 'public', 'config', 'store-config.json'), 'utf8');
-    const cfg = JSON.parse(raw);
-
-    const tiers = ['20', '30', '40', '50', '60', '70', '80', '90', '120', '150'];
-    for (const t of tiers) {
-      if (process.env[`WAVE_LINK_${t}`]) {
-        cfg.waveCheckoutLinks.byPriceTier[t] = process.env[`WAVE_LINK_${t}`];
-      }
-    }
+    const cfg = catalogService.readCatalogConfig();
     res.json(cfg);
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
+});
+
+// Catalog & Price Manager API endpoints
+app.get('/api/catalog', (req, res) => {
+  try {
+    const config = catalogService.readCatalogConfig();
+    res.json({ ok: true, config });
+  } catch (e) {
+    res.status(500).json({ ok: false, error: e.message });
+  }
+});
+
+app.post('/api/catalog/price', async (req, res) => {
+  try {
+    const result = await catalogService.updateItemPrice(req.body || {});
+    res.json(result);
+  } catch (e) {
+    res.status(400).json({ ok: false, error: e.message });
+  }
+});
+
+app.post('/api/catalog/item', async (req, res) => {
+  try {
+    const result = await catalogService.upsertCatalogItem(req.body || {});
+    res.json(result);
+  } catch (e) {
+    res.status(400).json({ ok: false, error: e.message });
+  }
+});
+
+app.delete('/api/catalog/item', (req, res) => {
+  try {
+    const result = catalogService.deleteCatalogItem(req.body || {});
+    res.json(result);
+  } catch (e) {
+    res.status(400).json({ ok: false, error: e.message });
+  }
+});
+
+app.post('/api/catalog/deploy', (req, res) => {
+  try {
+    const result = catalogService.deployCatalogToGitHub();
+    res.json(result);
+  } catch (e) {
+    res.status(500).json({ ok: false, error: e.message });
+  }
+});
+
+// Multi-item Stripe Checkout Session creator
+app.post('/api/checkout-session', async (req, res) => {
+  try {
+    const result = await catalogService.createMultiItemCheckoutSession(req.body || {});
+    res.json(result);
+  } catch (e) {
+    res.status(400).json({ ok: false, error: e.message });
+  }
+});
+
+// Separate Catalog & Price Manager menu route
+app.get('/manage', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'manage.html'));
 });
 
 // Static assets

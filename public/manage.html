@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catalog &amp; Price Manager — Monolith Studio Co.</title>
+  <link rel="icon" type="image/jpeg" href="images/products/monolith_avatar_icon.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --surface: #ffffff;
+      --slate-950: #090d16;
+      --slate-900: #0f172a;
+      --slate-800: #1e293b;
+      --slate-700: #334155;
+      --slate-600: #475569;
+      --slate-500: #64748b;
+      --slate-400: #94a3b8;
+      --border: #e2e8f0;
+      --border-strong: #cbd5e1;
+      --blue: #2563eb;
+      --blue-hover: #1d4ed8;
+      --emerald: #059669;
+      --emerald-bg: #ecfdf5;
+      --amber: #d97706;
+      --red: #dc2626;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-display: 'Plus Jakarta Sans', 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--slate-900);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top Bar */
+    .studio-topbar {
+      background: var(--slate-950);
+      color: #ffffff;
+      border-bottom: 1px solid #1e293b;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .studio-topbar-inner {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-group img {
+      width: 38px;
+      height: 38px;
+      border-radius: 9px;
+      border: 1px solid rgba(255,255,255,0.14);
+    }
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-sans);
+      font-size: 11.5px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 99px;
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(52, 211, 153, 0.3);
+    }
+    .badge-live .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10b981;
+    }
+    .brand-sub {
+      font-size: 12px;
+      color: var(--slate-400);
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 9px 15px;
+      border-radius: 8px;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+    .btn-ghost-dark {
+      background: rgba(255,255,255,0.06);
+      color: #e2e8f0;
+      border-color: rgba(255,255,255,0.14);
+    }
+    .btn-ghost-dark:hover {
+      background: rgba(255,255,255,0.12);
+      color: #ffffff;
+    }
+    .btn-primary {
+      background: var(--blue);
+      color: #ffffff;
+    }
+    .btn-primary:hover {
+      background: var(--blue-hover);
+    }
+    .btn-emerald {
+      background: var(--emerald);
+      color: #ffffff;
+    }
+    .btn-emerald:hover {
+      background: #047857;
+    }
+    .btn-outline {
+      background: #ffffff;
+      color: var(--slate-800);
+      border-color: var(--border-strong);
+    }
+    .btn-outline:hover {
+      background: #f8fafc;
+      border-color: var(--slate-500);
+    }
+    .btn-danger-ghost {
+      background: #fff1f2;
+      color: var(--red);
+      border-color: #fecdd3;
+    }
+    .btn-danger-ghost:hover {
+      background: #ffe4e6;
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1360px;
+      margin: 0 auto;
+      padding: 28px 24px 64px;
+    }
+
+    /* Stats & Control Bar */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+    }
+    .stat-label {
+      font-size: 11.5px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--slate-500);
+      margin-bottom: 4px;
+    }
+    .stat-value {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--slate-900);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.02em;
+    }
+    .stat-sub {
+      font-size: 12px;
+      color: var(--slate-500);
+      margin-top: 2px;
+    }
+
+    .toolbar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      flex: 1;
+    }
+    .search-input {
+      padding: 9px 13px;
+      border: 1px solid var(--border-strong);
+      border-radius: 8px;
+      font-size: 13.5px;
+      min-width: 260px;
+      font-family: var(--font-sans);
+    }
+    .search-input:focus {
+      outline: none;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+    }
+    .cat-pills {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .cat-pill {
+      padding: 6px 12px;
+      border-radius: 99px;
+      font-size: 12.5px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      color: var(--slate-600);
+      cursor: pointer;
+    }
+    .cat-pill.active {
+      background: var(--slate-900);
+      color: #ffffff;
+      border-color: var(--slate-900);
+    }
+
+    /* Toast Banner */
+    #status-banner {
+      display: none;
+      padding: 12px 16px;
+      border-radius: 10px;
+      margin-bottom: 16px;
+      font-size: 13.5px;
+      font-weight: 600;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    #status-banner.show {
+      display: flex;
+    }
+    #status-banner.success {
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      color: #065f46;
+    }
+    #status-banner.info {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: #1e40af;
+    }
+    #status-banner.error {
+      background: #fef2f2;
+      border: 1px solid #fecaca;
+      color: #991b1b;
+    }
+
+    /* Catalog Table / List */
+    .catalog-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .item-row {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 18px;
+      display: grid;
+      grid-template-columns: 72px 1.8fr 1.1fr 230px auto;
+      align-items: center;
+      gap: 18px;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .item-row:hover {
+      border-color: var(--border-strong);
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+    }
+    .item-thumb {
+      width: 68px;
+      height: 68px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      object-fit: contain;
+      padding: 4px;
+    }
+    .item-main h3 {
+      font-family: var(--font-display);
+      font-size: 15.5px;
+      font-weight: 700;
+      color: var(--slate-900);
+      letter-spacing: -0.01em;
+      margin-bottom: 3px;
+    }
+    .item-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      color: var(--slate-500);
+      margin-bottom: 5px;
+    }
+    .sku-pill {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      font-weight: 600;
+      background: #f1f5f9;
+      color: var(--slate-800);
+      padding: 2px 7px;
+      border-radius: 5px;
+      border: 1px solid var(--border);
+    }
+    .cat-tag {
+      background: #eff6ff;
+      color: var(--blue);
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 5px;
+      font-size: 11.5px;
+    }
+    .item-summary {
+      font-size: 12.5px;
+      color: var(--slate-600);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .stripe-col {
+      font-size: 12px;
+      color: var(--slate-600);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .stripe-link {
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      color: var(--blue);
+      text-decoration: none;
+      word-break: break-all;
+    }
+    .stripe-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Quick Price Editor Box */
+    .price-editor-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      padding: 8px 10px;
+      border-radius: 10px;
+    }
+    .price-input-wrap {
+      display: flex;
+      align-items: center;
+      background: #ffffff;
+      border: 1px solid var(--border-strong);
+      border-radius: 7px;
+      padding: 0 8px;
+      flex: 1;
+    }
+    .price-input-wrap span {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 15px;
+      color: var(--slate-500);
+    }
+    .price-input {
+      width: 72px;
+      border: none;
+      padding: 7px 4px;
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--slate-900);
+      font-variant-numeric: tabular-nums;
+      background: transparent;
+    }
+    .price-input:focus {
+      outline: none;
+    }
+    .btn-save-price {
+      padding: 7px 11px;
+      border-radius: 7px;
+      font-size: 12px;
+      font-weight: 700;
+      background: var(--slate-900);
+      color: #ffffff;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .btn-save-price:hover {
+      background: var(--blue);
+    }
+    .btn-save-price.saved {
+      background: var(--emerald);
+    }
+
+    .row-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Full Listing Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(9, 13, 22, 0.65);
+      backdrop-filter: blur(3px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 200;
+      overflow-y: auto;
+    }
+    .modal-backdrop.open {
+      display: flex;
+    }
+    .modal-dialog {
+      background: var(--surface);
+      width: 100%;
+      max-width: 860px;
+      max-height: 92vh;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 24px 60px rgba(9, 13, 22, 0.25);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .modal-header {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #f8fafc;
+    }
+    .modal-header h2 {
+      font-family: var(--font-display);
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .modal-body {
+      padding: 22px 24px;
+      overflow-y: auto;
+    }
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border);
+      background: #f8fafc;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+      grid-column: 1 / -1;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+    .form-group label {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--slate-700);
+    }
+    .form-group label span.hint {
+      font-weight: 400;
+      color: var(--slate-500);
+      font-size: 11.5px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      padding: 9px 12px;
+      border: 1px solid var(--border-strong);
+      border-radius: 8px;
+      font-family: var(--font-sans);
+      font-size: 13.5px;
+      color: var(--slate-900);
+      background: #ffffff;
+    }
+    .form-group textarea {
+      resize: vertical;
+      line-height: 1.5;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+    }
+
+    .image-uploader-card {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 16px;
+      align-items: center;
+      background: #f8fafc;
+      border: 1px dashed var(--border-strong);
+      border-radius: 12px;
+      padding: 14px;
+    }
+    .image-preview-box {
+      width: 116px;
+      height: 116px;
+      border-radius: 10px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .image-preview-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 6px;
+    }
+
+    @media (max-width: 1040px) {
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .item-row {
+        grid-template-columns: 64px 1fr;
+      }
+      .stripe-col, .price-editor-box, .row-actions {
+        grid-column: 1 / -1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Header -->
+  <header class="studio-topbar">
+    <div class="studio-topbar-inner">
+      <div class="brand-group">
+        <img src="images/products/monolith_avatar_icon.jpg" alt="Monolith Studio" />
+        <div>
+          <div class="brand-title">
+            <span>Monolith Catalog &amp; Price Manager</span>
+            <span class="badge-live"><span class="dot"></span> Stripe Live Sync Active</span>
+          </div>
+          <div class="brand-sub">Edit item prices on the fly, add full product listings with real photos, and sync directly to Stripe &amp; Storefront</div>
+        </div>
+      </div>
+
+      <div class="topbar-actions">
+        <a href="index.html" class="btn btn-ghost-dark">← Storefront</a>
+        <a href="http://localhost:8425" target="_blank" class="btn btn-ghost-dark">📦 Shipment Studio (:8425)</a>
+        <button type="button" class="btn btn-emerald" onclick="openListingModal()">+ Add New Product Listing</button>
+        <button type="button" id="btn-deploy" class="btn btn-primary" onclick="deployToGitHub()">🚀 Push Live to GitHub / Render</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Status Notification Banner -->
+    <div id="status-banner">
+      <span id="status-banner-text"></span>
+      <button type="button" onclick="hideBanner()" style="background:none;border:none;font-weight:700;cursor:pointer;color:inherit;">✕</button>
+    </div>
+
+    <!-- Stats Row -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total Active Items</div>
+        <div class="stat-value" id="stat-total-items">20</div>
+        <div class="stat-sub">Synced with Stripe &amp; Fulfillment Studio</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">$3 – $18 Accessories</div>
+        <div class="stat-value" id="stat-budget-count">10</div>
+        <div class="stat-sub">Skates, grips, switches, cables &amp; tools</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">$20 – $150 Hardware</div>
+        <div class="stat-value" id="stat-hardware-count">10</div>
+        <div class="stat-sub">Keyboards, mice, docks &amp; watch cases</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Price Range</div>
+        <div class="stat-value" id="stat-price-range">$3 – $150</div>
+        <div class="stat-sub">Instant Stripe Payment Link generation</div>
+      </div>
+    </div>
+
+    <!-- Search & Category Toolbar -->
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <input type="text" id="search-box" class="search-input" placeholder="Search by title, SKU (e.g. ML-SKT-003), or price..." oninput="renderManagerList()" />
+        <div id="cat-pills" class="cat-pills"></div>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <button type="button" class="btn btn-outline" onclick="exportCatalogJson()">⬇ Export JSON</button>
+      </div>
+    </div>
+
+    <!-- Product Rows -->
+    <div id="catalog-list" class="catalog-list"></div>
+  </main>
+
+  <!-- Full Listing Creator / Editor Modal -->
+  <div id="listing-modal" class="modal-backdrop" onclick="if(event.target === this) closeListingModal()">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h2 id="modal-heading">Add New Product Listing</h2>
+        <button type="button" onclick="closeListingModal()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#64748b;">✕</button>
+      </div>
+      <form id="listing-form" onsubmit="saveFullListing(event)" class="modal-body">
+        <input type="hidden" id="field-id" />
+        <input type="hidden" id="field-orig-sku" />
+
+        <div class="form-grid">
+          <!-- Image Upload & Preview -->
+          <div class="image-uploader-card">
+            <div class="image-preview-box">
+              <img id="field-image-preview" src="images/products/item_03_ptfe_skates.jpg" alt="Preview" />
+            </div>
+            <div style="display:flex; flex-direction:column; gap:8px;">
+              <div style="font-size:13px; font-weight:700; color:var(--slate-900);">Product Studio Photograph</div>
+              <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                <label class="btn btn-outline" style="cursor:pointer; margin:0;">
+                  📷 Upload Image File (JPG/PNG/WebP)
+                  <input type="file" id="field-image-file" accept="image/*" style="display:none;" onchange="handleImageFileSelect(event)" />
+                </label>
+                <span style="font-size:12px; color:var(--slate-500);">or enter path / URL below:</span>
+              </div>
+              <input type="text" id="field-image" placeholder="images/products/my_product.jpg or https://..." oninput="updateImagePreviewFromInput()" required style="padding:8px 11px; border:1px solid var(--border-strong); border-radius:7px; font-size:13px;" />
+            </div>
+          </div>
+
+          <div class="form-group full">
+            <label>Product Title *</label>
+            <input type="text" id="field-title" required placeholder="e.g. Coiled Braided USB-C Aviator Keyboard Cable" />
+          </div>
+
+          <div class="form-grid-3">
+            <div class="form-group">
+              <label>Price ($ USD) * <span class="hint">(Auto-creates Stripe Link)</span></label>
+              <input type="number" step="0.01" min="1" id="field-price" required placeholder="18" />
+            </div>
+            <div class="form-group">
+              <label>SKU * <span class="hint">(<a href="#" onclick="autoGenerateSku(); return false;">Auto-generate</a>)</span></label>
+              <input type="text" id="field-sku" required placeholder="ML-CBL-018" style="font-family:var(--font-mono);" />
+            </div>
+            <div class="form-group">
+              <label>Category *</label>
+              <input type="text" id="field-category" list="category-suggestions" required placeholder="Keyboards & Keypads" />
+              <datalist id="category-suggestions">
+                <option value="Mice & Pads"></option>
+                <option value="Keyboards & Keypads"></option>
+                <option value="Desk Accessories"></option>
+                <option value="Apple Watch Cases"></option>
+                <option value="Lighting & Docks"></option>
+                <option value="Handhelds"></option>
+              </datalist>
+            </div>
+          </div>
+
+          <div class="form-grid-3">
+            <div class="form-group">
+              <label>Card Badge <span class="hint">(Top-left tag on card)</span></label>
+              <input type="text" id="field-badge" placeholder="e.g. CNC Aluminum" />
+            </div>
+            <div class="form-group">
+              <label>Parcel Weight (Grams) *</label>
+              <input type="number" min="10" id="field-weight" required placeholder="180" />
+            </div>
+            <div class="form-group">
+              <label>Lead Time</label>
+              <input type="text" id="field-leadtime" value="Ships in 1–2 days" />
+            </div>
+          </div>
+
+          <div class="form-group full">
+            <label>Product Summary * <span class="hint">(Clear, natural description shown on the product card and top of details modal)</span></label>
+            <textarea id="field-summary" rows="2" required placeholder="Solid machined aluminum accessory built for daily desk use..."></textarea>
+          </div>
+
+          <div class="form-group full">
+            <label>Key Features / Bullet Highlights <span class="hint">(One bullet point per line)</span></label>
+            <textarea id="field-highlights" rows="4" placeholder="Machined from solid 6063 aluminum&#10;Includes braided USB-C cable&#10;Ships from Los Angeles in 1–2 business days"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Technical Specs <span class="hint">(Format: Key: Value, one per line)</span></label>
+            <textarea id="field-specs" rows="4" placeholder="Material: 6063 CNC Aluminum&#10;Finish: Matte Anodized Black&#10;Compatibility: Universal USB-C"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>In the Box Contents <span class="hint">(One included item per line)</span></label>
+            <textarea id="field-box" rows="4" placeholder="Main Hardware Unit&#10;Braided USB-C Cable&#10;Quick Start Card"></textarea>
+          </div>
+
+          <div class="form-group full">
+            <label>Stripe Payment Link <span class="hint">(Leave as-is or blank to auto-create a live Stripe Payment Link for the price above)</span></label>
+            <input type="text" id="field-stripe-link" placeholder="Auto-generated via Stripe API when you save" style="font-family:var(--font-mono); font-size:12.5px;" />
+          </div>
+        </div>
+
+        <div class="modal-footer" style="margin: 22px -24px -22px;">
+          <div style="font-size:12.5px; color:var(--slate-500);">
+            Saving automatically creates/updates the live <strong>Stripe Product, Price &amp; Payment Link</strong> and syncs `store-config.json`.
+          </div>
+          <div style="display:flex; gap:10px;">
+            <button type="button" class="btn btn-outline" onclick="closeListingModal()">Cancel</button>
+            <button type="submit" id="btn-save-listing" class="btn btn-primary">Save Listing &amp; Sync to Stripe</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let CATALOG_CONFIG = null;
+    let ACTIVE_CAT = 'All';
+    let PENDING_IMAGE_DATA_URL = null;
+    let PENDING_IMAGE_FILENAME = null;
+    let API_BASE = ''; // Resolved dynamically (same-origin or http://localhost:8425)
+
+    async function detectApiBase() {
+      // Try same-origin /api/catalog first
+      try {
+        const r1 = await fetch('/api/catalog', { method: 'GET' });
+        if (r1.ok) {
+          const ct = r1.headers.get('content-type') || '';
+          if (ct.includes('application/json')) {
+            API_BASE = '';
+            return;
+          }
+        }
+      } catch (_) {}
+
+      // Try Local Shipment Studio on http://localhost:8425
+      try {
+        const ctrl = new AbortController();
+        const t = setTimeout(() => ctrl.abort(), 1200);
+        const r2 = await fetch('http://localhost:8425/api/catalog', { signal: ctrl.signal });
+        clearTimeout(t);
+        if (r2.ok) {
+          API_BASE = 'http://localhost:8425';
+          return;
+        }
+      } catch (_) {}
+
+      API_BASE = null;
+    }
+
+    async function loadCatalog() {
+      await detectApiBase();
+      if (API_BASE !== null) {
+        try {
+          const res = await fetch(`${API_BASE}/api/catalog`);
+          if (res.ok) {
+            const data = await res.json();
+            CATALOG_CONFIG = data.config || data;
+          }
+        } catch (e) {
+          console.warn('API catalog fetch fallback:', e);
+        }
+      }
+
+      if (!CATALOG_CONFIG) {
+        const res = await fetch('config/store-config.json');
+        CATALOG_CONFIG = await res.json();
+        const localOverride = localStorage.getItem('monolith_catalog_override');
+        if (localOverride) {
+          try {
+            CATALOG_CONFIG = JSON.parse(localOverride);
+          } catch (_) {}
+        }
+      }
+
+      updateStats();
+      renderCategoryPills();
+      renderManagerList();
+    }
+
+    function showBanner(msg, type = 'success') {
+      const el = document.getElementById('status-banner');
+      const txt = document.getElementById('status-banner-text');
+      el.className = `show ${type}`;
+      txt.innerHTML = msg;
+    }
+
+    function hideBanner() {
+      const el = document.getElementById('status-banner');
+      el.className = '';
+    }
+
+    function updateStats() {
+      if (!CATALOG_CONFIG || !CATALOG_CONFIG.products) return;
+      const prods = CATALOG_CONFIG.products;
+      document.getElementById('stat-total-items').textContent = prods.length;
+      const budget = prods.filter(p => p.price <= 18).length;
+      const hw = prods.filter(p => p.price > 18).length;
+      document.getElementById('stat-budget-count').textContent = budget;
+      document.getElementById('stat-hardware-count').textContent = hw;
+      if (prods.length > 0) {
+        const prices = prods.map(p => p.price);
+        const minP = Math.min(...prices);
+        const maxP = Math.max(...prices);
+        document.getElementById('stat-price-range').textContent = `$${minP} – $${maxP}`;
+      }
+    }
+
+    function renderCategoryPills() {
+      const cats = ['All', ...new Set((CATALOG_CONFIG.products || []).map(p => p.category))];
+      const wrap = document.getElementById('cat-pills');
+      wrap.innerHTML = cats.map(c => `
+        <button type="button" class="cat-pill ${c === ACTIVE_CAT ? 'active' : ''}" onclick="setCat('${c.replace(/'/g, "\\'")}')">
+          ${c === 'All' ? `All (${CATALOG_CONFIG.products.length})` : c}
+        </button>
+      `).join('');
+    }
+
+    function setCat(c) {
+      ACTIVE_CAT = c;
+      renderCategoryPills();
+      renderManagerList();
+    }
+
+    function resolveImgSrc(imgPath) {
+      if (!imgPath) return 'images/products/monolith_avatar_icon.jpg';
+      if (imgPath.startsWith('http://') || imgPath.startsWith('https://') || imgPath.startsWith('data:')) {
+        return imgPath;
+      }
+      return imgPath;
+    }
+
+    function renderManagerList() {
+      const listEl = document.getElementById('catalog-list');
+      const q = (document.getElementById('search-box')?.value || '').trim().toLowerCase();
+
+      const items = (CATALOG_CONFIG.products || []).filter(p => {
+        if (ACTIVE_CAT !== 'All' && p.category !== ACTIVE_CAT) return false;
+        if (!q) return true;
+        return (
+          p.title.toLowerCase().includes(q) ||
+          p.sku.toLowerCase().includes(q) ||
+          p.category.toLowerCase().includes(q) ||
+          `$${p.price}`.includes(q)
+        );
+      });
+
+      listEl.innerHTML = items.map(p => `
+        <div class="item-row" id="row-${p.sku}">
+          <img class="item-thumb" src="${resolveImgSrc(p.image)}" alt="${p.title}" />
+          <div class="item-main">
+            <div class="item-meta">
+              <span class="sku-pill">${p.sku}</span>
+              <span class="cat-tag">${p.category}</span>
+              <span>Badge: <strong>${p.badge || 'Standard'}</strong></span>
+              <span>• ${p.weightGrams || 180}g (${((p.weightGrams || 180) / 453.592).toFixed(2)} lbs)</span>
+            </div>
+            <h3>${p.title}</h3>
+            <div class="item-summary">${p.summary || ''}</div>
+          </div>
+
+          <div class="stripe-col">
+            <div><strong>Stripe Product:</strong> <span style="font-family:var(--font-mono);">${p.stripeProductId || 'Auto'}</span></div>
+            <div>
+              <strong>Payment Link:</strong>
+              ${p.stripePaymentLink
+                ? `<a class="stripe-link" href="${p.stripePaymentLink}" target="_blank" rel="noopener">${p.stripePaymentLink.replace('https://', '')} ↗</a>`
+                : '<span style="color:#94a3b8;">Will generate on save</span>'}
+            </div>
+          </div>
+
+          <!-- On-The-Fly Price Editor -->
+          <div class="price-editor-box">
+            <div class="price-input-wrap">
+              <span>$</span>
+              <input
+                type="number"
+                step="0.01"
+                min="1"
+                id="price-input-${p.sku}"
+                class="price-input"
+                value="${p.price}"
+                onkeydown="if(event.key === 'Enter'){ event.preventDefault(); saveQuickPrice('${p.sku}'); }"
+              />
+            </div>
+            <button type="button" id="price-btn-${p.sku}" class="btn-save-price" onclick="saveQuickPrice('${p.sku}')">
+              Save Price
+            </button>
+          </div>
+
+          <div class="row-actions">
+            <button type="button" class="btn btn-outline" onclick="openListingModal('${p.sku}')">Edit Full Listing</button>
+            <button type="button" class="btn btn-danger-ghost" onclick="deleteListing('${p.sku}')" title="Delete Item">✕</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function saveQuickPrice(sku) {
+      const inputEl = document.getElementById(`price-input-${sku}`);
+      const btnEl = document.getElementById(`price-btn-${sku}`);
+      const newPrice = parseFloat(inputEl.value);
+      if (isNaN(newPrice) || newPrice <= 0) {
+        alert('Please enter a valid price greater than $0.');
+        return;
+      }
+
+      const origText = btnEl.textContent;
+      btnEl.textContent = 'Syncing...';
+      btnEl.disabled = true;
+
+      try {
+        if (API_BASE !== null) {
+          const res = await fetch(`${API_BASE}/api/catalog/price`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ sku, newPrice })
+          });
+          const data = await res.json();
+          if (!res.ok || !data.ok) {
+            throw new Error(data.error || 'Failed to update price');
+          }
+          CATALOG_CONFIG = data.config;
+          localStorage.setItem('monolith_catalog_override', JSON.stringify(CATALOG_CONFIG));
+          showBanner(`✓ Updated <strong>${sku}</strong> to <strong>$${newPrice.toFixed(2)}</strong> &amp; created new live Stripe Payment Link (<a href="${data.product.stripePaymentLink}" target="_blank" style="color:inherit;text-decoration:underline;">${data.product.stripePaymentLink}</a>)!`, 'success');
+        } else {
+          const item = CATALOG_CONFIG.products.find(p => p.sku === sku);
+          if (item) {
+            item.price = newPrice;
+            localStorage.setItem('monolith_catalog_override', JSON.stringify(CATALOG_CONFIG));
+            showBanner(`✓ Updated <strong>${sku}</strong> price to <strong>$${newPrice.toFixed(2)}</strong> in browser storage.`, 'info');
+          }
+        }
+
+        btnEl.textContent = '✓ Saved';
+        btnEl.classList.add('saved');
+        setTimeout(() => {
+          btnEl.textContent = origText;
+          btnEl.classList.remove('saved');
+          btnEl.disabled = false;
+          updateStats();
+          renderManagerList();
+        }, 1200);
+      } catch (err) {
+        showBanner(`Error updating price: ${err.message}`, 'error');
+        btnEl.textContent = origText;
+        btnEl.disabled = false;
+      }
+    }
+
+    function autoGenerateSku() {
+      const title = (document.getElementById('field-title').value || 'ITEM').trim();
+      const price = Math.round(parseFloat(document.getElementById('field-price').value || '25'));
+      const prefix = title.replace(/[^a-zA-Z]/g, '').slice(0, 3).toUpperCase() || 'HRD';
+      const paddedPrice = String(price).padStart(3, '0');
+      document.getElementById('field-sku').value = `ML-${prefix}-${paddedPrice}`;
+    }
+
+    function handleImageFileSelect(e) {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        PENDING_IMAGE_DATA_URL = evt.target.result;
+        const safeName = file.name.toLowerCase().replace(/[^a-z0-9._-]/g, '_');
+        PENDING_IMAGE_FILENAME = `custom_${Date.now()}_${safeName}`;
+        document.getElementById('field-image').value = `images/products/${PENDING_IMAGE_FILENAME}`;
+        document.getElementById('field-image-preview').src = PENDING_IMAGE_DATA_URL;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function updateImagePreviewFromInput() {
+      const val = (document.getElementById('field-image').value || '').trim();
+      if (val) {
+        document.getElementById('field-image-preview').src = resolveImgSrc(val);
+      }
+    }
+
+    function openListingModal(sku = null) {
+      PENDING_IMAGE_DATA_URL = null;
+      PENDING_IMAGE_FILENAME = null;
+      const modal = document.getElementById('listing-modal');
+      const heading = document.getElementById('modal-heading');
+
+      if (sku) {
+        const p = CATALOG_CONFIG.products.find(item => item.sku === sku);
+        if (!p) return;
+        heading.textContent = `Edit Listing — ${p.title} (${p.sku})`;
+        document.getElementById('field-id').value = p.id;
+        document.getElementById('field-orig-sku').value = p.sku;
+        document.getElementById('field-title').value = p.title || '';
+        document.getElementById('field-price').value = p.price;
+        document.getElementById('field-sku').value = p.sku || '';
+        document.getElementById('field-category').value = p.category || 'Desk Accessories';
+        document.getElementById('field-badge').value = p.badge || '';
+        document.getElementById('field-weight').value = p.weightGrams || 180;
+        document.getElementById('field-leadtime').value = p.leadTime || 'Ships in 1–2 days';
+        document.getElementById('field-image').value = p.image || '';
+        document.getElementById('field-image-preview').src = resolveImgSrc(p.image);
+        document.getElementById('field-summary').value = p.summary || '';
+        document.getElementById('field-highlights').value = (p.highlights || []).join('\n');
+        document.getElementById('field-specs').value = Object.entries(p.specs || {}).map(([k, v]) => `${k}: ${v}`).join('\n');
+        document.getElementById('field-box').value = (p.boxContents || []).join('\n');
+        document.getElementById('field-stripe-link').value = p.stripePaymentLink || '';
+      } else {
+        heading.textContent = 'Add New Product Listing';
+        document.getElementById('listing-form').reset();
+        document.getElementById('field-id').value = '';
+        document.getElementById('field-orig-sku').value = '';
+        document.getElementById('field-leadtime').value = 'Ships in 1–2 days';
+        document.getElementById('field-weight').value = '150';
+        document.getElementById('field-image').value = 'images/products/item_14_metal_keycap.jpg';
+        document.getElementById('field-image-preview').src = 'images/products/item_14_metal_keycap.jpg';
+      }
+
+      modal.classList.add('open');
+    }
+
+    function closeListingModal() {
+      document.getElementById('listing-modal').classList.remove('open');
+    }
+
+    async function saveFullListing(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btn-save-listing');
+      const origLabel = btn.textContent;
+      btn.textContent = 'Saving & Syncing with Stripe...';
+      btn.disabled = true;
+
+      const specsRaw = document.getElementById('field-specs').value.split('\n').map(s => s.trim()).filter(Boolean);
+      const specs = {};
+      for (const line of specsRaw) {
+        const idx = line.indexOf(':');
+        if (idx > 0) {
+          specs[line.slice(0, idx).trim()] = line.slice(idx + 1).trim();
+        } else {
+          specs['Detail'] = line;
+        }
+      }
+
+      const weightGrams = parseInt(document.getElementById('field-weight').value || '180', 10);
+      const payload = {
+        id: document.getElementById('field-id').value ? Number(document.getElementById('field-id').value) : undefined,
+        origSku: document.getElementById('field-orig-sku').value || undefined,
+        sku: document.getElementById('field-sku').value.trim().toUpperCase(),
+        title: document.getElementById('field-title').value.trim(),
+        price: parseFloat(document.getElementById('field-price').value),
+        category: document.getElementById('field-category').value.trim(),
+        badge: document.getElementById('field-badge').value.trim() || 'In Stock',
+        weightGrams,
+        weightLbs: Number((weightGrams / 453.592).toFixed(2)),
+        leadTime: document.getElementById('field-leadtime').value.trim() || 'Ships in 1–2 days',
+        image: document.getElementById('field-image').value.trim(),
+        imageDataUrl: PENDING_IMAGE_DATA_URL || undefined,
+        imageFilename: PENDING_IMAGE_FILENAME || undefined,
+        summary: document.getElementById('field-summary').value.trim(),
+        highlights: document.getElementById('field-highlights').value.split('\n').map(s => s.trim()).filter(Boolean),
+        specs,
+        boxContents: document.getElementById('field-box').value.split('\n').map(s => s.trim()).filter(Boolean),
+        stripePaymentLink: document.getElementById('field-stripe-link').value.trim() || undefined
+      };
+
+      try {
+        if (API_BASE !== null) {
+          const res = await fetch(`${API_BASE}/api/catalog/item`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          const data = await res.json();
+          if (!res.ok || !data.ok) {
+            throw new Error(data.error || 'Failed to save listing');
+          }
+          CATALOG_CONFIG = data.config;
+          localStorage.setItem('monolith_catalog_override', JSON.stringify(CATALOG_CONFIG));
+          showBanner(`✓ Saved <strong>${data.product.title}</strong> ($${data.product.price.toFixed(2)}) &amp; synced live Stripe Payment Link: <a href="${data.product.stripePaymentLink}" target="_blank" style="color:inherit;text-decoration:underline;">${data.product.stripePaymentLink}</a>`, 'success');
+        } else {
+          const existingIdx = CATALOG_CONFIG.products.findIndex(p => p.sku === payload.origSku || p.sku === payload.sku);
+          const itemObj = {
+            ...(existingIdx >= 0 ? CATALOG_CONFIG.products[existingIdx] : {}),
+            ...payload,
+            inStock: true,
+            gallery: [payload.imageDataUrl || payload.image],
+            image: payload.imageDataUrl || payload.image
+          };
+          if (existingIdx >= 0) {
+            CATALOG_CONFIG.products[existingIdx] = itemObj;
+          } else {
+            itemObj.id = CATALOG_CONFIG.products.length + 1;
+            CATALOG_CONFIG.products.push(itemObj);
+          }
+          CATALOG_CONFIG.products.sort((a, b) => a.price - b.price);
+          localStorage.setItem('monolith_catalog_override', JSON.stringify(CATALOG_CONFIG));
+          showBanner(`✓ Saved <strong>${itemObj.title}</strong> ($${itemObj.price.toFixed(2)}) in browser storage.`, 'info');
+        }
+
+        closeListingModal();
+        updateStats();
+        renderCategoryPills();
+        renderManagerList();
+      } catch (err) {
+        showBanner(`Error saving listing: ${err.message}`, 'error');
+      } finally {
+        btn.textContent = origLabel;
+        btn.disabled = false;
+      }
+    }
+
+    async function deleteListing(sku) {
+      const p = CATALOG_CONFIG.products.find(i => i.sku === sku);
+      if (!p) return;
+      if (!confirm(`Remove "${p.title}" (${sku}) from the catalog?`)) return;
+
+      try {
+        if (API_BASE !== null) {
+          const res = await fetch(`${API_BASE}/api/catalog/item`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ sku })
+          });
+          const data = await res.json();
+          if (!res.ok || !data.ok) throw new Error(data.error || 'Delete failed');
+          CATALOG_CONFIG = data.config;
+          localStorage.setItem('monolith_catalog_override', JSON.stringify(CATALOG_CONFIG));
+        } else {
+          CATALOG_CONFIG.products = CATALOG_CONFIG.products.filter(i => i.sku !== sku);
+          localStorage.setItem('monolith_catalog_override', JSON.stringify(CATALOG_CONFIG));
+        }
+        showBanner(`Removed <strong>${p.title}</strong> (${sku}) from catalog.`, 'info');
+        updateStats();
+        renderCategoryPills();
+        renderManagerList();
+      } catch (err) {
+        showBanner(`Error deleting item: ${err.message}`, 'error');
+      }
+    }
+
+    async function deployToGitHub() {
+      const btn = document.getElementById('btn-deploy');
+      const orig = btn.textContent;
+      btn.textContent = '⏳ Building & Pushing to GitHub...';
+      btn.disabled = true;
+
+      try {
+        if (API_BASE === null) {
+          throw new Error('Local server (port 8425 or 3030) is not reachable from this browser tab. Run locally or use Export JSON.');
+        }
+        const res = await fetch(`${API_BASE}/api/catalog/deploy`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        });
+        const data = await res.json();
+        if (!res.ok || !data.ok) {
+          throw new Error(data.error || 'Deploy failed');
+        }
+        showBanner(`🚀 Successfully built &amp; pushed catalog updates to <strong>github.com/squasa/monolith-studio</strong> (${data.commit || 'main'})!`, 'success');
+      } catch (err) {
+        showBanner(`Deploy notice: ${err.message}`, 'error');
+      } finally {
+        btn.textContent = orig;
+        btn.disabled = false;
+      }
+    }
+
+    function exportCatalogJson() {
+      const blob = new Blob([JSON.stringify(CATALOG_CONFIG, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'store-config.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    document.addEventListener('DOMContentLoaded', loadCatalog);
+  </script>
+</body>
+</html>

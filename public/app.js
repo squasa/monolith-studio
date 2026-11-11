@@ -3,18 +3,65 @@ let ACTIVE_CATEGORY = 'All';
 let CART = [];
 
 async function initStore() {
-  try {
-    const res = await fetch('config/store-config.json');
-    STORE_CONFIG = await res.json();
-  } catch (e) {
-    console.error('Failed to load store-config.json:', e);
-    return;
+  // 1. Try local API / Fulfillment Studio API first so live Catalog Manager edits reflect immediately
+  let loaded = false;
+  for (const apiUrl of ['/api/catalog', 'http://localhost:8425/api/catalog']) {
+    try {
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), 700);
+      const res = await fetch(apiUrl, { signal: ctrl.signal });
+      clearTimeout(timer);
+      if (res.ok) {
+        const ct = res.headers.get('content-type') || '';
+        if (ct.includes('application/json')) {
+          const data = await res.json();
+          if (data && (data.config || data.products)) {
+            STORE_CONFIG = data.config || data;
+            loaded = true;
+            break;
+          }
+        }
+      }
+    } catch (_) {}
   }
 
+  // 2. Fallback to static store-config.json + localStorage override
+  if (!loaded) {
+    try {
+      const res = await fetch('config/store-config.json');
+      STORE_CONFIG = await res.json();
+      const localOverride = localStorage.getItem('monolith_catalog_override');
+      if (localOverride) {
+        const parsed = JSON.parse(localOverride);
+        if (parsed && Array.isArray(parsed.products) && parsed.products.length > 0) {
+          STORE_CONFIG = parsed;
+        }
+      }
+    } catch (e) {
+      console.error('Failed to load store-config.json:', e);
+      return;
+    }
+  }
+
+  syncHeroDynamicPrices();
   renderFilters();
   renderProducts();
   updateCartBadge();
   handleInitialRoute();
+}
+
+function syncHeroDynamicPrices() {
+  if (!STORE_CONFIG || !Array.isArray(STORE_CONFIG.products)) return;
+  const browseBtn = document.getElementById('hero-browse-btn');
+  if (browseBtn) {
+    browseBtn.textContent = `Browse All ${STORE_CONFIG.products.length} Items`;
+  }
+  for (const p of STORE_CONFIG.products) {
+    const priceEl = document.getElementById(`hero-price-${p.sku}`);
+    if (priceEl) {
+      priceEl.textContent = `$${p.price}`;
+    }
+  }
 }
 
 function handleInitialRoute() {
@@ -60,9 +107,10 @@ function renderFilters() {
   const categories = ['All', ...new Set(STORE_CONFIG.products.map(p => p.category))];
   const bar = document.getElementById('filter-bar');
   if (!bar) return;
+  const totalCount = STORE_CONFIG.products.length;
   bar.innerHTML = categories.map(cat => `
     <button class="filter-btn ${cat === ACTIVE_CATEGORY ? 'active' : ''}" onclick="setCategory('${cat}')">
-      ${cat === 'All' ? 'All Releases (10)' : cat}
+      ${cat === 'All' ? `All Releases (${totalCount})` : cat}
     </button>
   `).join('');
 }
@@ -96,17 +144,21 @@ function renderProducts() {
           <span class="product-price">$${p.price.toFixed(2)}</span>
           <span class="product-stock">● In Stock • Ships in 1–2 Days</span>
         </div>
-        <div class="product-actions">
+        <div class="product-actions" style="grid-template-columns: 0.75fr 0.95fr 1.3fr;">
           <button class="btn-outline" onclick="openProductModal(${p.id})">Details</button>
-          <button class="btn-buy" onclick="buyNow(${p.id})">Buy Now — $${p.price}</button>
+          <button class="btn-outline" id="add-btn-${p.id}" onclick="addToCart(${p.id}, this)">+ Add to Bag</button>
+          <button class="btn-buy" onclick="buyNow(${p.id})">Buy — $${p.price}</button>
         </div>
       </div>
     </article>
   `).join('');
 }
 
-function openProductModal(productId) {
-  const p = STORE_CONFIG.products.find(item => item.id === productId);
+function openProductModal(productIdOrSku) {
+  const p = STORE_CONFIG.products.find(item =>
+    item.id === productIdOrSku ||
+    String(item.sku).toUpperCase() === String(productIdOrSku).toUpperCase()
+  );
   if (!p) return;
 
   const modal = document.getElementById('universal-modal');
@@ -184,7 +236,7 @@ function switchModalPhoto(thumbEl, url) {
   thumbEl.classList.add('active');
 }
 
-function addToCart(productId) {
+function addToCart(productId, btnEl = null) {
   const p = STORE_CONFIG.products.find(item => item.id === productId);
   if (!p) return;
   const existing = CART.find(i => i.product.id === productId);
@@ -194,6 +246,16 @@ function addToCart(productId) {
     CART.push({ product: p, qty: 1 });
   }
   updateCartBadge();
+  const targetBtn = btnEl || document.getElementById(`add-btn-${productId}`);
+  if (targetBtn) {
+    const itemQty = CART.find(i => i.product.id === productId)?.qty || 1;
+    targetBtn.textContent = `✓ In Bag (${itemQty})`;
+    targetBtn.style.borderColor = '#059669';
+    targetBtn.style.color = '#047857';
+    setTimeout(() => {
+      targetBtn.textContent = `+ Add to Bag (${itemQty})`;
+    }, 1000);
+  }
 }
 
 function changeCartQty(productId, delta) {
@@ -210,7 +272,10 @@ function changeCartQty(productId, delta) {
 function buyNow(productId) {
   const p = STORE_CONFIG.products.find(item => item.id === productId);
   if (!p) return;
-  CART = [{ product: p, qty: 1 }];
+  const existing = CART.find(i => i.product.id === productId);
+  if (!existing) {
+    CART.push({ product: p, qty: 1 });
+  }
   updateCartBadge();
   openCheckoutModal();
 }
@@ -379,61 +444,134 @@ function openCheckoutModal() {
 }
 
 function resolveCheckoutUrl(primaryItem, totalAmount) {
-  if (primaryItem && primaryItem.stripePaymentLink) {
-    return primaryItem.stripePaymentLink;
-  }
+  const isMultiItemOrQty = CART.length > 1 || (CART[0] && CART[0].qty > 1);
   const stripeLinks = STORE_CONFIG?.stripeCheckoutLinks || STORE_CONFIG?.waveCheckoutLinks;
-  if (!stripeLinks) return '';
-  const bySku = stripeLinks.bySku || {};
-  const byTier = stripeLinks.byPriceTier || {};
+  const bySku = stripeLinks?.bySku || {};
+  const byTier = stripeLinks?.byPriceTier || {};
 
-  if (primaryItem && bySku[primaryItem.sku] && bySku[primaryItem.sku].trim()) {
-    return bySku[primaryItem.sku].trim();
+  // Single item (qty = 1): use its exact SKU Payment Link
+  if (!isMultiItemOrQty) {
+    if (primaryItem && primaryItem.stripePaymentLink) {
+      return primaryItem.stripePaymentLink;
+    }
+    if (primaryItem && bySku[primaryItem.sku] && bySku[primaryItem.sku].trim()) {
+      return bySku[primaryItem.sku].trim();
+    }
   }
-  const tierKey = String(Math.round(totalAmount));
-  if (byTier[tierKey] && byTier[tierKey].trim()) {
-    return byTier[tierKey].trim();
+
+  // Multi-item cart (or fallback): match total cart amount in byPriceTier (exact or closest tier)
+  const targetTotal = Math.round(totalAmount);
+  if (byTier[String(targetTotal)] && byTier[String(targetTotal)].trim()) {
+    return byTier[String(targetTotal)].trim();
   }
+  const availableTiers = Object.keys(byTier).map(Number).filter(n => !isNaN(n) && byTier[String(n)]);
+  if (availableTiers.length > 0) {
+    availableTiers.sort((a, b) => Math.abs(a - targetTotal) - Math.abs(b - targetTotal));
+    return byTier[String(availableTiers[0])].trim();
+  }
+  return primaryItem?.stripePaymentLink || '';
+}
+
+async function createMultiItemStripeCheckout({ items, customerEmail, orderId }) {
+  const originUrl = window.location.origin && window.location.origin.startsWith('http')
+    ? window.location.origin
+    : 'https://monolith-studio.onrender.com';
+
+  // Try local backend /api/checkout-session or Shipment Studio http://localhost:8425/api/checkout-session
+  for (const ep of ['/api/checkout-session', 'http://localhost:8425/api/checkout-session']) {
+    try {
+      const ctrl = new AbortController();
+      const t = setTimeout(() => ctrl.abort(), 2500);
+      const res = await fetch(ep, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items, customerEmail, orderId, originUrl }),
+        signal: ctrl.signal
+      });
+      clearTimeout(t);
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.url) return data.url;
+      }
+    } catch (_) {}
+  }
+
   return '';
 }
 
 async function goDirectStripeCheckout() {
+  if (CART.length === 0) return;
   const totalAmount = CART.reduce((sum, i) => sum + i.product.price * i.qty, 0);
   const primaryProduct = CART[0]?.product;
-  const checkoutUrl = resolveCheckoutUrl(primaryProduct, totalAmount);
-  if (!checkoutUrl) return;
 
   const emailVal = (document.getElementById('express-checkout-email')?.value || '').trim();
   const orderId = 'ML-' + Math.random().toString(36).substring(2, 8).toUpperCase();
 
-  if (emailVal) {
-    const orderPayload = {
-      orderId,
-      createdAt: new Date().toISOString(),
-      customer: {
-        first_name: 'Studio',
-        last_name: 'Customer',
-        email: emailVal,
-        address: 'Stripe Checkout Address',
-        city: 'Los Angeles',
-        region: 'CA',
-        postal: '90043',
-        country: 'US'
-      },
-      items: CART.map(i => ({
-        sku: i.product.sku,
-        title: i.product.title,
-        price: i.product.price,
-        qty: i.qty,
-        weightGrams: i.product.weightGrams
-      })),
-      totalAmount
-    };
-    try {
-      const saved = JSON.parse(localStorage.getItem('monolith_orders') || '[]');
-      saved.unshift(orderPayload);
-      localStorage.setItem('monolith_orders', JSON.stringify(saved.slice(0, 30)));
-    } catch (_) {}
+  const cartItemsPayload = CART.map(i => ({
+    sku: i.product.sku,
+    title: i.product.title,
+    price: i.product.price,
+    qty: i.qty,
+    weightGrams: i.product.weightGrams,
+    image: i.product.image,
+    summary: i.product.summary
+  }));
+
+  const orderPayload = {
+    orderId,
+    createdAt: new Date().toISOString(),
+    customer: {
+      first_name: 'Studio',
+      last_name: 'Customer',
+      email: emailVal || 'rewindsupprt8@gmail.com',
+      address: 'Stripe Checkout Address',
+      city: 'Los Angeles',
+      region: 'CA',
+      postal: '90043',
+      country: 'US'
+    },
+    items: cartItemsPayload,
+    totalAmount
+  };
+
+  try {
+    const saved = JSON.parse(localStorage.getItem('monolith_orders') || '[]');
+    saved.unshift(orderPayload);
+    localStorage.setItem('monolith_orders', JSON.stringify(saved.slice(0, 30)));
+  } catch (_) {}
+
+  // If multiple items or quantity > 1 in bag, create a multi-item Stripe Checkout Session
+  const isMultiItemOrQty = CART.length > 1 || (CART[0] && CART[0].qty > 1);
+  if (isMultiItemOrQty) {
+    const btn = document.querySelector('.btn-stripe-primary');
+    if (btn) {
+      btn.disabled = true;
+      btn.innerHTML = `<span>Creating Multi-Item Stripe Checkout ($${totalAmount.toFixed(2)})...</span>`;
+    }
+    const multiSessionUrl = await createMultiItemStripeCheckout({
+      items: cartItemsPayload,
+      customerEmail: emailVal,
+      orderId
+    });
+    if (multiSessionUrl) {
+      window.location.href = multiSessionUrl;
+      return;
+    }
+  }
+
+  // Single item (qty = 1): use its dedicated Payment Link or create a session if missing
+  let checkoutUrl = resolveCheckoutUrl(primaryProduct, totalAmount);
+  if (!checkoutUrl) {
+    checkoutUrl = await createMultiItemStripeCheckout({
+      items: cartItemsPayload,
+      customerEmail: emailVal,
+      orderId
+    });
+    if (checkoutUrl) {
+      window.location.href = checkoutUrl;
+      return;
+    }
+    return;
   }
 
   const stripeParams = new URLSearchParams({
@@ -467,17 +605,21 @@ async function submitCheckout(e) {
   const primaryProduct = CART[0]?.product;
   const orderId = 'ML-' + Math.random().toString(36).substring(2, 8).toUpperCase();
 
+  const cartItemsPayload = CART.map(i => ({
+    sku: i.product.sku,
+    title: i.product.title,
+    price: i.product.price,
+    qty: i.qty,
+    weightGrams: i.product.weightGrams,
+    image: i.product.image,
+    summary: i.product.summary
+  }));
+
   const orderPayload = {
     orderId,
     createdAt: new Date().toISOString(),
     customer,
-    items: CART.map(i => ({
-      sku: i.product.sku,
-      title: i.product.title,
-      price: i.product.price,
-      qty: i.qty,
-      weightGrams: i.product.weightGrams
-    })),
+    items: cartItemsPayload,
     totalAmount
   };
 
@@ -509,7 +651,21 @@ async function submitCheckout(e) {
     clearTimeout(timer);
   } catch (_) {}
 
-  // Check if Stripe Payment Link or Wave Checkout link is configured for this SKU or price tier
+  // Multi-item or multi-qty bag: create a multi-item Stripe Checkout Session
+  const isMultiItemOrQty = CART.length > 1 || (CART[0] && CART[0].qty > 1);
+  if (isMultiItemOrQty) {
+    const multiSessionUrl = await createMultiItemStripeCheckout({
+      items: cartItemsPayload,
+      customerEmail: customer.email,
+      orderId
+    });
+    if (multiSessionUrl) {
+      window.location.href = multiSessionUrl;
+      return;
+    }
+  }
+
+  // Single item: check if Stripe Payment Link or Wave Checkout link is configured
   const checkoutUrl = resolveCheckoutUrl(primaryProduct, totalAmount);
   if (checkoutUrl) {
     if (checkoutUrl.includes('buy.stripe.com')) {
@@ -690,7 +846,7 @@ async function lookupOrder() {
   } else {
     resultEl.innerHTML = `
       <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:10px; padding:16px; font-size:13.5px; color:#334155;">
-        Order reference <strong>#${q}</strong> is queued in our Los Angeles fulfillment system. If you placed your order within the last 24 hours, your USPS/UPS/FedEx tracking link will be dispatched to your email shortly. For immediate assistance, email <strong>support@monolithstudio.co</strong>.
+        Order reference <strong>#${q}</strong> is queued in our Los Angeles fulfillment system. If you placed your order within the last 24 hours, your USPS/UPS/FedEx tracking link will be dispatched to your email shortly. For immediate assistance, email <strong>rewindsupprt8@gmail.com</strong>.
       </div>
     `;
   }
